@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { strings } from '@/config/strings';
-import { resizeImageFile, useCamera } from '@/shared/lib/camera';
-import { CameraIcon, ImageIcon } from './icons';
+import { resizeImageFile, useCamera, useHasCamera } from '@/shared/lib/camera';
+import { useIsDesktop } from '@/shared/lib/useMediaQuery';
+import { CameraIcon } from './icons';
+import { ImageDropZone } from './ImageDropZone';
 
 type CameraViewProps = {
   // Recebe sempre um JPEG ≤ 1024px e sem EXIF, venha da câmera ou do upload.
@@ -10,6 +12,8 @@ type CameraViewProps = {
 
 export function CameraView({ onCapture }: CameraViewProps) {
   const { state, videoRef, start, capture } = useCamera();
+  const isDesktop = useIsDesktop();
+  const hasCamera = useHasCamera();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,12 +29,18 @@ export function CameraView({ onCapture }: CameraViewProps) {
     }
   }
 
-  function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    event.target.value = ''; // permite escolher o mesmo arquivo de novo
-    if (file) void deliver(() => resizeImageFile(file));
+  function handleFile(file: File) {
+    if (!file.type.startsWith('image/')) {
+      setError(strings.camera.invalidImage);
+      return;
+    }
+    void deliver(() => resizeImageFile(file));
   }
 
+  // No computador sem webcam, nem oferecemos a câmera: só o envio de arquivo.
+  // No celular sempre oferecemos, porque alguns navegadores só listam a câmera após a permissão.
+  const showCamera = !(isDesktop && hasCamera === false);
+  const cameraFailed = state.status === 'denied' || state.status === 'unavailable';
   const fallbackMessage =
     state.status === 'denied'
       ? strings.camera.denied
@@ -38,8 +48,8 @@ export function CameraView({ onCapture }: CameraViewProps) {
         ? strings.camera.unavailable
         : null;
 
-  return (
-    <div className="camera" aria-busy={busy || state.status === 'requesting'}>
+  const cameraPanel = showCamera && (
+    <div className="camera__panel">
       {state.status === 'ready' && (
         <div className="camera__preview">
           <video
@@ -80,29 +90,23 @@ export function CameraView({ onCapture }: CameraViewProps) {
           {fallbackMessage}
         </p>
       )}
+    </div>
+  );
 
-      <label
-        className={
-          fallbackMessage
-            ? 'action-button action-button--green'
-            : 'action-button action-button--secondary'
-        }
-      >
-        <ImageIcon size={32} />
-        <span>{strings.camera.upload}</span>
-        {/* Sem o atributo capture: o celular oferece câmera e galeria. */}
-        <input
-          type="file"
-          accept="image/*"
-          className="visually-hidden"
-          disabled={busy}
-          onChange={handleFile}
-        />
-      </label>
+  const layout = isDesktop ? (showCamera ? 'camera--side-by-side' : 'camera--upload-only') : '';
 
+  return (
+    <div className={`camera ${layout}`} aria-busy={busy || state.status === 'requesting'}>
+      {cameraPanel}
+      <ImageDropZone
+        variant={isDesktop ? 'dropzone' : 'button'}
+        prominent={!showCamera || cameraFailed}
+        disabled={busy}
+        onFile={handleFile}
+      />
       {busy && <p role="status">{strings.camera.processing}</p>}
       {error && (
-        <p className="camera__message" role="alert">
+        <p className="camera__message camera__error" role="alert">
           {error}
         </p>
       )}

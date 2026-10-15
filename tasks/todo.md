@@ -40,10 +40,11 @@
   - **Verificar:** `npm test -- src/shared/lib/screen`
   - **Arquivos:** `src/shared/lib/screen/ScreenContext.tsx`, `useScreen.ts`, `useScreen.test.tsx`
 
-- [ ] **T6: `useCamera` + captura sem EXIF + fallback de upload** · M · deps: T4
+- [x] **T6: `useCamera` + captura sem EXIF + fallback de upload** · M · deps: T4
   - `getUserMedia` com `facingMode: { ideal: 'environment' }`; estados da spec; `capture()` → canvas → JPEG ≤ 1024px; o upload passa pelo mesmo redimensionamento. Câmera frontal/webcam → preview espelhado, foto **não** espelhada. `CameraView` de teste em `/escanear` (provisório).
   - **Aceite:** câmera negada ou ausente → "Enviar foto"; saída ≤ 1024px e sem EXIF; webcam espelhada só no preview.
   - **Verificar:** testes unitários de `resizeImage` e do fallback; **manual:** câmera traseira no celular real **e** webcam no computador, pela URL da Vercel
+  - **Feito (2026-10-15):** celular real ok. Webcam não testada manualmente (o computador do Hudson não tem câmera; o caso "sem câmera" foi validado). `Enviar foto` ficou **sem** `capture` para oferecer a galeria.
   - **Arquivos:** `src/shared/lib/camera/useCamera.ts`, `resizeImage.ts`, `resizeImage.test.ts`, `src/shared/ui/CameraView.tsx`, `CameraView.test.tsx`
 
 - [ ] **T6b: Experiência no computador (lado a lado, arrastar e soltar, "Melhor no celular")** · M · deps: T6

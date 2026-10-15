@@ -17,7 +17,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "icons": "node scripts/generate-icons.ts"
+    "icons": "node scripts/generate-icons.ts",
+    "qr:site": "node scripts/generate-site-qr.ts"
   },
   "dependencies": {
     "react": "^19.3.1",
@@ -32,6 +33,7 @@
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
     "@types/node": "^24.19.2",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
@@ -44,6 +46,7 @@
     "globals": "^17.13.0",
     "jsdom": "^30.1.3",
     "prettier": "^3.9.10",
+    "qrcode": "^1.5.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.71.2",
     "vite": "^8.3.4",

@@ -37,6 +37,14 @@ export const strings = {
     unavailable: 'Não encontramos uma câmera. Você pode enviar uma foto.',
     invalidImage: 'Não consegui abrir essa imagem. Tente outra foto.',
     processing: 'Preparando a foto…',
+    dropHint: 'Arraste uma foto para cá ou clique para escolher',
+    dropActive: 'Solte a foto aqui',
+  },
+  desktopHint: {
+    title: 'Melhor no celular',
+    text: 'Aponte a câmera do celular para o QR e abra o EcoScan por lá.',
+    qrAlt: 'QR code que abre o EcoScan no celular',
+    dismiss: 'Fechar aviso',
   },
   cameraTest: {
     result: 'Foto pronta',

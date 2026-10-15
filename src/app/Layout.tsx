@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from 'react-router';
 import { strings } from '@/config/strings';
 import { ScreenProvider } from '@/shared/lib/screen';
 import { HomeIcon } from '@/shared/ui/icons';
+import { DesktopHint } from './DesktopHint';
 
 export function Layout() {
   const isHome = useLocation().pathname === '/';
@@ -17,6 +18,7 @@ export function Layout() {
             </Link>
           </header>
         )}
+        <DesktopHint />
         <main className="layout__main">
           <Outlet />
         </main>

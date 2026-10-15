@@ -233,6 +233,111 @@ body {
   border-radius: var(--radius);
 }
 
+.camera__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Computador: câmera e envio lado a lado; área de arrastar e soltar */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 12rem;
+  padding: var(--space-3);
+  border: 3px dashed var(--color-green);
+  border-radius: var(--radius);
+  color: var(--color-green);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropzone--green {
+  background: var(--color-surface);
+}
+
+.dropzone--active {
+  border-style: solid;
+  background: #e2f1e6;
+}
+
+.dropzone:focus-within {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.dropzone__hint {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+@media (pointer: fine) and (min-width: 720px) {
+  .layout__main:has(.camera--side-by-side) {
+    max-width: 60rem;
+  }
+
+  .camera--side-by-side {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+  }
+
+  .camera--side-by-side .dropzone {
+    min-height: 100%;
+  }
+
+  .camera--side-by-side > :not(.camera__panel, .dropzone) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Banner "Melhor no celular" */
+.desktop-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: calc(100% - 2 * var(--space-2));
+  max-width: 60rem;
+  margin: var(--space-2) auto 0;
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.desktop-hint img {
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+}
+
+.desktop-hint__text {
+  flex: 1;
+}
+
+.desktop-hint__text p {
+  margin: 0;
+}
+
+.desktop-hint__close {
+  flex-shrink: 0;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.desktop-hint__close:hover {
+  background: #e3e8e5;
+}
+
 /* Telas provisórias */
 .placeholder h1 {
   margin-top: 0;

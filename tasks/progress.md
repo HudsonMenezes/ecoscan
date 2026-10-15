@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 1, Fundação (`app-shell`)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), P2 (CI)
-- **Em andamento:** **T6: câmera.** Código, testes e E2E prontos e no ar; **falta o teste manual do Hudson** (câmera traseira no celular e webcam no computador, em `/escanear`). Só depois marcar a T6 no `todo.md`.
-- **Depois:** T6b (experiência no computador) → **Checkpoint A** (revisão com o Hudson)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), P2 (CI)
+- **Em andamento:** **T6b: experiência no computador.** Código, testes e E2E prontos e no ar; **falta o Hudson ler o QR do banner com o celular**. Depois, marcar a T6b no `todo.md`.
+- **Depois:** **Checkpoint A** (revisão com o Hudson)
 
 ## Como retomar
 
@@ -41,3 +41,5 @@
 - **`useScreen`:** pode receber um array de ações novo a cada render. Ele só registra de novo quando a fala ou os pares id/rótulo mudam, e o `run` registrado sempre chama o callback mais recente. Fora do `ScreenProvider` (por exemplo, em testes de componente de uma tela) ele não faz nada.
 - **E2E instável localmente:** com 6 navegadores em paralelo, o Chromium às vezes deixava sem resposta a requisição de um chunk lazy, e o precache do service worker piorava o problema. O `playwright.config.ts` agora bloqueia service workers e usa 3 workers localmente (96/96 estáveis). Para checar se há intermitência: `npx playwright test --repeat-each=5`.
 - **E2E da câmera:** o Chromium precisa de `--use-fake-device-for-media-stream` **e** `--use-fake-ui-for-media-stream` (sem o segundo, o `getUserMedia` dá `NotSupportedError` mesmo com a permissão concedida). A câmera falsa entrega 640x480 ou 1920x1080, então os testes verificam "lado maior ≤ 1024", e não um tamanho fixo.
+- **QR do site:** `npm run qr:site` gera `public/qr-site.svg` (commitado). A URL fica em `scripts/generate-site-qr.ts`; se o domínio mudar, rodar de novo.
+- **Sem webcam no computador:** `useHasCamera` usa `enumerateDevices` (sem pedir permissão) e, só no desktop, esconde o "Abrir câmera". No celular a câmera é sempre oferecida, porque alguns navegadores só listam câmeras depois da permissão.
