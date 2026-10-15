@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), P2 (CI)
-- **Próxima:** **T8: `POST /api/scan`** (OpenAI + Structured Outputs). Conferir na documentação oficial o modelo, a Responses API e o parâmetro de raciocínio antes de codar.
-- **Depois:** T9 (eval, maior risco do projeto) → T10 → T11 → T12 → **Checkpoint B**
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), P2 (CI)
+- **Próxima:** **T9: eval do scanner** (22 imagens; só CC0, domínio público ou CC BY, **não** CC BY-SA, que é a licença da maioria das fotos do Commons). Custo estimado: ~US$ 0,004 por chamada.
+- **Depois:** T10 → T11 → T12 → **Checkpoint B**
 
 ## Como retomar
 
@@ -44,3 +44,5 @@
 - **QR do site:** `npm run qr:site` gera `public/qr-site.svg` (commitado). A URL fica em `scripts/generate-site-qr.ts`; se o domínio mudar, rodar de novo.
 - **Sem webcam no computador:** `useHasCamera` usa `enumerateDevices` (sem pedir permissão) e, só no desktop, esconde o "Abrir câmera". No celular a câmera é sempre oferecida, porque alguns navegadores só listam câmeras depois da permissão.
 - **Contrato compartilhado (`src/shared/contracts/`):** usado pelo front e pelo `api/`. Não pode importar `@/`, e os imports relativos usam `.js` (o `tsc` do `api/` com `nodenext` aceita, conferido). Rodar esses arquivos direto com `node` (type stripping) **falha**, porque o Node não troca `.js` por `.ts`. Na T9, o script de eval precisa contornar isso (por exemplo, rodando pelo Vitest/Vite, ou com outro runner).
+- **OpenAI (conferido na doc oficial em 2026-10-15):** `gpt-5.4-mini` aceita esforço de raciocínio `none` (o mínimo e o padrão; não existe `minimal`); o modo strict dos Structured Outputs **não** aceita `maxLength`/`minLength`, então `toStrictJsonSchema` remove esses campos (e o `pattern`) e o Zod valida depois. SDK `openai` fixado em 7.27.0. `store: false` para a OpenAI não guardar as fotos.
+- **Qualidade da IA:** numa chamada real, o modelo misturou uma palavra em árabe no texto. O contrato agora só aceita escrita latina, e a resposta reprovada aciona o retry.
