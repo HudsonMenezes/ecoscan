@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { strings } from '@/config/strings';
-import type { LedgerEntry, Wallet } from '../model/ledger';
+import { BoltIcon, CheckIcon, CloseIcon, CoinIcon } from '@/shared/ui/icons';
+import type { LedgerEntry } from '../model/ledger';
 import type { Level } from '../model/levels';
 import { playChime } from './chime';
 import { LevelIcon } from './LevelIcon';
@@ -12,17 +13,17 @@ const { success } = strings.disposal;
 const CONFETTI = Array.from({ length: 18 }, (_, i) => ({
   left: `${(i * 37) % 100}%`,
   delay: `${(i % 6) * 0.12}s`,
-  color: ['#1f5fae', '#c62828', '#f2b01e', '#1b7f3b', '#ef6c00'][i % 5],
+  color: ['#b8e04a', '#f2b01e', '#ffffff', '#8ec5ff'][i % 4],
 }));
 
 type CelebrationProps = {
   entry: LedgerEntry;
   leveledUp: Level | null;
-  wallet: Wallet;
   onScanAnother: () => void;
 };
 
-export function Celebration({ entry, leveledUp, wallet, onScanAnother }: CelebrationProps) {
+// Tela verde inteira por cima de tudo (inclusive da barra inferior), como no canvas.
+export function Celebration({ entry, leveledUp, onScanAnother }: CelebrationProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -41,38 +42,60 @@ export function Celebration({ entry, leveledUp, wallet, onScanAnother }: Celebra
         ))}
       </div>
 
-      <h2 id="celebration-title" ref={titleRef} tabIndex={-1} className="celebration__title">
-        {success.title}
-      </h2>
-      <p>{success.item(entry.itemName)}</p>
+      <div className="celebration__top">
+        <Link to="/" className="round-button round-button--on-dark" aria-label={success.close}>
+          <CloseIcon size={24} />
+        </Link>
+      </div>
 
-      <p className="celebration__gain">
-        <span className="celebration__coin" aria-hidden="true">
-          🪙
+      <div className="celebration__body">
+        <span className="celebration__check" aria-hidden="true">
+          <CheckIcon size={48} />
         </span>
-        {success.gained(entry.xp, entry.coins)}
-      </p>
+        <div>
+          <h2 id="celebration-title" ref={titleRef} tabIndex={-1} className="celebration__title">
+            {success.title}
+          </h2>
+          <p className="celebration__item">{success.item(entry.itemName)}</p>
+        </div>
 
-      {leveledUp && (
-        <p className="celebration__level-up" role="status">
-          <LevelIcon icon={leveledUp.icon} size={28} /> {success.levelUp(leveledUp.name)}
-        </p>
-      )}
+        {/* Os blocos são visuais; a frase escondida é o que o leitor de tela lê. */}
+        <p className="visually-hidden">{success.gained(entry.xp, entry.coins)}</p>
+        <div className="celebration__gains" aria-hidden="true">
+          <div className="celebration__gain">
+            <BoltIcon size={26} />
+            <span className="celebration__gain-value">+{entry.xp}</span>
+            <span>{success.xpLabel}</span>
+          </div>
+          <div className="celebration__gain celebration__gain--coins">
+            <CoinIcon size={26} />
+            <span className="celebration__gain-value">+{entry.coins}</span>
+            <span>{success.coinsLabel}</span>
+          </div>
+        </div>
 
-      <p className="celebration__wallet">
-        <LevelIcon icon={wallet.level.icon} size={22} />{' '}
-        {success.summary(wallet.level.name, wallet.xp, wallet.coins)}
-      </p>
+        {leveledUp && (
+          <div className="celebration__level-up" role="status">
+            <span className="celebration__level-icon" aria-hidden="true">
+              <LevelIcon icon={leveledUp.icon} size={28} />
+            </span>
+            <div>
+              <p className="celebration__level-label">{success.newLevel}</p>
+              <p className="celebration__level-name">{success.levelUp(leveledUp.name)}</p>
+            </div>
+          </div>
+        )}
+      </div>
 
-      <div className="result-card__actions">
+      <div className="celebration__actions">
         <button
           type="button"
-          className="action-button action-button--green"
+          className="action-button action-button--accent"
           onClick={onScanAnother}
         >
           {strings.disposal.scanAnother}
         </button>
-        <Link to="/carteira" className="action-button action-button--secondary">
+        <Link to="/carteira" className="action-button action-button--ghost">
           {strings.disposal.wallet}
         </Link>
       </div>

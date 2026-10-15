@@ -81,7 +81,7 @@ describe('WalletScreen', () => {
     expect(screen.getByText(text.toNext(10, 'Broto'))).toBeInTheDocument();
     expect(totals()).toEqual(['40', '20']);
 
-    const items = within(screen.getByRole('list')).getAllByRole('listitem');
+    const items = within(screen.getAllByRole('list').at(-1)!).getAllByRole('listitem');
     expect(items.map((li) => li.querySelector('.wallet-history__name')?.textContent)).toEqual([
       'Lata',
       'Pilha AA',
@@ -91,6 +91,26 @@ describe('WalletScreen', () => {
     expect(items[1]!.querySelector('.wallet-history__icon')).toHaveStyle({
       backgroundColor: CATEGORIES.pilhas_baterias.color,
     });
+  });
+
+  it('a trilha marca os níveis concluídos, o atual e os próximos', async () => {
+    seed([entry({ xp: 160 })]); // Muda (nível 3)
+    renderWallet();
+
+    await screen.findByRole('heading', { name: 'Muda' });
+    const trail = within(screen.getAllByRole('list')[0]!); // a trilha vem antes do histórico
+    const steps = trail.getAllByRole('listitem');
+    expect(steps).toHaveLength(6);
+    expect(steps.map((li) => li.className.match(/--(\w+)/)?.[1])).toEqual([
+      'done',
+      'done',
+      'current',
+      'next',
+      'next',
+      'next',
+    ]);
+    expect(steps[2]).toHaveAttribute('aria-current', 'step');
+    expect(steps[5]).toHaveTextContent('Guardião');
   });
 
   it('fala o saldo e quanto falta para o próximo nível (frase da spec)', async () => {

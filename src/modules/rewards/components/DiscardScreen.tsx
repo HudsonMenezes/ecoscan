@@ -43,12 +43,7 @@ function Disposal({ pointId }: { pointId: string | null }) {
       {state.status === 'error' && <DisposalError state={state} nav={nav} />}
 
       {state.status === 'success' && (
-        <Celebration
-          entry={state.entry}
-          leveledUp={state.leveledUp}
-          wallet={state.wallet}
-          onScanAnother={nav.scan}
-        />
+        <Celebration entry={state.entry} leveledUp={state.leveledUp} onScanAnother={nav.scan} />
       )}
     </div>
   );
@@ -63,8 +58,10 @@ function DisposalError({
 }) {
   const action = errorAction(state, nav);
   return (
-    <div className="discard-error">
-      <AlertIcon size={64} />
+    <div className="card discard-error">
+      <span className="discard-error__icon" aria-hidden="true">
+        <AlertIcon size={40} />
+      </span>
       <p role="alert">{errorMessage(state)}</p>
       <button type="button" className="action-button action-button--green" onClick={action.run}>
         {action.label}

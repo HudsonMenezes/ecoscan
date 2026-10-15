@@ -154,7 +154,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
 - [x] **U1a: Base visual** · tokens, fontes em `public/fonts/`, botões, cartões, ícones de nível
 - [x] **U1b: Navegação e Início** · cabeçalho, barra inferior, resumo do jogador, dica rápida
 - [x] **U1c: Scanner** · câmera escura com moldura, resultado em cartões com botão fixo
-- [ ] **U1d: Descarte e Carteira** · comemoração em tela verde, leitor de QR, trilha de níveis
+- [x] **U1d: Descarte e Carteira** · comemoração em tela verde, leitor de QR, trilha de níveis
   - **Aceite (U1):** telas batem com o canvas; contraste AA; alvos de toque ≥ 44px; funciona em 360px; todos os testes verdes; print de cada tela revisado.
 
 ## Fase 3b: Voice (paralela à 3a)

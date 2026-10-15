@@ -26,8 +26,10 @@ export function QrReader({ onPoint }: { onPoint: (pointId: string) => void }) {
 
   if (invalid) {
     return (
-      <div className="discard-error">
-        <AlertIcon size={64} />
+      <div className="card discard-error">
+        <span className="discard-error__icon" aria-hidden="true">
+          <AlertIcon size={40} />
+        </span>
         <p role="alert">{disposal.errors.unknown_point}</p>
         <button
           type="button"
@@ -64,8 +66,10 @@ export function QrReader({ onPoint }: { onPoint: (pointId: string) => void }) {
 
   const failed = state.status === 'denied' || state.status === 'unavailable';
   return (
-    <div className="discard-reader">
-      <QrIcon size={96} />
+    <div className="card discard-reader">
+      <span className="discard-reader__icon" aria-hidden="true">
+        <QrIcon size={56} />
+      </span>
       <p>{strings.discard.speech}</p>
       {failed ? (
         <p className="camera__message" role="status">
@@ -74,7 +78,7 @@ export function QrReader({ onPoint }: { onPoint: (pointId: string) => void }) {
       ) : (
         <button
           type="button"
-          className="action-button action-button--blue"
+          className="action-button action-button--green"
           disabled={state.status === 'requesting'}
           onClick={() => void start()}
         >

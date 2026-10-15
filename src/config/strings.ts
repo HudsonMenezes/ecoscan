@@ -86,8 +86,10 @@ export const strings = {
       speech: (item: string, xp: number, coins: number) =>
         `Parabéns! Você descartou ${midSentence(item)} corretamente e ganhou ${xp} pontos e ${coins} moedas.`,
       levelUp: (level: string) => `Você subiu para o nível ${level}!`,
-      summary: (level: string, xp: number, coins: number) =>
-        `${level} · ${xp} XP · ${coins} moedas`,
+      newLevel: 'Nível novo',
+      xpLabel: 'XP',
+      coinsLabel: 'moedas',
+      close: 'Fechar e voltar ao início',
     },
   },
   wallet: {
@@ -99,6 +101,10 @@ export const strings = {
     maxLevel: 'Você chegou ao nível mais alto!',
     progressLabel: 'Progresso até o próximo nível',
     historyTitle: 'Seus descartes',
+    historyCount: (count: number) => `${count} ${count === 1 ? 'item' : 'itens'}`,
+    levelOf: (number: number, total: number) => `Nível ${number} de ${total}`,
+    trailTitle: 'Sua trilha',
+    xpTotal: 'XP total',
     empty: 'Você ainda não descartou nada. Escaneie um item para começar!',
     scan: 'Escanear item',
     gain: (xp: number, coins: number) =>
