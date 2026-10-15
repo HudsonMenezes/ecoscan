@@ -1,6 +1,6 @@
 # Spec: voice
 
-> Módulo 3 de 4. Depende de [`app-shell`](SPEC-app-shell.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **rascunho, aguardando revisão**.
+> Módulo 3 de 4. Depende de [`app-shell`](SPEC-app-shell.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **aprovada em 2026-10-15**.
 
 ## Objetivo
 

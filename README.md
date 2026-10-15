@@ -76,5 +76,5 @@ Detalhes em [`docs/SPEC-app-shell.md`](docs/SPEC-app-shell.md#segurança-e-priva
 - [Mapa de capacidades](docs/CAPABILITY-MAP.md)
 - [Spec: app-shell](docs/SPEC-app-shell.md)
 - [Spec: scanner](docs/SPEC-scanner.md)
-- [Spec: voice](docs/SPEC-voice.md) (rascunho)
-- [Spec: rewards](docs/SPEC-rewards.md) (rascunho)
+- [Spec: voice](docs/SPEC-voice.md)
+- [Spec: rewards](docs/SPEC-rewards.md)

@@ -1,6 +1,6 @@
 # Spec: rewards
 
-> Módulo 4 de 4. Depende de [`app-shell`](SPEC-app-shell.md) e [`scanner`](SPEC-scanner.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **rascunho, aguardando revisão**.
+> Módulo 4 de 4. Depende de [`app-shell`](SPEC-app-shell.md) e [`scanner`](SPEC-scanner.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **aprovada em 2026-10-15**.
 
 ## Objetivo
 
@@ -193,8 +193,9 @@ Com o ledger no localStorage, alguém com conhecimento técnico consegue editar 
 
 ## Perguntas em aberto
 
-- Freio contra o mesmo item escaneado várias vezes: nenhum (só demo), limite diário de descartes ou intervalo mínimo entre descartes?
+- Nenhuma no momento.
 
 ## Decisões
 
 - Valores de XP/moedas e níveis aprovados como estão (2026-10-15); podem mudar depois.
+- Sem freio contra o mesmo item escaneado várias vezes (sem limite diário nem intervalo mínimo). Aceito na demo (2026-10-15).
