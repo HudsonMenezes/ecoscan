@@ -151,4 +151,4 @@ O reconhecimento de voz do Chrome (Android e desktop) **envia o áudio para serv
 
 ## Perguntas em aberto
 
-- Nenhuma no momento. O aviso de privacidade do reconhecimento de voz entra no texto de boas-vindas; confirme se esse aviso basta para a escola.
+- Nenhuma. O aviso de privacidade na tela de boas-vindas e na página "Sobre" foi considerado suficiente (2026-10-15).

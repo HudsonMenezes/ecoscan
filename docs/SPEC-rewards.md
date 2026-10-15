@@ -22,7 +22,7 @@ Recompensar o descarte correto. O usuário escaneia o item, vai até o ponto de 
        ├─ ponto desconhecido          → "Esse QR não é um ponto do EcoScan"
        ├─ sem LastScan                → "Primeiro escaneie o item" + botão → /escanear
        ├─ LastScan com mais de 10 min → "Escaneie o item de novo antes de descartar"
-       ├─ LastScan já recompensado    → "Esse item já foi descartado"
+       ├─ este scan (LastScan.id) já foi recompensado → "Esse item já foi contado! Escaneie o próximo item para descartar de novo." + botão "Escanear próximo"
        ├─ ponto não aceita a categoria → "Esse ponto não recebe <categoria>" (v1: aceita todas)
        └─ OK → registra no ledger → tela de comemoração (animação + som + fala)
 ```
@@ -167,7 +167,7 @@ export function claimDisposal({ pointId, lastScan, ledger, now }: ClaimInput): C
 | Unitário | Vitest (table-driven) | `claimDisposal`: cada `ClaimError` e o caminho feliz; expiração exatamente em 10 min; `getWallet` e as fronteiras de nível (49/50, 799/800); `parsePointUrl` (URL válida, outro domínio, sem parâmetro, lixo) |
 | Unitário | Vitest | Ledger inválido no storage → carteira vazia, sem crash |
 | Componente | Testing Library | Sucesso mostra +XP/+moedas; cada erro mostra a ação certa; a carteira renderiza o histórico |
-| E2E | Playwright | `LastScan` semeado → abrir `/descartar?ponto=escola-demo` → comemoração → `/carteira` com saldo atualizado; repetir a URL → "já foi descartado" |
+| E2E | Playwright | `LastScan` semeado → abrir `/descartar?ponto=escola-demo` → comemoração → `/carteira` com saldo atualizado; repetir a URL → "já foi contado"; novo scan do mesmo material → recompensado de novo |
 | Manual | Celular real | Ler o QR impresso pelo leitor do app **e** pela câmera nativa (Android e iPhone) |
 
 Meta: 100% de cobertura de linhas em `model/` e `qr/parsePointUrl.ts`.
@@ -186,11 +186,15 @@ Com o ledger no localStorage, alguém com conhecimento técnico consegue editar 
 
 - [ ] Fluxo completo no celular: escanear → Descartar → ler o QR impresso → comemoração com fala → carteira atualizada.
 - [ ] O mesmo QR lido pela câmera nativa (Android e iPhone) abre o app e credita, se houver um scan válido.
-- [ ] O mesmo scan nunca é recompensado duas vezes; um scan com mais de 10 min é recusado com uma mensagem clara.
+- [ ] O mesmo scan nunca é recompensado duas vezes, mas **scans diferentes do mesmo material** (ex.: duas garrafas PET escaneadas em sequência) são **ambos** recompensados. Um scan com mais de 10 min é recusado com uma mensagem clara.
 - [ ] Nível e barra de progresso corretos nas fronteiras da tabela (teste unitário).
 - [ ] `npm run qr:demo` gera SVG, PNG e a página A4 com a URL de produção.
 - [ ] Todos os testes passam; `lint` e `typecheck` limpos.
 
 ## Perguntas em aberto
 
-- Os valores de XP/moedas e os nomes dos níveis (Semente → Guardião do Planeta) estão bons para a escola, ou preferem outros?
+- Freio contra o mesmo item escaneado várias vezes: nenhum (só demo), limite diário de descartes ou intervalo mínimo entre descartes?
+
+## Decisões
+
+- Valores de XP/moedas e níveis aprovados como estão (2026-10-15); podem mudar depois.
