@@ -21,6 +21,7 @@
     "qr:site": "node scripts/generate-site-qr.ts"
   },
   "dependencies": {
+    "openai": "7.27.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router": "^8.4.0",

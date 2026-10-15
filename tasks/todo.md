@@ -70,7 +70,7 @@
   - **Verificar:** `npm test -- scanner/model`
   - **Arquivos:** `src/modules/scanner/model/categories.ts`, `src/shared/contracts/scanResult.ts`, `applyConfidenceRules.ts`, `*.test.ts`
 
-- [ ] **T8: `POST /api/scan` (OpenAI + Structured Outputs)** · M · deps: T2, T7
+- [x] **T8: `POST /api/scan` (OpenAI + Structured Outputs)** · M · deps: T2, T7
   - Conferir na documentação oficial o nome do modelo, a Responses API, `json_schema strict`, `input_image` e o parâmetro de raciocínio. Prompt v1 com os exemplos de itens compostos, regras de segurança e `PROMPT_VERSION`. Validação de origem e payload (≤ 1 MB, JPEG); timeout de 20 s; 1 retry; logs sem imagem.
   - **Aceite:** testes com cliente mockado cobrem 400/403/413/502/504 e o retry; uma chamada real via `vercel dev` com uma foto de pilha devolve `pilhas_baterias`.
   - **Verificar:** `npm test -- api/scan`; `curl` local com uma imagem de teste

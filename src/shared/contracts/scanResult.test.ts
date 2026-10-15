@@ -34,6 +34,16 @@ describe('ScanResultSchema', () => {
     );
   });
 
+  it('aceita acentos, números, pontuação e emoji', () => {
+    const text = 'Lâmpada fluorescente: leve ao ponto de coleta (não quebre!) — 100% ♻️';
+    expect(ScanResultSchema.safeParse({ ...battery, disposal: text }).success).toBe(true);
+  });
+
+  it('rejeita texto com outra escrita misturada (ex.: árabe)', () => {
+    const mixed = 'Ela tem مواد químicas internas.';
+    expect(ScanResultSchema.safeParse({ ...battery, categoryReason: mixed }).success).toBe(false);
+  });
+
   it('rejeita categoria fora do catálogo e confiança inválida', () => {
     expect(ScanResultSchema.safeParse({ ...battery, category: 'lixo' }).success).toBe(false);
     expect(ScanResultSchema.safeParse({ ...battery, confidence: 'total' }).success).toBe(false);
