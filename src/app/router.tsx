@@ -15,7 +15,9 @@ export function createRoutes(): RouteObject[] {
         { index: true, Component: HomeScreen },
         {
           path: 'escanear',
-          lazy: { Component: async () => (await placeholders()).ScanPlaceholder },
+          lazy: {
+            Component: async () => (await import('./CameraTestScreen')).CameraTestScreen,
+          },
         },
         {
           path: 'descartar',

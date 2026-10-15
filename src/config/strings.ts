@@ -28,5 +28,19 @@ export const strings = {
     title: 'Minha carteira',
     speech: 'Aqui você vê seu nível, seus pontos e suas moedas.',
   },
+  camera: {
+    open: 'Abrir câmera',
+    opening: 'Abrindo a câmera…',
+    capture: 'Tirar foto',
+    upload: 'Enviar foto',
+    denied: 'Sem permissão para usar a câmera. Você pode enviar uma foto.',
+    unavailable: 'Não encontramos uma câmera. Você pode enviar uma foto.',
+    invalidImage: 'Não consegui abrir essa imagem. Tente outra foto.',
+    processing: 'Preparando a foto…',
+  },
+  cameraTest: {
+    result: 'Foto pronta',
+    again: 'Tirar outra',
+  },
   placeholder: 'Em construção.',
 } as const;

@@ -1,5 +1,5 @@
-// Telas provisórias, carregadas sob demanda. Os módulos scanner e rewards
-// substituem cada uma nas próximas fases.
+// Telas provisórias, carregadas sob demanda. O módulo rewards substitui
+// cada uma na fase 3.
 import { strings } from '@/config/strings';
 import { useScreen } from '@/shared/lib/screen';
 
@@ -12,10 +12,6 @@ function Placeholder({ title, speech }: { title: string; speech: string }) {
       <p>{strings.placeholder}</p>
     </div>
   );
-}
-
-export function ScanPlaceholder() {
-  return <Placeholder {...strings.scan} />;
 }
 
 export function DiscardPlaceholder() {

@@ -18,7 +18,18 @@ export default defineConfig({
     // a navegação instável. O PWA é validado pelo Lighthouse no Checkpoint A.
     serviceWorkers: 'block',
   },
-  projects: [{ name: 'mobile-chrome', use: { ...devices['Pixel 5'] } }],
+  projects: [
+    {
+      name: 'mobile-chrome',
+      use: {
+        ...devices['Pixel 5'],
+        // Câmera falsa do Chromium. Sem o fake-ui, o getUserMedia falha com NotSupportedError.
+        launchOptions: {
+          args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'],
+        },
+      },
+    },
+  ],
   webServer: {
     command: `npm run build && npm run preview -- --port ${PORT} --strictPort`,
     url: `http://localhost:${PORT}`,
