@@ -2,15 +2,27 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { strings } from '@/config/strings';
+import { ScreenProvider, useCurrentScreen } from '@/shared/lib/screen';
 import { HomeScreen } from './HomeScreen';
+
+function SpeechSpy() {
+  return <output data-testid="speech">{useCurrentScreen().speech}</output>;
+}
+
+function renderHome() {
+  render(
+    <MemoryRouter>
+      <ScreenProvider>
+        <HomeScreen />
+        <SpeechSpy />
+      </ScreenProvider>
+    </MemoryRouter>,
+  );
+}
 
 describe('HomeScreen', () => {
   it('mostra os 3 botões com rótulo acessível, destino e cor', () => {
-    render(
-      <MemoryRouter>
-        <HomeScreen />
-      </MemoryRouter>,
-    );
+    renderHome();
 
     const expected = [
       { label: strings.home.actions.scan, href: '/escanear', color: 'green' },
@@ -25,5 +37,11 @@ describe('HomeScreen', () => {
       expect(link).toHaveClass(`big-action--${color}`);
       expect(link.querySelector('svg')).not.toBeNull();
     }
+  });
+
+  it('registra a fala da Home para o módulo voice', () => {
+    renderHome();
+
+    expect(screen.getByTestId('speech')).toHaveTextContent(strings.home.speech);
   });
 });

@@ -34,7 +34,7 @@
   - **Arquivos:** `src/app/router.tsx`, `src/app/Layout.tsx`, `src/app/HomeScreen.tsx`, `src/shared/ui/BigActionButton.tsx`, `src/config/strings.ts` (+ `src/styles/tokens.css`, `tests/e2e/smoke.spec.ts`)
   - Inclui os ícones PNG do PWA (192px, 512px e maskable): o manifest da T1 só tem o `favicon.svg`, e o Lighthouse exige PNG para considerar o app instalável.
 
-- [ ] **T5: `ScreenContext` + `useScreen`** · S · deps: T4
+- [x] **T5: `ScreenContext` + `useScreen`** · S · deps: T4
   - Provider no Layout; `useScreen({ speech, actions })` registra e limpa ao desmontar; `useCurrentScreen()`. A Home registra a fala dela.
   - **Aceite:** trocar de rota troca o `speech`/`actions` atual; desmontar limpa as ações.
   - **Verificar:** `npm test -- src/shared/lib/screen`

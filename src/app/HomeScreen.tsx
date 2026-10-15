@@ -1,9 +1,11 @@
 import { strings } from '@/config/strings';
+import { useScreen } from '@/shared/lib/screen';
 import { BigActionButton } from '@/shared/ui/BigActionButton';
 import { CameraIcon, QrIcon, WalletIcon } from '@/shared/ui/icons';
 
 export function HomeScreen() {
-  const { title, subtitle, actions } = strings.home;
+  const { title, subtitle, actions, speech } = strings.home;
+  useScreen({ speech });
 
   return (
     <div className="home">

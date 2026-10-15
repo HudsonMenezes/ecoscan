@@ -1,8 +1,11 @@
 // Telas provisórias, carregadas sob demanda. Os módulos scanner e rewards
 // substituem cada uma nas próximas fases.
 import { strings } from '@/config/strings';
+import { useScreen } from '@/shared/lib/screen';
 
-function Placeholder({ title }: { title: string }) {
+function Placeholder({ title, speech }: { title: string; speech: string }) {
+  useScreen({ speech });
+
   return (
     <div className="placeholder">
       <h1>{title}</h1>
@@ -12,13 +15,13 @@ function Placeholder({ title }: { title: string }) {
 }
 
 export function ScanPlaceholder() {
-  return <Placeholder title={strings.scan.title} />;
+  return <Placeholder {...strings.scan} />;
 }
 
 export function DiscardPlaceholder() {
-  return <Placeholder title={strings.discard.title} />;
+  return <Placeholder {...strings.discard} />;
 }
 
 export function WalletPlaceholder() {
-  return <Placeholder title={strings.wallet.title} />;
+  return <Placeholder {...strings.wallet} />;
 }

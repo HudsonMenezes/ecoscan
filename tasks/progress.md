@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 1, Fundação (`app-shell`)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), P2 (CI)
-- **Próxima:** **T5: `ScreenContext` + `useScreen`** (ver [`todo.md`](todo.md)). As falas de cada tela já estão em `src/config/strings.ts`.
-- **Depois:** T6 (câmera; precisa de teste no celular real) → T6b (experiência no computador) → **Checkpoint A** (revisão com o Hudson)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), P2 (CI)
+- **Próxima:** **T6: `useCamera` + captura sem EXIF + fallback de upload** (ver [`todo.md`](todo.md)). Precisa de teste manual no celular real e na webcam.
+- **Depois:** T6b (experiência no computador) → **Checkpoint A** (revisão com o Hudson)
 
 ## Como retomar
 
@@ -38,3 +38,4 @@
 - O Prettier formata também os `.md` (as tabelas ficam alinhadas). Rodar `npm run format` antes de commitar, porque a CI checa.
 - **Rotas:** `createRoutes()` é uma fábrica de propósito. O React Router modifica os objetos `lazy` ao resolvê-los, e reaproveitar o mesmo array em dois routers (por exemplo, entre testes) gera 404 no carregamento direto da rota.
 - **Ícones do PWA:** `npm run icons` gera o `favicon.svg` e os PNGs em `public/` (rasterizados com o Chromium do Playwright, sem dependência nova). Para mudar o desenho, editar `scripts/generate-icons.ts` e rodar de novo.
+- **`useScreen`:** pode receber um array de ações novo a cada render. Ele só registra de novo quando a fala ou os pares id/rótulo mudam, e o `run` registrado sempre chama o callback mais recente. Fora do `ScreenProvider` (por exemplo, em testes de componente de uma tela) ele não faz nada.
