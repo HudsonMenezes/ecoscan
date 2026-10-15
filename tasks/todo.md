@@ -55,9 +55,9 @@
 
 ### ✅ Checkpoint A: app-shell
 
-- [ ] Todos os critérios de sucesso da [SPEC-app-shell](../docs/SPEC-app-shell.md#critérios-de-sucesso), exceto rate limit e budget (ficam para P1)
-- [ ] Lighthouse no deploy: instalável, Acessibilidade ≥ 95
-- [ ] `grep -r "sk-" dist/` vazio
+- [x] Todos os critérios de sucesso da [SPEC-app-shell](../docs/SPEC-app-shell.md#critérios-de-sucesso), exceto rate limit e budget (ficam para P1)
+- [x] Lighthouse no deploy: instalável, Acessibilidade ≥ 95 (2026-10-15: Acessibilidade 100, Boas práticas 100, Performance 99–100 nas 4 rotas; instalabilidade via CDP `Page.getInstallabilityErrors` sem erros, porque o Lighthouse 12 não tem mais a categoria PWA)
+- [x] `grep -r "sk-" dist/` vazio (o literal acha `mask-type` do React DOM; o padrão de chave real `sk-[A-Za-z0-9_-]{20,}` volta vazio; a P1 automatiza isso com esse padrão)
 - [ ] **Revisão com você antes de seguir**
 
 ---

@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 1, Fundação (`app-shell`)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), P2 (CI)
-- **Em andamento:** **T6b: experiência no computador.** Código, testes e E2E prontos e no ar; **falta o Hudson ler o QR do banner com o celular**. Depois, marcar a T6b no `todo.md`.
-- **Depois:** **Checkpoint A** (revisão com o Hudson)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), P2 (CI)
+- **Em andamento:** **Checkpoint A** (revisão da fase 1 com o Hudson). Verificações automáticas feitas em 2026-10-15; falta a aprovação dele.
+- **Depois:** Fase 2 (scanner), começando pela T7. A T9 (eval) é o maior risco do projeto.
 
 ## Como retomar
 
