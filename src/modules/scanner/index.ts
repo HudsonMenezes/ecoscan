@@ -4,3 +4,4 @@ export { CATEGORIES, CATEGORY_LIST } from './model/categories';
 export type { CategoryInfo } from './model/categories';
 export { getLastScan } from './model/lastScan';
 export type { LastScan } from './model/lastScan';
+export { ScanScreen } from './components/ScanScreen';

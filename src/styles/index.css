@@ -145,6 +145,15 @@ body {
   color: var(--color-green-text);
 }
 
+.action-button--blue {
+  background: var(--color-blue);
+  color: var(--color-blue-text);
+}
+
+a.action-button {
+  text-decoration: none;
+}
+
 .action-button--secondary {
   background: var(--color-bg);
   color: var(--color-green);
@@ -338,6 +347,112 @@ body {
   background: #e3e8e5;
 }
 
+/* Scanner */
+.scan-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  font-size: var(--font-size-lg);
+}
+
+.scan-loading__spinner {
+  width: 64px;
+  height: 64px;
+  border: 6px solid var(--color-surface);
+  border-top-color: var(--color-green);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scan-error,
+.retry-hint {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.retry-hint {
+  align-items: center;
+  text-align: center;
+}
+
+.retry-hint h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.retry-hint ul {
+  margin: 0;
+  padding-left: var(--space-3);
+  text-align: left;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.result-card__category {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius);
+}
+
+.result-card__category p {
+  margin: 0;
+}
+
+.result-card__label {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.result-card__item {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.result-card__item:focus {
+  outline: none;
+}
+
+.result-card__section h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.result-card__section p {
+  margin: 0;
+}
+
+.result-card__why {
+  padding: var(--space-2);
+  border-left: 6px solid var(--color-amber);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+}
+
+.result-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
 /* Telas provisórias */
 .placeholder h1 {
   margin-top: 0;
@@ -347,5 +462,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .big-action {
     transition: none;
+  }
+
+  .scan-loading__spinner {
+    animation: none;
   }
 }

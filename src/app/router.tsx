@@ -16,7 +16,7 @@ export function createRoutes(): RouteObject[] {
         {
           path: 'escanear',
           lazy: {
-            Component: async () => (await import('./CameraTestScreen')).CameraTestScreen,
+            Component: async () => (await import('@/modules/scanner')).ScanScreen,
           },
         },
         {

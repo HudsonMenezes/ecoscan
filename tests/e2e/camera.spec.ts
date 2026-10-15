@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { BATTERY_RESULT, hasExif, interceptScan, jpegSize } from './helpers/scan.ts';
 
 // Segmento APP1 com EXIF mínimo: só a tag Orientation = 6 (girar 90° no sentido horário).
 function exifOrientation6() {
@@ -40,17 +41,11 @@ async function bigJpegWithExif(page: Page, width: number, height: number) {
   return Buffer.concat([jpeg.subarray(0, 2), exifOrientation6(), jpeg.subarray(2)]);
 }
 
-async function previewBytes(page: Page) {
-  return page.getByRole('img').evaluate(async (img: HTMLImageElement) => {
-    const buffer = await (await fetch(img.src)).arrayBuffer();
-    return Array.from(new Uint8Array(buffer));
-  });
-}
-
 test.describe('câmera', () => {
   test.use({ permissions: ['camera'] });
 
-  test('abre a câmera só no toque, captura e gera um JPEG', async ({ page }) => {
+  test('abre a câmera só no toque, captura e envia um JPEG ≤ 1024px', async ({ page }) => {
+    const photos = await interceptScan(page);
     await page.goto('/escanear');
     await expect(page.locator('video')).toHaveCount(0);
 
@@ -59,14 +54,15 @@ test.describe('câmera', () => {
     await page.waitForFunction(() => document.querySelector('video')!.videoWidth > 0);
     await page.getByRole('button', { name: 'Tirar foto' }).click();
 
+    await expect(page.getByRole('heading', { name: BATTERY_RESULT.itemName })).toBeVisible();
     // A câmera falsa entrega 640x480 ou 1920x1080 (pedimos 1080p como ideal).
-    const info = page.getByTestId('photo-info');
-    await expect(info).toContainText(/\d+×\d+ · .* · image\/jpeg/);
-    const [, width, height] = /(\d+)×(\d+)/.exec((await info.textContent()) ?? '')!;
-    expect(Math.max(Number(width), Number(height))).toBeLessThanOrEqual(1024);
+    expect(photos).toHaveLength(1);
+    const { width, height } = jpegSize(photos[0]!);
+    expect(Math.max(width, height)).toBeLessThanOrEqual(1024);
   });
 
   test('upload: aplica a orientação, reduz para ≤ 1024px e remove o EXIF', async ({ page }) => {
+    const photos = await interceptScan(page);
     await page.goto('/escanear');
     const original = await bigJpegWithExif(page, 3000, 2000);
     expect(original.includes(Buffer.from('Exif\0\0', 'binary'))).toBe(true);
@@ -77,11 +73,12 @@ test.describe('câmera', () => {
       buffer: original,
     });
 
+    await expect(page.getByRole('heading', { name: BATTERY_RESULT.itemName })).toBeVisible();
     // 3000x2000 deitado + Orientation 6 → em pé, reduzido para 683x1024.
-    await expect(page.getByTestId('photo-info')).toContainText('683×1024');
-    const result = Buffer.from(await previewBytes(page));
-    expect(result.includes(Buffer.from('Exif', 'binary'))).toBe(false);
-    expect(result.length).toBeLessThanOrEqual(900_000);
+    const sent = photos[0]!;
+    expect(jpegSize(sent)).toEqual({ width: 683, height: 1024 });
+    expect(hasExif(sent)).toBe(false);
+    expect(sent.length).toBeLessThanOrEqual(900_000);
   });
 });
 

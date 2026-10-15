@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useImperativeHandle, useState } from 'react';
 import { strings } from '@/config/strings';
 import { resizeImageFile, useCamera, useHasCamera } from '@/shared/lib/camera';
 import { useIsDesktop } from '@/shared/lib/useMediaQuery';
 import { CameraIcon } from './icons';
 import { ImageDropZone } from './ImageDropZone';
 
+// Controle para quem está fora da câmera (ex.: comando de voz "capturar"):
+// tira a foto se a câmera estiver aberta, ou abre a câmera se ainda estiver parada.
+export type CameraControl = { capture: () => void };
+
 type CameraViewProps = {
   // Recebe sempre um JPEG ≤ 1024px e sem EXIF, venha da câmera ou do upload.
   onCapture: (photo: Blob) => void;
+  controlRef?: React.Ref<CameraControl>;
 };
 
-export function CameraView({ onCapture }: CameraViewProps) {
+export function CameraView({ onCapture, controlRef }: CameraViewProps) {
   const { state, videoRef, start, capture } = useCamera();
   const isDesktop = useIsDesktop();
   const hasCamera = useHasCamera();
@@ -28,6 +33,14 @@ export function CameraView({ onCapture }: CameraViewProps) {
       setBusy(false);
     }
   }
+
+  useImperativeHandle(controlRef, () => ({
+    capture: () => {
+      if (busy) return;
+      if (state.status === 'ready') void deliver(capture);
+      else if (state.status === 'idle') void start();
+    },
+  }));
 
   function handleFile(file: File) {
     if (!file.type.startsWith('image/')) {

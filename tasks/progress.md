@@ -7,7 +7,7 @@
 
 - **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
 - **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), P2 (CI)
-- **Próxima:** **T11: telas do scanner** (ScanScreen, ResultCard, RetryHint). Precisa de teste manual do Hudson no celular.
+- **Em andamento:** **T11: telas do scanner.** Código, testes e E2E prontos e no ar; **falta o teste manual do Hudson** (escanear uma pilha real no celular e um objeto pelo computador). Depois, marcar a T11 no `todo.md`.
 - **Depois:** T12 (orientação local de Duque de Caxias + E2E) → **Checkpoint B**
 
 ## Como retomar
@@ -48,3 +48,4 @@
 - **Qualidade da IA:** numa chamada real, o modelo misturou uma palavra em árabe no texto. O contrato agora só aceita escrita latina, e a resposta reprovada aciona o retry.
 - **Eval do scanner (T9):** `npm run eval:scanner` usa `http://localhost:3000` (`npx vercel dev`) por padrão; passe a URL de produção como argumento. Custa ~US$ 0,10 por rodada. O modelo varia entre rodadas: ao mudar o prompt, rode **pelo menos 2 vezes**. Prompt atual `scan-v4`; ponto fraco conhecido: lenço de papel usado às vezes vira `papel` (não perigoso). As imagens do Commons precisam ser CC0, domínio público ou CC BY; **CC BY-SA não serve**.
 - **Log do `/api/scan`:** traz `rejections` (campo e código do Zod, `json`, `output:...`, `api:...`) para diagnosticar os 502 raros (~1% no eval).
+- **ScanScreen e o comando de voz "capturar":** o `CameraView` expõe `controlRef` (`useImperativeHandle`). A linha que monta a fala da tela tem um `eslint-disable-next-line react-hooks/refs` justificado, porque a regra não distingue "passar uma função que lê o ref" de "ler o ref no render". E2E de câmera/upload intercepta `/api/scan` e confere a foto enviada (tamanho e EXIF) com `tests/e2e/helpers/scan.ts`.

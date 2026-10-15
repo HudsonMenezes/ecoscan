@@ -56,9 +56,26 @@ export const strings = {
     timeout: 'Demorou demais para analisar. Tente de novo.',
     unavailable: 'Não consegui analisar a foto agora. Tente de novo.',
   },
-  cameraTest: {
-    result: 'Foto pronta',
-    again: 'Tirar outra',
+  scanner: {
+    loading: 'Analisando a foto…',
+    loadingSpeech: 'Estou analisando a foto. Espere um pouquinho.',
+    bin: (color: string) => `Lixeira ${color}`,
+    howTo: 'Como descartar',
+    why: 'Por que aqui?',
+    consequence: 'Se descartar errado',
+    discard: 'Descartar',
+    scanAgain: 'Escanear outro',
+    tryAgain: 'Tentar de novo',
+    newPhoto: 'Tirar outra foto',
+    capture: 'Capturar',
+    retryTitle: 'Não consegui identificar o objeto',
+    retryTips: [
+      'Procure um lugar com mais luz.',
+      'Deixe só o objeto na foto, sem outras coisas em volta.',
+      'Chegue mais perto, com o objeto inteiro aparecendo.',
+    ],
+    retrySpeech:
+      'Não consegui identificar o objeto. Tente de novo num lugar com mais luz, com só o objeto na foto.',
   },
   placeholder: 'Em construção.',
 } as const;

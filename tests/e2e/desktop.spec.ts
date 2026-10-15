@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { BATTERY_RESULT, interceptScan, jpegSize } from './helpers/scan.ts';
 
 test.describe('computador', () => {
   test.use({
@@ -39,7 +40,8 @@ test.describe('computador', () => {
     await expect(page.locator('video')).toHaveClass(/camera__video--mirrored/);
   });
 
-  test('arrastar e soltar uma foto gera o JPEG reduzido', async ({ page }) => {
+  test('arrastar e soltar uma foto envia o JPEG reduzido', async ({ page }) => {
+    const photos = await interceptScan(page);
     await page.goto('/escanear');
 
     const dataTransfer = await page.evaluateHandle(async () => {
@@ -58,8 +60,8 @@ test.describe('computador', () => {
     await zone.dispatchEvent('dragover', { dataTransfer });
     await zone.dispatchEvent('drop', { dataTransfer });
 
-    await expect(page.getByTestId('photo-info')).toContainText('1024×768');
-    await expect(page.getByTestId('photo-info')).toContainText('image/jpeg');
+    await expect(page.getByRole('heading', { name: BATTERY_RESULT.itemName })).toBeVisible();
+    expect(jpegSize(photos[0]!)).toEqual({ width: 1024, height: 768 });
   });
 });
 
