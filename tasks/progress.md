@@ -7,7 +7,7 @@
 
 - **Fase atual:** U1 (nova identidade visual) concluída no código em 2026-10-15; falta a revisão do Hudson no celular. Depois: 3b (Voice) e o Checkpoint C.
 - **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; falta o teste manual num Android e num iPhone), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI)
-- **Próxima:** **V1** (fase 3b, Voice; ver [`todo.md`](todo.md) e [`docs/SPEC-voice.md`](../docs/SPEC-voice.md)). Pendente do Hudson: imprimir `print/qr-escola-demo.html` (ou abrir o PNG em outra tela) e ler o QR pelo leitor do app num Android **e** num iPhone, e também pela câmera nativa (aceites da R4 e da R5).
+- **Próxima:** **V1** (fase 3b, Voice; ver [`todo.md`](todo.md) e [`docs/SPEC-voice.md`](../docs/SPEC-voice.md)). Pendente do Hudson: (1) revisar o novo visual (U1) no celular e pedir ajustes, se houver; (2) imprimir `print/qr-escola-demo.html` (ou abrir o PNG em outra tela) e ler o QR pelo leitor do app num Android **e** num iPhone, e também pela câmera nativa (aceites da R4 e da R5). Se a revisão da U1 trouxer ajustes, fazer antes da V1.
 
 ## Como retomar
 
