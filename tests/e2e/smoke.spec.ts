@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 
+const HOME_LINK = 'EcoScan, voltar para o início';
 const routes = [
-  { button: 'Escanear', path: '/escanear', heading: 'Escanear' },
-  { button: 'Descartar', path: '/descartar', heading: 'Descartar' },
-  { button: 'Carteira', path: '/carteira', heading: 'Minha carteira' },
+  // O scanner ocupa a tela inteira e tem o próprio botão de voltar.
+  { button: 'Escanear', path: '/escanear', heading: 'Escanear', back: 'Voltar para o início' },
+  { button: 'Descartar', path: '/descartar', heading: 'Descartar', back: HOME_LINK },
+  { button: 'Carteira', path: '/carteira', heading: 'Minha carteira', back: HOME_LINK },
 ];
 const ACTIONS = ['Escanear objeto', 'Descartar no ponto', 'Minha carteira'];
 
@@ -34,7 +36,7 @@ test('a home mostra as 3 ações e a barra inferior, sem scroll horizontal em 36
   expect(overflow).toBe(0);
 });
 
-for (const { button, path, heading } of routes) {
+for (const { button, path, heading, back } of routes) {
   test(`navega pela barra inferior até ${path} e volta`, async ({ page }) => {
     await page.goto('/');
     await page
@@ -45,7 +47,7 @@ for (const { button, path, heading } of routes) {
     await expect(page).toHaveURL(path);
     await expect(page.getByRole('heading', { name: heading })).toBeVisible();
 
-    await page.getByRole('link', { name: 'EcoScan, voltar para o início' }).click();
+    await page.getByRole('link', { name: back }).click();
     await expect(page).toHaveURL('/');
   });
 }

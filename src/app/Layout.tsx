@@ -5,8 +5,8 @@ import { LeafIcon } from '@/shared/ui/icons';
 import { BottomNav } from './BottomNav';
 import { DesktopHint } from './DesktopHint';
 
-// Telas que ocupam a tela inteira, com a própria barra de ações (o scanner, na U1c).
-const FULL_SCREEN: string[] = [];
+// O scanner ocupa a tela inteira e tem a própria barra superior e de ações.
+const FULL_SCREEN = ['/escanear'];
 
 export function Layout() {
   const fullScreen = FULL_SCREEN.includes(useLocation().pathname);
@@ -28,7 +28,7 @@ export function Layout() {
             </Link>
           </header>
         )}
-        <DesktopHint />
+        {!fullScreen && <DesktopHint />}
         <main className="layout__main">
           <Outlet />
         </main>

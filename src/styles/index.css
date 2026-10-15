@@ -503,16 +503,23 @@ a.action-button {
   gap: var(--space-2);
 }
 
-.camera__preview {
+.camera__preview,
+.camera__placeholder {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius);
-  background: #000;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(120% 80% at 50% 40%, #3a4a3f 0%, #18221b 60%, #0f1712 100%);
+}
+
+.camera__placeholder {
+  aspect-ratio: 4 / 5;
+  max-height: 52dvh;
 }
 
 .camera__video {
   display: block;
   width: 100%;
+  aspect-ratio: 4 / 5; /* vertical, como no canvas; a foto enviada usa o quadro original */
   max-height: 65dvh;
   object-fit: cover;
 }
@@ -522,6 +529,71 @@ a.action-button {
   transform: scaleX(-1);
 }
 
+/* Cantos de mira (verde-broto) */
+.camera__viewfinder {
+  position: absolute;
+  inset: 12% 14% 22%;
+  pointer-events: none;
+}
+
+.camera__viewfinder span {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  border: 5px solid var(--color-accent);
+}
+
+.camera__viewfinder span:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 1.5rem;
+}
+
+.camera__viewfinder span:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-top-right-radius: 1.5rem;
+}
+
+.camera__viewfinder span:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom-left-radius: 1.5rem;
+}
+
+.camera__viewfinder span:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-top: 0;
+  border-left: 0;
+  border-bottom-right-radius: 1.5rem;
+}
+
+.camera__placeholder .camera__viewfinder {
+  inset: 14%;
+}
+
+.camera__hint {
+  position: absolute;
+  top: var(--space-2);
+  left: 50%;
+  margin: 0;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(15 23 18 / 72%);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
 .camera__shutter {
   position: absolute;
   bottom: var(--space-2);
@@ -529,12 +601,13 @@ a.action-button {
   transform: translateX(-50%);
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
-  border: 4px solid var(--color-green);
+  width: 5rem;
+  height: 5rem;
+  border: 5px solid #fff;
   border-radius: 50%;
-  background: var(--color-bg);
-  color: var(--color-green);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  box-shadow: 0 0 0 6px rgb(184 224 74 / 25%);
   cursor: pointer;
 }
 
@@ -542,7 +615,7 @@ a.action-button {
   margin: 0;
   padding: var(--space-2);
   border-radius: var(--radius);
-  background: var(--color-surface);
+  background: var(--color-sand);
 }
 
 .photo-preview {
@@ -663,20 +736,87 @@ a.action-button {
 }
 
 /* Scanner */
+.scan-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: var(--content-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-2) 10rem;
+}
+
+/* Câmera e análise: tela escura, como um app de câmera. */
+.scan-screen--dark {
+  max-width: none;
+  background: #0f1712;
+  color: #fff;
+}
+
+.scan-screen--dark > * {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+
+.scan-screen--dark .action-button--secondary,
+.scan-screen--dark .dropzone {
+  border-color: rgb(255 255 255 / 50%);
+  background: transparent;
+  color: #fff;
+}
+
+.scan-screen--dark .camera__message,
+.scan-screen--dark .dropzone__hint {
+  background: rgb(255 255 255 / 10%);
+  color: #e3f1e8;
+}
+
+.scan-screen__bar {
+  display: grid;
+  grid-template-columns: var(--touch-target) 1fr var(--touch-target);
+  align-items: center;
+}
+
+.scan-screen__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  text-align: center;
+}
+
+.round-button {
+  display: grid;
+  place-items: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-card);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.scan-screen--dark .round-button {
+  border-color: transparent;
+  background: rgb(255 255 255 / 14%);
+  color: #fff;
+}
+
 .scan-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-3) 0;
+  padding: 4rem 0;
   font-size: var(--font-size-lg);
 }
 
 .scan-loading__spinner {
   width: 64px;
   height: 64px;
-  border: 6px solid var(--color-surface);
-  border-top-color: var(--color-green);
+  border: 6px solid rgb(255 255 255 / 15%);
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -696,7 +836,11 @@ a.action-button {
 
 .retry-hint {
   align-items: center;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
   text-align: center;
+  box-shadow: var(--shadow-card);
 }
 
 .retry-hint h2 {
@@ -713,82 +857,175 @@ a.action-button {
 .result-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.875rem;
 }
 
 .result-card__category {
+  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-2);
-  border-radius: var(--radius);
+  overflow: hidden;
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Círculo decorativo claro, como no canvas. */
+.result-card__category::before {
+  content: '';
+  position: absolute;
+  right: -2rem;
+  bottom: -3rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 8%);
+}
+
+.result-card__category > * {
+  position: relative;
 }
 
 .result-card__category p {
   margin: 0;
 }
 
-.result-card__label {
-  font-size: var(--font-size-xl);
+.result-card__tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.result-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 20%);
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  line-height: 1.2;
+}
+
+.result-card__composite {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.result-card__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.result-card__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 1.25rem;
+  background: #fff;
+}
+
+.result-card__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.9;
 }
 
 .result-card__item {
-  margin: 0;
-  font-size: var(--font-size-lg);
+  margin: 0.125rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 800;
 }
 
 .result-card__item:focus {
   outline: none;
 }
 
+.result-card__destination {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 1rem;
+  background: rgb(0 0 0 / 18%);
+  font-weight: 700;
+}
+
+.result-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .result-card__section h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .result-card__section p {
   margin: 0;
+  color: var(--color-text-soft);
+  line-height: 1.5;
 }
 
-.result-card__why {
-  padding: var(--space-2);
-  border-left: 6px solid var(--color-amber);
-  border-radius: 0.5rem;
-  background: var(--color-surface);
+.icon-badge--blue {
+  background: var(--color-blue-soft);
+  color: var(--color-blue);
 }
 
-/* Alerta: o que acontece se descartar errado. */
+.icon-badge--amber {
+  background: var(--color-amber-soft);
+  color: var(--color-amber-ink);
+}
+
+.icon-badge--red {
+  background: var(--color-red);
+  color: #fff;
+}
+
+.icon-badge--forest {
+  background: var(--color-green);
+  color: var(--color-accent);
+}
+
+/* Alerta: o que acontece se descartar errado (vermelho, aprovado pelo Hudson). */
 .result-card__consequence {
   padding: var(--space-2);
-  border-left: 6px solid var(--color-red);
-  border-radius: 0.5rem;
+  border: 1px solid var(--color-red-border);
+  border-radius: var(--radius-lg);
   background: var(--color-red-surface);
 }
 
 .result-card__consequence h3 {
-  color: var(--color-red);
+  color: var(--color-red-ink);
+}
+
+.result-card__consequence p {
+  color: #4a1c1a;
 }
 
 .result-card__benefit {
   padding: var(--space-2);
-  border-left: 6px solid var(--color-green);
-  border-radius: 0.5rem;
-  background: #e2f1e6;
+  border-radius: var(--radius-lg);
+  background: var(--color-green-soft);
 }
 
-.result-card__local {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: var(--space-2);
-  border-left: 6px solid var(--color-blue);
-  border-radius: 0.5rem;
-  background: var(--color-surface);
+.result-card__benefit h3 {
+  color: var(--color-green);
+}
+
+.result-card__benefit p {
+  color: #1e3a2a;
 }
 
 .result-card__local a {
@@ -809,6 +1046,53 @@ a.action-button {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+}
+
+/* Barra fixa do resultado: "Descartar no ponto" + "Escanear outro".
+   Em telas estreitas a ação principal ocupa a largura toda; a partir de 420px ficam lado a lado. */
+.result-card__actions--sticky {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  flex-direction: column;
+  gap: 0.375rem;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0.75rem var(--space-2) calc(0.75rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--color-card);
+  box-shadow: 0 -8px 24px rgb(23 32 27 / 8%);
+}
+
+.result-card__actions--sticky .action-button--green {
+  order: -1;
+  white-space: nowrap;
+}
+
+.result-card__actions--sticky .action-button--secondary {
+  min-height: 2.75rem;
+  border-color: transparent;
+}
+
+@media (min-width: 420px) {
+  .result-card__actions--sticky {
+    flex-direction: row;
+    gap: var(--space-1);
+  }
+
+  .result-card__actions--sticky .action-button--green {
+    order: 0;
+  }
+
+  .result-card__actions--sticky .action-button--secondary {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 3.25rem;
+    border-color: var(--color-green);
+  }
 }
 
 /* Carteira */

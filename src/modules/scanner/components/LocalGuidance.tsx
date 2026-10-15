@@ -1,5 +1,6 @@
 import { strings } from '@/config/strings';
 import type { Category } from '@/shared/contracts';
+import { MapPinIcon } from '@/shared/ui/icons';
 import { LOCALE, getLocalGuidance } from '../model/localGuidance';
 
 // "dd/mm/aaaa" sem passar por Date, para não depender do fuso do aparelho.
@@ -11,8 +12,13 @@ export function LocalGuidance({ category }: { category: Category }) {
   if (!guidance) return null;
 
   return (
-    <section className="result-card__section result-card__local" data-testid="local-guidance">
-      <h3>{strings.scanner.localTitle(LOCALE.city)}</h3>
+    <section className="card result-card__section result-card__local" data-testid="local-guidance">
+      <h3>
+        <span className="icon-badge icon-badge--blue" aria-hidden="true">
+          <MapPinIcon size={20} />
+        </span>
+        {strings.scanner.localTitle(LOCALE.city)}
+      </h3>
       <p>{guidance.text}</p>
       {guidance.link && (
         <p>

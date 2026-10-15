@@ -9,6 +9,18 @@ import { ImageDropZone } from './ImageDropZone';
 // tira a foto se a câmera estiver aberta, ou abre a câmera se ainda estiver parada.
 export type CameraControl = { capture: () => void };
 
+// Cantos de mira sobre a imagem: só guiam o enquadramento.
+function Viewfinder() {
+  return (
+    <div className="camera__viewfinder" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  );
+}
+
 type CameraViewProps = {
   // Recebe sempre um JPEG ≤ 1024px e sem EXIF, venha da câmera ou do upload.
   onCapture: (photo: Blob) => void;
@@ -72,6 +84,8 @@ export function CameraView({ onCapture, controlRef }: CameraViewProps) {
             muted
             playsInline
           />
+          <Viewfinder />
+          <p className="camera__hint">{strings.camera.frameHint}</p>
           <button
             type="button"
             className="camera__shutter"
@@ -85,9 +99,15 @@ export function CameraView({ onCapture, controlRef }: CameraViewProps) {
       )}
 
       {(state.status === 'idle' || state.status === 'requesting') && (
+        <div className="camera__placeholder" aria-hidden="true">
+          <Viewfinder />
+        </div>
+      )}
+
+      {(state.status === 'idle' || state.status === 'requesting') && (
         <button
           type="button"
-          className="action-button action-button--green"
+          className="action-button action-button--accent"
           disabled={state.status === 'requesting'}
           onClick={() => void start()}
         >
