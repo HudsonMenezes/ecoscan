@@ -94,7 +94,7 @@
   - **Verificar:** testes de componente; **manual:** escanear uma pilha real pelo celular e um objeto pela webcam do computador (layout lado a lado da T6b mantido)
   - **Arquivos:** `src/modules/scanner/components/ScanScreen.tsx`, `ResultCard.tsx`, `RetryHint.tsx`, `*.test.tsx`
 
-- [ ] **T12: Orientação local de Duque de Caxias + E2E do scanner** · M · deps: T11
+- [x] **T12: Orientação local de Duque de Caxias + E2E do scanner** · M · deps: T11
   - Pesquisar fontes **oficiais** (prefeitura, programas de logística reversa) e preencher `localGuidance.ts` com URL e data de verificação; bloco "Em Duque de Caxias" no ResultCard. E2E: câmera falsa + `/api/scan` interceptado → ResultCard com a cor certa → Descartar leva a `/descartar`.
   - **Aceite:** toda entrada tem fonte e data; categorias sem fonte não mostram o bloco; E2E verde.
   - **Verificar:** `npm run test:e2e -- scanner`; revisar as fontes listadas no commit

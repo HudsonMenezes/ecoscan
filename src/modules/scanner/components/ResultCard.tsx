@@ -4,6 +4,7 @@ import { strings } from '@/config/strings';
 import type { ScanResult } from '@/shared/contracts';
 import { CATEGORIES } from '../model/categories';
 import { CategoryIcon } from './CategoryIcon';
+import { LocalGuidance } from './LocalGuidance';
 
 // Texto da IA sempre como texto puro (nada de HTML).
 export function ResultCard({
@@ -45,6 +46,8 @@ export function ResultCard({
         <h3>{strings.scanner.howTo}</h3>
         <p>{result.disposal}</p>
       </section>
+
+      <LocalGuidance category={result.category} />
 
       <section className="result-card__section result-card__why">
         <h3>{info.whyTitle}</h3>

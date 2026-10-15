@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { strings } from '@/config/strings';
 import type { ScanResult } from '@/shared/contracts';
 import { CATEGORIES } from '../model/categories';
+import { LOCAL_GUIDANCE } from '../model/localGuidance';
 import { ResultCard } from './ResultCard';
 
 const carton: ScanResult = {
@@ -68,6 +69,34 @@ describe('ResultCard', () => {
 
     expect(screen.getByText(CATEGORIES.pilhas_baterias.destination)).toBeInTheDocument();
     expect(screen.queryByText(/Lixeira/)).toBeNull();
+  });
+
+  it('categoria com fonte oficial mostra o bloco "Em Duque de Caxias" com fonte e data', () => {
+    renderCard(carton);
+
+    const block = screen.getByTestId('local-guidance');
+    expect(within(block).getByRole('heading', { name: 'Em Duque de Caxias' })).toBeInTheDocument();
+    expect(within(block).getByText(LOCAL_GUIDANCE.papel!.text)).toBeInTheDocument();
+    const source = within(block).getByRole('link', { name: 'Prefeitura de Duque de Caxias' });
+    expect(source).toHaveAttribute('href', LOCAL_GUIDANCE.papel!.sources[0].url);
+    expect(source).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(within(block).getByText(/conferida em 15\/10\/2026/)).toBeInTheDocument();
+  });
+
+  it('entrada com lista oficial de pontos mostra o link para ela', () => {
+    renderCard({ ...carton, category: 'eletronicos', isComposite: false });
+
+    expect(screen.getByRole('link', { name: 'Ver os pontos de entrega' })).toHaveAttribute(
+      'href',
+      LOCAL_GUIDANCE.eletronicos!.link!.url,
+    );
+  });
+
+  it('categoria sem fonte oficial não mostra o bloco local', () => {
+    renderCard({ ...carton, category: 'pilhas_baterias', isComposite: false });
+
+    expect(screen.queryByTestId('local-guidance')).toBeNull();
+    expect(screen.queryByText('Em Duque de Caxias')).toBeNull();
   });
 
   it('texto da IA aparece como texto puro, nunca como HTML', () => {
