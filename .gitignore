@@ -1,0 +1,38 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Variáveis de ambiente (nunca commitar segredos)
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Testes
+coverage/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.local
+
+# Certificados do HTTPS local
+*.pem
