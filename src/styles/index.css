@@ -596,9 +596,12 @@ a.action-button {
   background: radial-gradient(120% 80% at 50% 40%, #3a4a3f 0%, #18221b 60%, #0f1712 100%);
 }
 
+/* Mesmo tamanho do vídeo, para a tela não "pular" quando a câmera liga.
+   O width explícito evita que o aspect-ratio encolha a largura ao bater no max-height. */
 .camera__placeholder {
+  width: 100%;
   aspect-ratio: 4 / 5;
-  max-height: 52dvh;
+  max-height: 65dvh;
 }
 
 .camera__video {

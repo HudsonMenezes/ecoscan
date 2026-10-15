@@ -1,4 +1,4 @@
-import { useImperativeHandle, useState } from 'react';
+import { useEffect, useImperativeHandle, useState } from 'react';
 import { strings } from '@/config/strings';
 import { resizeImageFile, useCamera, useHasCamera } from '@/shared/lib/camera';
 import { useIsDesktop } from '@/shared/lib/useMediaQuery';
@@ -25,9 +25,11 @@ type CameraViewProps = {
   // Recebe sempre um JPEG ≤ 1024px e sem EXIF, venha da câmera ou do upload.
   onCapture: (photo: Blob) => void;
   controlRef?: React.Ref<CameraControl>;
+  // Liga a câmera ao abrir, sem esperar o toque em "Abrir câmera" (que fica como reserva).
+  autoStart?: boolean;
 };
 
-export function CameraView({ onCapture, controlRef }: CameraViewProps) {
+export function CameraView({ onCapture, controlRef, autoStart = false }: CameraViewProps) {
   const { state, videoRef, start, capture } = useCamera();
   const isDesktop = useIsDesktop();
   const hasCamera = useHasCamera();
@@ -65,6 +67,14 @@ export function CameraView({ onCapture, controlRef }: CameraViewProps) {
   // No computador sem webcam, nem oferecemos a câmera: só o envio de arquivo.
   // No celular sempre oferecemos, porque alguns navegadores só listam a câmera após a permissão.
   const showCamera = !(isDesktop && hasCamera === false);
+
+  // No computador, só depois de saber que há webcam (o enumerateDevices é assíncrono).
+  // Sem guarda por ref: no StrictMode a limpeza do useCamera invalida o primeiro
+  // pedido, e o segundo é o que vale.
+  const shouldAutoStart = autoStart && (isDesktop ? hasCamera === true : true);
+  useEffect(() => {
+    if (shouldAutoStart) void start();
+  }, [shouldAutoStart, start]);
   const cameraFailed = state.status === 'denied' || state.status === 'unavailable';
   const fallbackMessage =
     state.status === 'denied'

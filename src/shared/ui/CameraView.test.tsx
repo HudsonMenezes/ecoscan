@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -46,6 +47,26 @@ describe('CameraView', () => {
 
     expect(getUserMedia).toHaveBeenCalledOnce();
     expect(await screen.findByRole('button', { name: strings.camera.capture })).toBeEnabled();
+  });
+
+  it('autoStart: liga a câmera ao abrir, sem esperar o toque', async () => {
+    const getUserMedia = stubCamera({ facingMode: 'environment' });
+    render(
+      <StrictMode>
+        <CameraView autoStart onCapture={vi.fn()} />
+      </StrictMode>,
+    );
+
+    expect(await screen.findByRole('button', { name: strings.camera.capture })).toBeEnabled();
+    expect(getUserMedia).toHaveBeenCalled();
+  });
+
+  it('autoStart com a câmera negada: mostra o aviso e o envio de foto', async () => {
+    stubCamera({ error: 'NotAllowedError' });
+    render(<CameraView autoStart onCapture={vi.fn()} />);
+
+    expect(await screen.findByText(strings.camera.denied)).toBeInTheDocument();
+    expect(uploadInput()).toBeInTheDocument();
   });
 
   it('câmera traseira: preview sem espelho', async () => {
@@ -124,6 +145,17 @@ describe('CameraView no computador', () => {
     expect(await screen.findByText(strings.camera.dropHint)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: strings.camera.open })).toBeInTheDocument();
     expect(container.firstChild).toHaveClass('camera--side-by-side');
+  });
+
+  it('autoStart sem webcam: não pede a câmera', async () => {
+    mockPointer('desktop');
+    const getUserMedia = vi.fn();
+    const enumerateDevices = vi.fn(async () => [] as MediaDeviceInfo[]);
+    vi.stubGlobal('navigator', { ...navigator, mediaDevices: { enumerateDevices, getUserMedia } });
+    const { container } = render(<CameraView autoStart onCapture={vi.fn()} />);
+
+    await vi.waitFor(() => expect(container.firstChild).toHaveClass('camera--upload-only'));
+    expect(getUserMedia).not.toHaveBeenCalled();
   });
 
   it('sem webcam: mostra só o envio de arquivo, sem oferecer a câmera', async () => {

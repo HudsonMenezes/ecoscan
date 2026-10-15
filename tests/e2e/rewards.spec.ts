@@ -20,7 +20,6 @@ const QR_LINK = '/descartar?ponto=escola-demo';
 
 async function scanPet(page: Page) {
   await page.goto('/escanear');
-  await page.getByRole('button', { name: 'Abrir câmera' }).click();
   await page.waitForFunction(() => document.querySelector('video')?.videoWidth);
   await page.getByRole('button', { name: 'Tirar foto' }).click();
   await expect(page.getByRole('heading', { name: PET.itemName })).toBeVisible();

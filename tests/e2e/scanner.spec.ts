@@ -14,7 +14,6 @@ const CARTON_RESULT = {
 
 async function scanWithCamera(page: Page) {
   await page.goto('/escanear');
-  await page.getByRole('button', { name: 'Abrir câmera' }).click();
   await page.waitForFunction(() => document.querySelector('video')?.videoWidth);
   await page.getByRole('button', { name: 'Tirar foto' }).click();
 }
@@ -64,6 +63,6 @@ test.describe('scanner', () => {
 
     await page.getByRole('button', { name: 'Escanear outro' }).click();
 
-    await expect(page.getByRole('button', { name: 'Abrir câmera' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Tirar foto' })).toBeVisible();
   });
 });

@@ -48,7 +48,7 @@ export function ScanScreen() {
       </header>
 
       {(state.status === 'idle' || state.status === 'capturing') && (
-        <CameraView controlRef={cameraRef} onCapture={(photo) => void submit(photo)} />
+        <CameraView autoStart controlRef={cameraRef} onCapture={(photo) => void submit(photo)} />
       )}
 
       {state.status === 'loading' && (

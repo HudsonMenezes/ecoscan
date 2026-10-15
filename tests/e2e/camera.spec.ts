@@ -44,12 +44,10 @@ async function bigJpegWithExif(page: Page, width: number, height: number) {
 test.describe('câmera', () => {
   test.use({ permissions: ['camera'] });
 
-  test('abre a câmera só no toque, captura e envia um JPEG ≤ 1024px', async ({ page }) => {
+  test('abre a câmera sozinha ao entrar, captura e envia um JPEG ≤ 1024px', async ({ page }) => {
     const photos = await interceptScan(page);
     await page.goto('/escanear');
-    await expect(page.locator('video')).toHaveCount(0);
 
-    await page.getByRole('button', { name: 'Abrir câmera' }).click();
     await expect(page.locator('video')).toBeVisible();
     await page.waitForFunction(() => document.querySelector('video')!.videoWidth > 0);
     await page.getByRole('button', { name: 'Tirar foto' }).click();
@@ -88,8 +86,6 @@ test('câmera negada mostra o aviso e o "Enviar foto"', async ({ page }) => {
       Promise.reject(new DOMException('negado', 'NotAllowedError'));
   });
   await page.goto('/escanear');
-
-  await page.getByRole('button', { name: 'Abrir câmera' }).click();
 
   await expect(page.getByText('Sem permissão para usar a câmera')).toBeVisible();
   await expect(page.getByLabel('Enviar foto')).toHaveAttribute('accept', 'image/*');

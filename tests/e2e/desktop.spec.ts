@@ -26,18 +26,17 @@ test.describe('computador', () => {
     await expect(page.getByText('Melhor no celular')).toHaveCount(0);
   });
 
-  test('câmera e envio ficam lado a lado; webcam com preview espelhado', async ({ page }) => {
+  test('câmera e envio ficam lado a lado; webcam liga sozinha, com preview espelhado', async ({
+    page,
+  }) => {
     await page.goto('/escanear');
 
-    const open = page.getByRole('button', { name: 'Abrir câmera' });
+    const video = page.locator('video');
     const drop = page.getByText('Arraste uma foto para cá ou clique para escolher');
-    await expect(open).toBeVisible();
+    await expect(video).toHaveClass(/camera__video--mirrored/);
     await expect(drop).toBeVisible();
-    const [openBox, dropBox] = [await open.boundingBox(), await drop.boundingBox()];
-    expect(dropBox!.x).toBeGreaterThan(openBox!.x + openBox!.width);
-
-    await open.click();
-    await expect(page.locator('video')).toHaveClass(/camera__video--mirrored/);
+    const [videoBox, dropBox] = [await video.boundingBox(), await drop.boundingBox()];
+    expect(dropBox!.x).toBeGreaterThan(videoBox!.x + videoBox!.width);
   });
 
   test('arrastar e soltar uma foto envia o JPEG reduzido', async ({ page }) => {
@@ -68,7 +67,7 @@ test.describe('computador', () => {
 test('no celular o banner não aparece e não há área de arrastar', async ({ page }) => {
   await page.goto('/escanear');
 
-  await expect(page.getByRole('button', { name: 'Abrir câmera' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Tirar foto' })).toBeVisible();
   await expect(page.getByText('Melhor no celular')).toHaveCount(0);
   await expect(page.locator('label.dropzone')).toHaveCount(0);
 });
