@@ -4,6 +4,7 @@ node_modules/
 # Build
 dist/
 dist-ssr/
+dev-dist/
 *.tsbuildinfo
 
 # Variáveis de ambiente (nunca commitar segredos)

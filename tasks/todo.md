@@ -8,7 +8,7 @@
 
 ## Fase 1: Fundação (`app-shell`)
 
-- [ ] **T1: Scaffold do projeto** · M · deps: —
+- [x] **T1: Scaffold do projeto** · M · deps: —
   - Vite + React + TS strict, alias `@/`, ESLint + Prettier, Vitest + Testing Library + setup, Playwright, `vite-plugin-pwa` (manifest mínimo), `@vitejs/plugin-basic-ssl`; scripts do `package.json` iguais à spec. Substitui o `index.html` vazio.
   - **Aceite:** todos os comandos da seção "Comandos" da spec existem e rodam; um teste de exemplo passa; `npm run dev` abre em HTTPS na rede local.
   - **Verificar:** `npm run build && npm run lint && npm run typecheck && npm test`
@@ -32,6 +32,7 @@
   - **Aceite:** a Home mostra 3 botões com ícone, cor e `aria-label`, e cada um navega; sem scroll horizontal em 360px.
   - **Verificar:** teste de componente da Home; E2E de smoke (viewport Pixel 5) navegando pelas 4 rotas
   - **Arquivos:** `src/app/router.tsx`, `src/app/Layout.tsx`, `src/app/HomeScreen.tsx`, `src/shared/ui/BigActionButton.tsx`, `src/config/strings.ts` (+ `src/styles/tokens.css`, `tests/e2e/smoke.spec.ts`)
+  - Inclui os ícones PNG do PWA (192px, 512px e maskable): o manifest da T1 só tem o `favicon.svg`, e o Lighthouse exige PNG para considerar o app instalável.
 
 - [ ] **T5: `ScreenContext` + `useScreen`** · S · deps: T4
   - Provider no Layout; `useScreen({ speech, actions })` registra e limpa ao desmontar; `useCurrentScreen()`. A Home registra a fala dela.
@@ -52,6 +53,7 @@
   - **Arquivos:** `src/shared/ui/CameraView.tsx`, `src/shared/ui/ImageDropZone.tsx`, `src/app/DesktopHint.tsx`, `scripts/generate-site-qr.ts`, `*.test.tsx`
 
 ### ✅ Checkpoint A: app-shell
+
 - [ ] Todos os critérios de sucesso da [SPEC-app-shell](../docs/SPEC-app-shell.md#critérios-de-sucesso), exceto rate limit e budget (ficam para P1)
 - [ ] Lighthouse no deploy: instalável, Acessibilidade ≥ 95
 - [ ] `grep -r "sk-" dist/` vazio
@@ -98,6 +100,7 @@
   - **Arquivos:** `src/modules/scanner/model/localGuidance.ts`, `components/LocalGuidance.tsx`, `tests/e2e/scanner.spec.ts`
 
 ### ✅ Checkpoint B: scanner
+
 - [ ] Critérios da [SPEC-scanner](../docs/SPEC-scanner.md#critérios-de-sucesso) atendidos (eval, injeção de prompt, foto vazia, retry)
 - [ ] Deploy atualizado; escanear 3 objetos reais no celular
 - [ ] Logs da Vercel sem imagens
@@ -182,6 +185,7 @@
   - **Arquivos:** `tests/e2e/voice.spec.ts`, `tests/e2e/fakes/speech.ts`
 
 ### ✅ Checkpoint C: experiência completa
+
 - [ ] Critérios da [SPEC-voice](../docs/SPEC-voice.md#critérios-de-sucesso) e da [SPEC-rewards](../docs/SPEC-rewards.md#critérios-de-sucesso)
 - [ ] Roteiro completo **só por voz**: escanear → ouvir → descartar pelo QR impresso → ouvir o saldo
 - [ ] Testado em um Android e em um iPhone reais
@@ -210,6 +214,7 @@
   - **Arquivos:** `docs/DEMO.md`, `README.md`
 
 ### ✅ Checkpoint final
+
 - [ ] Todos os critérios de sucesso das 4 specs marcados
 - [ ] Deploy de produção estável; README com a URL
 - [ ] **Aprovação final com você**
