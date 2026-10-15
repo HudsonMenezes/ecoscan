@@ -37,3 +37,6 @@ Thumbs.db
 
 # Certificados do HTTPS local
 *.pem
+
+.vercel
+.env*

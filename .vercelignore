@@ -1,0 +1,2 @@
+# Testes não podem virar funções serverless em api/
+api/**/*.test.ts
