@@ -1,8 +1,8 @@
-// Placeholder do scaffold (T1). Rotas e layout chegam na T4.
+import { RouterProvider } from 'react-router/dom';
+import { createAppRouter } from './router';
+
+const router = createAppRouter();
+
 export function App() {
-  return (
-    <main>
-      <h1>EcoScan</h1>
-    </main>
-  );
+  return <RouterProvider router={router} />;
 }

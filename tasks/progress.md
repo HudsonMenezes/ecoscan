@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 1, Fundação (`app-shell`)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), P2 (CI)
-- **Próxima:** **T4: Layout, Home e rotas** (ver [`todo.md`](todo.md)). Inclui os ícones PNG do PWA.
-- **Depois:** T5 (`useScreen`) → T6 (câmera; precisa de teste no celular real) → T6b (experiência no computador) → **Checkpoint A** (revisão com o Hudson)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), P2 (CI)
+- **Próxima:** **T5: `ScreenContext` + `useScreen`** (ver [`todo.md`](todo.md)). As falas de cada tela já estão em `src/config/strings.ts`.
+- **Depois:** T6 (câmera; precisa de teste no celular real) → T6b (experiência no computador) → **Checkpoint A** (revisão com o Hudson)
 
 ## Como retomar
 
@@ -36,3 +36,5 @@
 - **Testes de `api/`** usam `// @vitest-environment node` na primeira linha.
 - **Commits** terminam com `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; e-mail do git: `hudson.bm23@gmail.com`.
 - O Prettier formata também os `.md` (as tabelas ficam alinhadas). Rodar `npm run format` antes de commitar, porque a CI checa.
+- **Rotas:** `createRoutes()` é uma fábrica de propósito. O React Router modifica os objetos `lazy` ao resolvê-los, e reaproveitar o mesmo array em dois routers (por exemplo, entre testes) gera 404 no carregamento direto da rota.
+- **Ícones do PWA:** `npm run icons` gera o `favicon.svg` e os PNGs em `public/` (rasterizados com o Chromium do Playwright, sem dependência nova). Para mudar o desenho, editar `scripts/generate-icons.ts` e rodar de novo.

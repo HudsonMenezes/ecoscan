@@ -27,7 +27,7 @@
   - **Verificar:** `npm test -- src/shared/lib/storage`
   - **Arquivos:** `src/shared/lib/storage/AppStorage.ts`, `LocalStorageAdapter.ts`, `LocalStorageAdapter.test.ts`, `index.ts`
 
-- [ ] **T4: Layout, Home e rotas** · M · deps: T1
+- [x] **T4: Layout, Home e rotas** · M · deps: T1
   - Router com `/`, `/escanear`, `/descartar` e `/carteira` (placeholders lazy); `BigActionButton`; `strings.ts`; tokens de cor em variáveis CSS (verde/azul/âmbar); alvos ≥ 64px; fonte ≥ 18px.
   - **Aceite:** a Home mostra 3 botões com ícone, cor e `aria-label`, e cada um navega; sem scroll horizontal em 360px.
   - **Verificar:** teste de componente da Home; E2E de smoke (viewport Pixel 5) navegando pelas 4 rotas
