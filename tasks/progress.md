@@ -5,9 +5,9 @@
 
 ## Onde estamos
 
-- **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), P2 (CI)
-- **Próxima:** **Checkpoint B**: só falta o ok final do Hudson para o box vermelho de "O que acontece se descartar errado?" (pedido dele na revisão). Testes no celular e logs da Vercel já conferidos por ele (2026-10-15). **Eval completo do scan-v5: o Hudson decidiu não repetir** (os testes feitos bastam). Depois: fase 3 (3a Rewards e 3b Voice, independentes).
+- **Fase atual:** 3a, Rewards (Checkpoint B aprovado em 2026-10-15)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger; 100% de cobertura), P2 (CI)
+- **Próxima:** **R2: `claimDisposal` + pontos + `parsePointUrl`** (ver [`todo.md`](todo.md) e [`docs/SPEC-rewards.md`](../docs/SPEC-rewards.md)). Eval completo do scan-v5: o Hudson decidiu **não** repetir (2026-10-15). A fase 3b (Voice) é independente e pode vir depois da 3a.
 
 ## Como retomar
 

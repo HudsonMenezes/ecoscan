@@ -105,13 +105,13 @@
 - [x] Critérios da [SPEC-scanner](../docs/SPEC-scanner.md#critérios-de-sucesso) atendidos (eval, injeção de prompt, foto vazia, retry)
 - [x] Deploy atualizado; escanear objetos reais no celular (Hudson: pano de microfibra e relógio, 2026-10-15)
 - [x] Logs da Vercel sem imagens (conferido pelo Hudson em 2026-10-15)
-- [ ] **Revisão com você antes de seguir**
+- [x] **Revisão com você antes de seguir** (aprovado pelo Hudson em 2026-10-15, com o box vermelho de "O que acontece se descartar errado?")
 
 ---
 
 ## Fase 3a: Rewards (paralela à 3b)
 
-- [ ] **R1: Níveis, regras de recompensa e ledger** · S · deps: T3, T7
+- [x] **R1: Níveis, regras de recompensa e ledger** · S · deps: T3, T7
   - `levels.ts`, `rewardRules.ts`, `ledger.ts` (schema + `getWallet`), com TDD.
   - **Aceite:** fronteiras 49/50 e 799/800 corretas; progresso 0..1; ledger inválido → carteira vazia; 100% de cobertura de linhas.
   - **Verificar:** `npm test -- rewards/model -- --coverage`
