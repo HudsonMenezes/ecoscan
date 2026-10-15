@@ -12,3 +12,5 @@ export type { CollectionPoint } from './model/points';
 export { parsePointUrl } from './qr/parsePointUrl';
 export { DiscardScreen } from './components/DiscardScreen';
 export { WalletScreen } from './components/WalletScreen';
+export { PlayerSummary } from './components/PlayerSummary';
+export { LevelIcon } from './components/LevelIcon';

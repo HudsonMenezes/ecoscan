@@ -4,6 +4,7 @@ import { strings } from '@/config/strings';
 import type { LedgerEntry, Wallet } from '../model/ledger';
 import type { Level } from '../model/levels';
 import { playChime } from './chime';
+import { LevelIcon } from './LevelIcon';
 
 const { success } = strings.disposal;
 
@@ -54,12 +55,12 @@ export function Celebration({ entry, leveledUp, wallet, onScanAnother }: Celebra
 
       {leveledUp && (
         <p className="celebration__level-up" role="status">
-          <span aria-hidden="true">{leveledUp.icon}</span> {success.levelUp(leveledUp.name)}
+          <LevelIcon icon={leveledUp.icon} size={28} /> {success.levelUp(leveledUp.name)}
         </p>
       )}
 
       <p className="celebration__wallet">
-        <span aria-hidden="true">{wallet.level.icon}</span>{' '}
+        <LevelIcon icon={wallet.level.icon} size={22} />{' '}
         {success.summary(wallet.level.name, wallet.xp, wallet.coins)}
       </p>
 

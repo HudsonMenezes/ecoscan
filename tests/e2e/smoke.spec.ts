@@ -2,21 +2,30 @@ import { expect, test } from '@playwright/test';
 
 const routes = [
   { button: 'Escanear', path: '/escanear', heading: 'Escanear' },
-  { button: 'Descartar (QR)', path: '/descartar', heading: 'Descartar' },
-  { button: 'Minha carteira', path: '/carteira', heading: 'Minha carteira' },
+  { button: 'Descartar', path: '/descartar', heading: 'Descartar' },
+  { button: 'Carteira', path: '/carteira', heading: 'Minha carteira' },
 ];
+const ACTIONS = ['Escanear objeto', 'Descartar no ponto', 'Minha carteira'];
 
-test('a home mostra os 3 botões e não tem scroll horizontal em 360px', async ({ page }) => {
+test('a home mostra as 3 ações e a barra inferior, sem scroll horizontal em 360px', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 360, height: 740 });
   await page.goto('/');
 
   await expect(page).toHaveTitle('EcoScan');
-  await expect(page.getByRole('heading', { name: 'EcoScan' })).toBeVisible();
-  for (const { button } of routes) {
-    const link = page.getByRole('link', { name: button });
+  await expect(page.getByRole('heading', { name: 'O que vamos descartar hoje?' })).toBeVisible();
+  const actions = page.getByRole('navigation', { name: 'O que você quer fazer?' });
+  for (const label of ACTIONS) {
+    const link = actions.getByRole('link', { name: new RegExp(`^${label}`) });
     await expect(link).toBeVisible();
     const box = await link.boundingBox();
     expect(box?.height).toBeGreaterThanOrEqual(64);
+  }
+  const nav = page.getByRole('navigation', { name: 'Navegação principal' });
+  for (const { button } of routes) {
+    const box = await nav.getByRole('link', { name: button }).boundingBox();
+    expect(box?.height).toBeGreaterThanOrEqual(44);
   }
 
   const overflow = await page.evaluate(
@@ -26,9 +35,12 @@ test('a home mostra os 3 botões e não tem scroll horizontal em 360px', async (
 });
 
 for (const { button, path, heading } of routes) {
-  test(`navega da home até ${path} e volta`, async ({ page }) => {
+  test(`navega pela barra inferior até ${path} e volta`, async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: button }).click();
+    await page
+      .getByRole('navigation', { name: 'Navegação principal' })
+      .getByRole('link', { name: button })
+      .click();
 
     await expect(page).toHaveURL(path);
     await expect(page.getByRole('heading', { name: heading })).toBeVisible();

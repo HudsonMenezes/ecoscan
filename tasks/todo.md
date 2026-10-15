@@ -147,6 +147,16 @@
   - **Verificar:** `npm run test:e2e -- rewards`
   - **Arquivos:** `components/WalletScreen.tsx`, `WalletScreen.test.tsx`, `tests/e2e/rewards.spec.ts`
 
+## U1: Nova identidade visual (aprovada pelo Hudson em 2026-10-15)
+
+Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn4NwZHzS13J7iDTs): fundo creme, cartões brancos, verde-floresta `#0E5F3A` + verde-broto `#B8E04A`, Bricolage Grotesque + Figtree (auto-hospedadas, por causa da CSP), ícones em traço (sem emoji, inclusive nos níveis), barra de navegação inferior, resumo do jogador no Início, botão fixo "Descartar no ponto" no Resultado e trilha de níveis na Carteira. Cores CONAMA das categorias mantidas. Feita antes da fase 3b porque muda a navegação.
+
+- [x] **U1a: Base visual** · tokens, fontes em `public/fonts/`, botões, cartões, ícones de nível
+- [x] **U1b: Navegação e Início** · cabeçalho, barra inferior, resumo do jogador, dica rápida
+- [ ] **U1c: Scanner** · câmera escura com moldura, resultado em cartões com botão fixo
+- [ ] **U1d: Descarte e Carteira** · comemoração em tela verde, leitor de QR, trilha de níveis
+  - **Aceite (U1):** telas batem com o canvas; contraste AA; alvos de toque ≥ 44px; funciona em 360px; todos os testes verdes; print de cada tela revisado.
+
 ## Fase 3b: Voice (paralela à 3a)
 
 - [ ] **V1: `parseCommand` + tabela de comandos** · S · deps: T5

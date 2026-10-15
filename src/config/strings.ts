@@ -13,15 +13,43 @@ export const strings = {
     homeHint: ', voltar para o início',
   },
   home: {
-    title: 'EcoScan',
-    subtitle: 'O que você quer fazer?',
+    title: 'O que vamos descartar hoje?',
+    greeting: (hour: number) => (hour < 12 ? 'Bom dia!' : hour < 18 ? 'Boa tarde!' : 'Boa noite!'),
     speech:
-      'Bem-vindo ao EcoScan. Toque no botão verde para escanear um objeto, no azul para descartar no ponto de coleta, ou no amarelo para ver sua carteira.',
+      'Bem-vindo ao EcoScan. Toque em Escanear objeto para descobrir onde descartar, em Descartar no ponto para ganhar pontos, ou em Minha carteira para ver seu nível.',
+    actionsLabel: 'O que você quer fazer?',
     actions: {
-      scan: 'Escanear',
-      discard: 'Descartar (QR)',
+      scan: 'Escanear objeto',
+      scanHint: 'A IA diz onde descartar',
+      discard: 'Descartar no ponto',
+      discardHint: 'Leia o QR e ganhe',
       wallet: 'Minha carteira',
+      walletHint: 'Nível e histórico',
     },
+    player: {
+      label: 'Seu nível',
+      level: (number: number) => `Nível ${number}`,
+      coins: 'moedas',
+      progress: (xp: number, toNext: number, next: string) =>
+        `${xp} XP · faltam ${toNext} XP para o nível ${next}`,
+      maxLevel: (xp: number) => `${xp} XP · você chegou ao nível mais alto!`,
+    },
+    tipTitle: 'Dica rápida',
+    tips: [
+      'Enxágue as embalagens antes de descartar. Restos de comida atrapalham a reciclagem.',
+      'Pilhas e baterias nunca vão no lixo comum: os metais delas contaminam o solo e a água.',
+      'Óleo de cozinha usado não vai na pia. Guarde numa garrafa PET e leve a um ponto de coleta.',
+      'Remédios vencidos vão para a farmácia, não para o lixo nem para o vaso sanitário.',
+      'Desmonte as caixas de papelão: elas ocupam menos espaço na coleta.',
+      'Guardanapo e papel engordurado não são recicláveis: vão no lixo comum.',
+    ],
+  },
+  nav: {
+    label: 'Navegação principal',
+    home: 'Início',
+    scan: 'Escanear',
+    discard: 'Descartar',
+    wallet: 'Carteira',
   },
   scan: {
     title: 'Escanear',

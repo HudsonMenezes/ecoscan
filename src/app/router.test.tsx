@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
@@ -14,16 +14,30 @@ function renderAt(path: string) {
 
 describe('router', () => {
   it.each([
-    [strings.home.actions.scan, strings.scan.title, '/escanear'],
-    [strings.home.actions.discard, strings.discard.title, '/descartar'],
-    [strings.home.actions.wallet, strings.wallet.title, '/carteira'],
-  ])('o botão "%s" abre a tela "%s"', async (button, title, path) => {
+    [strings.nav.scan, strings.scan.title, '/escanear'],
+    [strings.nav.discard, strings.discard.title, '/descartar'],
+    [strings.nav.wallet, strings.wallet.title, '/carteira'],
+  ])('o item "%s" da barra inferior abre a tela "%s"', async (item, title, path) => {
     const router = renderAt('/');
+    const nav = await screen.findByRole('navigation', { name: strings.nav.label });
 
-    await userEvent.click(screen.getByRole('link', { name: button }));
+    await userEvent.click(within(nav).getByRole('link', { name: item }));
 
     expect(await screen.findByRole('heading', { name: title })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe(path);
+  });
+
+  it('a barra inferior marca a tela atual', async () => {
+    renderAt('/carteira');
+    const nav = await screen.findByRole('navigation', { name: strings.nav.label });
+
+    expect(within(nav).getByRole('link', { name: strings.nav.wallet })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(within(nav).getByRole('link', { name: strings.nav.home })).not.toHaveAttribute(
+      'aria-current',
+    );
   });
 
   it('o link de início volta para a Home', async () => {

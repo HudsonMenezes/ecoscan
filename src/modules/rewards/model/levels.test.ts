@@ -4,12 +4,12 @@ import { LEVELS, getNextLevel, levelForXp, levelProgress } from './levels';
 describe('levels', () => {
   it('segue a tabela da spec, em ordem crescente de XP', () => {
     expect(LEVELS.map((l) => [l.number, l.name, l.icon, l.minXp])).toEqual([
-      [1, 'Semente', '🌰', 0],
-      [2, 'Broto', '🌱', 50],
-      [3, 'Muda', '🌿', 150],
-      [4, 'Árvore', '🌳', 300],
-      [5, 'Floresta', '🌲🌳', 500],
-      [6, 'Guardião do Planeta', '🌎', 800],
+      [1, 'Semente', 'seed', 0],
+      [2, 'Broto', 'sprout', 50],
+      [3, 'Muda', 'seedling', 150],
+      [4, 'Árvore', 'tree', 300],
+      [5, 'Floresta', 'forest', 500],
+      [6, 'Guardião do Planeta', 'planet', 800],
     ]);
   });
 

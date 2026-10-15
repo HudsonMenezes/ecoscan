@@ -12,7 +12,7 @@ test.describe('computador', () => {
   test('mostra o banner "Melhor no celular" com o QR, e dispensar persiste', async ({ page }) => {
     await page.goto('/');
 
-    const hint = page.getByRole('complementary');
+    const hint = page.getByRole('complementary', { name: 'Melhor no celular' });
     await expect(hint).toContainText('Melhor no celular');
     const qr = page.getByAltText('QR code que abre o EcoScan no celular');
     await expect(qr).toBeVisible();
@@ -22,7 +22,7 @@ test.describe('computador', () => {
     await expect(hint).toHaveCount(0);
 
     await page.reload();
-    await expect(page.getByRole('heading', { name: 'EcoScan' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'O que vamos descartar hoje?' })).toBeVisible();
     await expect(page.getByText('Melhor no celular')).toHaveCount(0);
   });
 

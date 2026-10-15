@@ -5,14 +5,14 @@ import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 
-const GREEN = '#1b7f3b';
+const GREEN = '#0e5f3a';
 
 // Folha dentro de cantos de "mira" de câmera, num quadro de 512x512.
 const GLYPH = `
   <g fill="none" stroke="#fff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
     <path d="M112 176v-48a16 16 0 0 1 16-16h48M336 112h48a16 16 0 0 1 16 16v48M400 336v48a16 16 0 0 1-16 16h-48M176 400h-48a16 16 0 0 1-16-16v-48"/>
   </g>
-  <path fill="#fff" d="M340 168c-110 0-172 48-172 128 0 22 6 40 16 54 18-52 58-90 118-112-48 30-80 70-96 124 12 6 28 10 46 10 80 0 108-80 88-204z"/>
+  <path fill="#b8e04a" d="M340 168c-110 0-172 48-172 128 0 22 6 40 16 54 18-52 58-90 118-112-48 30-80 70-96 124 12 6 28 10 46 10 80 0 108-80 88-204z"/>
 `;
 
 // `inset` encolhe o desenho para caber na zona segura do ícone maskable (80%).

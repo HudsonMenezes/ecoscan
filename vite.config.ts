@@ -12,7 +12,7 @@ export default defineConfig(({ command, isPreview }) => ({
     command === 'serve' && !isPreview ? basicSsl() : null,
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png', 'fonts/*.woff2'],
       manifest: {
         name: 'EcoScan',
         short_name: 'EcoScan',
@@ -20,8 +20,8 @@ export default defineConfig(({ command, isPreview }) => ({
         lang: 'pt-BR',
         start_url: '/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#1b7f3b',
+        background_color: '#f7f3ea',
+        theme_color: '#0e5f3a',
         // Gerados por `npm run icons`. O Lighthouse exige PNG 192/512 para considerar instalável.
         icons: [
           { src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' },

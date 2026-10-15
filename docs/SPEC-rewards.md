@@ -69,6 +69,8 @@ Ficam configuráveis em `model/rewardRules.ts`. Itens perigosos valem mais, porq
 | 5     | Floresta            | 🌲🌳  | 500       |
 | 6     | Guardião do Planeta | 🌎    | 800       |
 
+Os ícones da tabela são de referência: desde a identidade visual de 2026-10-15 o app desenha cada nível em traço (`LevelIcon`: semente, broto, muda, árvore, floresta, planeta), sem emoji.
+
 Ao subir de nível aparece uma comemoração específica, com fala: _"Você subiu para o nível Muda!"_.
 
 ## Dados: ledger

@@ -5,6 +5,7 @@ import { CATEGORIES, CategoryIcon } from '@/modules/scanner';
 import { useScreen } from '@/shared/lib/screen';
 import { getLedger, getWallet, type LedgerEntry } from '../model/ledger';
 import { describeWalletScreen, xpToNext } from './describeWalletScreen';
+import { LevelIcon } from './LevelIcon';
 
 const { wallet: text } = strings;
 
@@ -33,7 +34,7 @@ export function WalletScreen() {
 
       <section className="wallet-level" aria-labelledby="wallet-level-name">
         <span className="wallet-level__icon" aria-hidden="true">
-          {wallet.level.icon}
+          <LevelIcon icon={wallet.level.icon} size={48} />
         </span>
         <div>
           <p className="wallet-level__number">{text.level(wallet.level.number)}</p>

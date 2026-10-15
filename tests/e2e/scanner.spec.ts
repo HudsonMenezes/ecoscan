@@ -40,7 +40,7 @@ test.describe('scanner', () => {
       local.getByRole('link', { name: 'Prefeitura de Duque de Caxias' }),
     ).toHaveAttribute('href', /^https:\/\/portal\.duquedecaxias\.rj\.gov\.br\//);
 
-    await page.getByRole('link', { name: 'Descartar' }).click();
+    await page.getByRole('main').getByRole('link', { name: 'Descartar' }).click();
     await expect(page).toHaveURL(/\/descartar$/);
     await expect(page.getByRole('heading', { name: 'Descartar', level: 1 })).toBeVisible();
   });
