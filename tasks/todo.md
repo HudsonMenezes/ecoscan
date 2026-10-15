@@ -117,7 +117,7 @@
   - **Verificar:** `npm test -- rewards/model -- --coverage`
   - **Arquivos:** `src/modules/rewards/model/levels.ts`, `rewardRules.ts`, `ledger.ts`, `*.test.ts`
 
-- [ ] **R2: `claimDisposal` + pontos + `parsePointUrl`** · S · deps: R1, T10
+- [x] **R2: `claimDisposal` + pontos + `parsePointUrl`** · S · deps: R1, T10
   - Funções puras com relógio injetado; `COLLECTION_POINTS` com `escola-demo`.
   - **Aceite:** cada `ClaimError` e o caminho feliz testados; expiração exatamente em 10 min; **dois scans distintos do mesmo material são ambos recompensados**; mesmo `scanId` → `already_claimed`.
   - **Verificar:** `npm test -- rewards/model rewards/qr`
