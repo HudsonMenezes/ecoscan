@@ -21,7 +21,7 @@
   - **Verificar:** `npm test`; `curl -I <url>` mostra os headers; `curl <url>/api/health`
   - **Arquivos:** `api/health.ts`, `api/_lib/http.ts`, `api/_lib/http.test.ts`, `vercel.json`
 
-- [ ] **T3: `AppStorage` + `LocalStorageAdapter`** · S · deps: T1
+- [x] **T3: `AppStorage` + `LocalStorageAdapter`** · S · deps: T1
   - Implementação com TDD conforme o contrato da spec, com chaves `ecoscan:*` e validação Zod.
   - **Aceite:** dado ausente, JSON corrompido ou schema inválido → `null`, sem exceção; `set`/`get`/`remove` funcionam; cobertura ≥ 80%.
   - **Verificar:** `npm test -- src/shared/lib/storage`
@@ -201,7 +201,7 @@
   - **Verificar:** script + teste manual de rajada
   - **Arquivos:** `scripts/check-secrets.ts`, `package.json`, `vercel.json`
 
-- [ ] **P2: CI no GitHub Actions** · S · deps: T1 · aprovada; pode ser feita logo após T1
+- [x] **P2: CI no GitHub Actions** · S · deps: T1 · aprovada; pode ser feita logo após T1
   - Workflow: install → lint → typecheck → test → build → check:secrets → E2E (Chromium).
   - **Aceite:** o workflow passa no push para `main`.
   - **Verificar:** execução verde no GitHub
