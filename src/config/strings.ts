@@ -1,5 +1,10 @@
 // Textos da interface em pt-BR. O módulo voice lê as mesmas frases, então
 // tudo que aparece na tela ou é falado precisa morar aqui.
+
+// Nome do item no meio da frase: "Garrafa PET" → "garrafa PET"; siglas ("PET") ficam como estão.
+const midSentence = (item: string) =>
+  /^\p{Lu}\p{Ll}/u.test(item) ? item[0]!.toLowerCase() + item.slice(1) : item;
+
 export const strings = {
   appName: 'EcoScan',
   layout: {
@@ -25,6 +30,32 @@ export const strings = {
   discard: {
     title: 'Descartar',
     speech: 'Aponte a câmera para o QR do ponto de coleta.',
+  },
+  disposal: {
+    readerHint:
+      'Use a câmera do celular para ler o QR do ponto de coleta. Ele abre o EcoScan e conta o seu descarte.',
+    scanItem: 'Escanear item',
+    scanNext: 'Escanear próximo',
+    scanAnother: 'Escanear outro',
+    readAnotherQr: 'Ler outro QR',
+    wallet: 'Minha carteira',
+    errors: {
+      unknown_point: 'Esse QR não é um ponto do EcoScan.',
+      no_scan: 'Primeiro escaneie o item que você vai descartar.',
+      scan_expired: 'Escaneie o item de novo antes de descartar.',
+      already_claimed: 'Esse item já foi contado! Escaneie o próximo item para descartar de novo.',
+      category_not_accepted: (category: string) => `Esse ponto não recebe ${category}.`,
+    },
+    success: {
+      title: 'Parabéns!',
+      gained: (xp: number, coins: number) => `+${xp} XP e +${coins} moedas`,
+      item: (item: string) => `Você descartou ${midSentence(item)} corretamente.`,
+      speech: (item: string, xp: number, coins: number) =>
+        `Parabéns! Você descartou ${midSentence(item)} corretamente e ganhou ${xp} pontos e ${coins} moedas.`,
+      levelUp: (level: string) => `Você subiu para o nível ${level}!`,
+      summary: (level: string, xp: number, coins: number) =>
+        `${level} · ${xp} XP · ${coins} moedas`,
+    },
   },
   wallet: {
     title: 'Minha carteira',

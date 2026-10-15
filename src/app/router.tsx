@@ -21,7 +21,9 @@ export function createRoutes(): RouteObject[] {
         },
         {
           path: 'descartar',
-          lazy: { Component: async () => (await placeholders()).DiscardPlaceholder },
+          lazy: {
+            Component: async () => (await import('@/modules/rewards')).DiscardScreen,
+          },
         },
         {
           path: 'carteira',

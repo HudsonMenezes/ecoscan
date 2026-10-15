@@ -502,7 +502,132 @@ a.action-button {
   font-size: var(--font-size-xl);
 }
 
+/* Descarte */
+.discard-reader,
+.discard-error,
+.celebration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.discard-reader p,
+.discard-error p,
+.celebration p {
+  margin: 0;
+}
+
+.discard-error {
+  color: var(--color-text);
+}
+
+.discard-error svg {
+  color: var(--color-red);
+}
+
+.celebration {
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--space-3);
+}
+
+.celebration .result-card__actions {
+  align-self: stretch;
+}
+
+.celebration__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: var(--color-green);
+}
+
+.celebration__title:focus {
+  outline: none;
+}
+
+.celebration__gain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  background: var(--color-amber);
+  color: var(--color-amber-text);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.celebration__coin {
+  display: inline-block;
+  animation: coin-pop 0.8s ease-out both;
+}
+
+.celebration__level-up {
+  padding: var(--space-2);
+  border-left: 6px solid var(--color-green);
+  border-radius: 0.5rem;
+  background: #e2f1e6;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.celebration__wallet {
+  color: var(--color-text-muted);
+}
+
+.celebration__confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.celebration__confetti span {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall 1.6s ease-in forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(420px) rotate(540deg);
+  }
+}
+
+@keyframes coin-pop {
+  0% {
+    transform: translateY(16px) scale(0.4);
+  }
+
+  60% {
+    transform: translateY(-8px) scale(1.25);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .celebration__confetti {
+    display: none;
+  }
+
+  .celebration__coin {
+    animation: none;
+  }
+
   .big-action {
     transition: none;
   }

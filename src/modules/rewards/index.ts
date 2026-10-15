@@ -10,3 +10,4 @@ export type { ClaimError, ClaimResult } from './model/claimDisposal';
 export { COLLECTION_POINTS, findPoint } from './model/points';
 export type { CollectionPoint } from './model/points';
 export { parsePointUrl } from './qr/parsePointUrl';
+export { DiscardScreen } from './components/DiscardScreen';

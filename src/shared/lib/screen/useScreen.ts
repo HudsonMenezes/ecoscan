@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 
 export type ScreenAction = {
-  id: 'capture' | 'retry' | 'discard' | 'scan-again'; // ampliável
+  id: 'capture' | 'retry' | 'discard' | 'scan-again' | 'wallet'; // ampliável
   label: string; // nome falado/mostrado
   run: () => void;
 };

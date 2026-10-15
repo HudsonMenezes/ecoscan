@@ -123,7 +123,7 @@
   - **Verificar:** `npm test -- rewards/model rewards/qr`
   - **Arquivos:** `model/claimDisposal.ts`, `model/points.ts`, `qr/parsePointUrl.ts`, `*.test.ts`
 
-- [ ] **R3: Fluxo de descarte via link (`/descartar?ponto=`)** · M · deps: R2, T5
+- [x] **R3: Fluxo de descarte via link (`/descartar?ponto=`)** · M · deps: R2, T5
   - `useDisposal` (lê LastScan + ledger, chama `claimDisposal`, persiste); `DiscardScreen` com sucesso/erros e ações; `Celebration` (animação, som, comemoração de nível); registra `speech`.
   - **Aceite:** abrir `/descartar?ponto=escola-demo` com scan válido credita e comemora; cada erro mostra a mensagem e o botão da spec.
   - **Verificar:** testes de componente; manual pelo link no celular
