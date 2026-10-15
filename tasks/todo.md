@@ -159,7 +159,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
 
 ## Fase 3b: Voice (paralela à 3a)
 
-- [ ] **V1: `parseCommand` + tabela de comandos** · S · deps: T5
+- [x] **V1: `parseCommand` + tabela de comandos** · S · deps: T5
   - Normalização (acentos, maiúsculas, pontuação); intenções de navegação, `repeat`, `help`, `action:<id>`, desconhecido. TDD table-driven.
   - **Aceite:** 100% dos sinônimos da spec reconhecidos com e sem acento; as ações da tela atual são reconhecidas pelos rótulos.
   - **Verificar:** `npm test -- voice/model`
