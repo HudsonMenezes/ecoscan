@@ -1,6 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StrictMode } from 'react';
+import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { strings } from '@/config/strings';
 import { ScreenProvider, useScreen } from '@/shared/lib/screen';
@@ -22,13 +23,15 @@ function setup({ speech = 'Tela inicial', compact = false } = {}) {
   const tts = createBrowserTts(fake.synth, FakeUtteranceCtor);
   const ui = (text: string) => (
     <StrictMode>
-      <TtsContext value={tts}>
-        <ScreenProvider>
-          <VoiceAutoSpeak />
-          <VoiceDock compact={compact} />
-          {text && <Screen key={text} speech={text} />}
-        </ScreenProvider>
-      </TtsContext>
+      <MemoryRouter>
+        <TtsContext value={tts}>
+          <ScreenProvider>
+            <VoiceAutoSpeak />
+            <VoiceDock compact={compact} />
+            {text && <Screen key={text} speech={text} />}
+          </ScreenProvider>
+        </TtsContext>
+      </MemoryRouter>
     </StrictMode>
   );
   const view = render(ui(speech));
@@ -119,11 +122,13 @@ describe('VoiceDock', () => {
   it('sem speechSynthesis, não mostra nada', () => {
     const tts = createBrowserTts(undefined, undefined);
     render(
-      <TtsContext value={tts}>
-        <ScreenProvider>
-          <VoiceDock />
-        </ScreenProvider>
-      </TtsContext>,
+      <MemoryRouter>
+        <TtsContext value={tts}>
+          <ScreenProvider>
+            <VoiceDock />
+          </ScreenProvider>
+        </TtsContext>
+      </MemoryRouter>,
     );
     expect(screen.queryByRole('group', { name: voice.dockLabel })).not.toBeInTheDocument();
   });
@@ -136,14 +141,16 @@ describe('VoiceAutoSpeak com dois VoiceDock montados (topo + comemoração)', ()
     const tts = createBrowserTts(fake.synth, FakeUtteranceCtor);
 
     render(
-      <TtsContext value={tts}>
-        <ScreenProvider>
-          <VoiceAutoSpeak />
-          <VoiceDock />
-          <VoiceDock compact />
-          <Screen speech="Parabéns" />
-        </ScreenProvider>
-      </TtsContext>,
+      <MemoryRouter>
+        <TtsContext value={tts}>
+          <ScreenProvider>
+            <VoiceAutoSpeak />
+            <VoiceDock />
+            <VoiceDock compact />
+            <Screen speech="Parabéns" />
+          </ScreenProvider>
+        </TtsContext>
+      </MemoryRouter>,
     );
 
     expect(fake.texts()).toEqual(['Parabéns']);

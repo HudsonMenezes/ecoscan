@@ -177,7 +177,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Verificar:** `npm test -- api/tts voice/tts`; manual forçando `VITE_TTS_PROVIDER=openai`
   - **Arquivos:** `api/tts.ts`, `api/tts.test.ts`, `src/modules/voice/tts/openaiTts.ts`, `tts/useSpeech.ts`
 
-- [ ] **V4: Comandos de voz (🎤)** · M · deps: V1, V2
+- [x] **V4: Comandos de voz (🎤)** · M · deps: V1, V2
   - `useVoiceCommand` (detecção de suporte, pt-BR, uma frase, indicador visual); o 🎤 no VoiceDock despacha as intenções (navegar, repetir, ajuda, ações da tela; desconhecido → sugestões faladas).
   - **Aceite:** o 🎤 some sem suporte (Firefox, sem erro no console); "escanear" na Home → `/escanear`; "capturar" na tela do scanner dispara a captura.
   - **Verificar:** testes com `SpeechRecognition` falso; manual Android + iPhone

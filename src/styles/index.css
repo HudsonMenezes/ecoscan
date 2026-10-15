@@ -52,7 +52,7 @@ body {
 }
 
 /* Em telas bem estreitas, a marca fica só com o ícone (o nome segue no aria-label). */
-@media (max-width: 359px) {
+@media (max-width: 379px) {
   .layout__wordmark {
     display: none;
   }
@@ -67,6 +67,7 @@ body {
 }
 
 .voice-dock__listen,
+.voice-dock__mic,
 .voice-dock__mode {
   position: relative;
   display: grid;
@@ -84,8 +85,22 @@ body {
   box-shadow: var(--shadow-card);
 }
 
-/* Ondas enquanto fala */
-.voice-dock__listen--active::after {
+.voice-dock__mic {
+  width: var(--touch-target-home);
+  height: var(--touch-target-home);
+  border: 2px solid var(--color-green);
+  background: var(--color-card);
+  color: var(--color-green);
+}
+
+.voice-dock__mic--active {
+  background: var(--color-green);
+  color: var(--color-green-text);
+}
+
+/* Ondas enquanto fala ou escuta */
+.voice-dock__listen--active::after,
+.voice-dock__mic--active::after {
   position: absolute;
   inset: 0;
   border: 3px solid var(--color-accent);
@@ -127,8 +142,23 @@ body {
   color: var(--color-accent-text);
 }
 
+.scan-screen--dark .voice-dock__mic,
+.celebration .voice-dock__mic {
+  border-color: transparent;
+  background: rgb(255 255 255 / 14%);
+  color: #fff;
+}
+
+.scan-screen--dark .voice-dock__mic--active,
+.celebration .voice-dock__mic--active {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
 .scan-screen--dark .voice-dock__listen--active::after,
-.celebration .voice-dock__listen--active::after {
+.celebration .voice-dock__listen--active::after,
+.scan-screen--dark .voice-dock__mic--active::after,
+.celebration .voice-dock__mic--active::after {
   border-color: #fff;
 }
 
@@ -860,9 +890,11 @@ a.action-button {
   color: #e3f1e8;
 }
 
+/* Voltar | título | voz. Com 🔊 e 🎤 à direita, colunas iguais (1fr auto 1fr)
+   estouravam a largura em 360px; o título só fica levemente fora do centro. */
 .scan-screen__bar {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: var(--space-1);
   align-items: center;
 }
@@ -1716,7 +1748,8 @@ a.action-button {
     animation: none;
   }
 
-  .voice-dock__listen--active::after {
+  .voice-dock__listen--active::after,
+  .voice-dock__mic--active::after {
     animation: none;
   }
 }

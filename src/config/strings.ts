@@ -146,6 +146,15 @@ export const strings = {
     listen: 'Ouvir esta tela',
     stop: 'Parar de falar',
     voiceMode: 'Modo voz: cada tela fala sozinha ao abrir',
+    command: 'Falar um comando',
+    listening: 'Ouvindo… toque para cancelar',
+    help: (hints: string[]) =>
+      `Você pode dizer: ${hints.slice(0, -1).join(', ')} ou ${hints[hints.length - 1]}.`,
+    notUnderstood: (help: string) => `Não entendi. ${help}`,
+    noSpeech: 'Não ouvi nada. Toque no microfone e fale de novo.',
+    micDenied:
+      'Não consegui usar o microfone. Libere o microfone para este site nas configurações do navegador.',
+    micError: 'O reconhecimento de voz não funcionou agora. Tente de novo.',
   },
   scanner: {
     loading: 'Analisando a foto…',

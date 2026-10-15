@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ScreenAction } from '@/shared/lib/screen';
 import { ACTION_SYNONYMS, GLOBAL_COMMANDS } from './commands';
-import { normalize, parseCommand } from './parseCommand';
+import { commandHints, normalize, parseAlternatives, parseCommand } from './parseCommand';
 
 const noop = () => {};
 const action = (id: ScreenAction['id'], label: string): ScreenAction => ({ id, label, run: noop });
@@ -141,5 +141,30 @@ describe('parseCommand: ações da tela', () => {
 describe('parseCommand: desconhecido', () => {
   it.each(['', '   ', 'banana', 'qual é a previsão do tempo', '!!!'])('%j → unknown', (phrase) => {
     expect(intentKey(phrase, [action('capture', 'Capturar')])).toBe('unknown');
+  });
+});
+
+describe('parseAlternatives', () => {
+  it('usa a primeira alternativa que é um comando', () => {
+    expect(parseAlternatives(['escalar', 'escanear'], [])).toEqual({ type: 'nav', target: 'scan' });
+  });
+
+  it('nenhuma alternativa conhecida → unknown', () => {
+    expect(parseAlternatives(['banana', 'bandana'], [])).toEqual({ type: 'unknown' });
+    expect(parseAlternatives([], [])).toEqual({ type: 'unknown' });
+  });
+});
+
+describe('commandHints', () => {
+  it('ações da tela primeiro, depois os comandos globais, sem repetir', () => {
+    const actions = [action('capture', 'Capturar'), action('scan-again', 'Escanear')];
+    expect(commandHints(actions)).toEqual([
+      'capturar',
+      'escanear',
+      'descartar',
+      'minha carteira',
+      'início',
+      'repetir',
+    ]);
   });
 });

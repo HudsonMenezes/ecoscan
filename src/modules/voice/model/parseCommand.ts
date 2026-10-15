@@ -57,3 +57,22 @@ export function parseCommand(transcript: string, actions: ScreenAction[]): Voice
 
   return best.intent;
 }
+
+// O reconhecimento devolve algumas alternativas (a mais provável primeiro): vale
+// a primeira que for um comando conhecido.
+export function parseAlternatives(transcripts: string[], actions: ScreenAction[]): VoiceIntent {
+  for (const transcript of transcripts) {
+    const intent = parseCommand(transcript, actions);
+    if (intent.type !== 'unknown') return intent;
+  }
+  return { type: 'unknown' };
+}
+
+// Comandos que valem em qualquer tela, na ordem em que a ajuda fala.
+const GLOBAL_HINTS = ['escanear', 'descartar', 'minha carteira', 'início', 'repetir'];
+
+// O que dá para falar nesta tela: as ações dela primeiro, sem repetir.
+export function commandHints(actions: ScreenAction[]): string[] {
+  const hints = [...actions.map((action) => action.label.toLowerCase()), ...GLOBAL_HINTS];
+  return hints.filter((hint, i) => hints.findIndex((h) => normalize(h) === normalize(hint)) === i);
+}
