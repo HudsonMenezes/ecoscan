@@ -164,6 +164,20 @@ describe('POST /api/scan', () => {
     expect(aborted).toBe(true);
   });
 
+  it('o log registra por que cada tentativa foi rejeitada, sem o conteúdo', async () => {
+    const tooLong = 'x'.repeat(241);
+    const { handle, log } = setup(
+      answers('{"quebrado', JSON.stringify({ ...battery, disposal: tooLong })),
+    );
+
+    await handle(request({ imageBase64: JPEG }));
+
+    const entry = log.mock.calls[0]?.[0] as { status: number; rejections: string[] };
+    expect(entry.status).toBe(502);
+    expect(entry.rejections).toEqual(['json', 'schema:disposal:too_big']);
+    expect(JSON.stringify(entry)).not.toContain(tooLong);
+  });
+
   it('o log não contém a imagem nem o texto da IA', async () => {
     const { handle, log } = setup(answers(JSON.stringify(battery)));
 

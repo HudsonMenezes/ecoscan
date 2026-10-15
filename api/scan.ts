@@ -23,9 +23,11 @@ const ScanRequestSchema = z.object({
 
 class TimeoutError extends Error {}
 
-type Outcome =
-  | { ok: true; result: ScanResult; attempts: number }
-  | { ok: false; status: 502 | 504; error: 'ai_unavailable' | 'ai_timeout'; attempts: number };
+// `rejections`: por que cada tentativa falhou (campo e código, nunca o conteúdo).
+type Outcome = { attempts: number; rejections: string[] } & (
+  | { ok: true; result: ScanResult }
+  | { ok: false; status: 502 | 504; error: 'ai_unavailable' | 'ai_timeout' }
+);
 
 async function identifyWaste(
   imageBase64: string,
@@ -35,11 +37,13 @@ async function identifyWaste(
 ): Promise<Outcome> {
   const deadline = now() + timeoutMs;
   let attempts = 0;
+  const rejections: string[] = [];
 
   while (attempts < MAX_ATTEMPTS) {
     attempts += 1;
     const remaining = deadline - now();
-    if (remaining <= 0) return { ok: false, status: 504, error: 'ai_timeout', attempts };
+    if (remaining <= 0)
+      return { ok: false, status: 504, error: 'ai_timeout', attempts, rejections };
 
     const controller = new AbortController();
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -54,21 +58,29 @@ async function identifyWaste(
         }),
       ]);
       const parsed = ScanResultSchema.safeParse(JSON.parse(raw));
-      if (parsed.success) return { ok: true, result: parsed.data, attempts };
+      if (parsed.success) return { ok: true, result: parsed.data, attempts, rejections };
       // Schema inválido: tenta de novo.
+      rejections.push(
+        ...parsed.error.issues.map((issue) => `schema:${issue.path.join('.')}:${issue.code}`),
+      );
     } catch (error) {
       if (error instanceof TimeoutError) {
-        return { ok: false, status: 504, error: 'ai_timeout', attempts };
+        return { ok: false, status: 504, error: 'ai_timeout', attempts, rejections };
       }
       // JSON quebrado ou resposta inutilizável: tenta de novo. Erro da API: desiste.
-      if (!(error instanceof SyntaxError) && !(error instanceof InvalidModelOutputError)) {
-        return { ok: false, status: 502, error: 'ai_unavailable', attempts };
+      if (error instanceof SyntaxError) {
+        rejections.push('json');
+      } else if (error instanceof InvalidModelOutputError) {
+        rejections.push(`output:${error.message}`);
+      } else {
+        rejections.push(`api:${error instanceof Error ? error.name : 'unknown'}`);
+        return { ok: false, status: 502, error: 'ai_unavailable', attempts, rejections };
       }
     } finally {
       clearTimeout(timer);
     }
   }
-  return { ok: false, status: 502, error: 'ai_unavailable', attempts };
+  return { ok: false, status: 502, error: 'ai_unavailable', attempts, rejections };
 }
 
 function isJpeg(imageBase64: string) {
@@ -129,6 +141,7 @@ export function createScanHandler({
         error: outcome.error,
         latencyMs,
         attempts: outcome.attempts,
+        rejections: outcome.rejections,
         promptVersion: PROMPT_VERSION,
       });
       return jsonError(outcome.status, outcome.error);
@@ -142,6 +155,7 @@ export function createScanHandler({
       confidence: result.confidence,
       latencyMs,
       attempts: outcome.attempts,
+      rejections: outcome.rejections,
       promptVersion: PROMPT_VERSION,
     });
     return Response.json(result, { headers: { 'Cache-Control': 'no-store' } });

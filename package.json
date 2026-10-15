@@ -18,7 +18,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "icons": "node scripts/generate-icons.ts",
-    "qr:site": "node scripts/generate-site-qr.ts"
+    "qr:site": "node scripts/generate-site-qr.ts",
+    "eval:scanner": "node scripts/eval-scanner.ts"
   },
   "dependencies": {
     "openai": "7.27.0",
