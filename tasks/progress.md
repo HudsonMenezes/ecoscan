@@ -25,7 +25,7 @@
 | Env vars na Vercel | `OPENAI_API_KEY` (Secret), `OPENAI_MODEL`, `OPENAI_TTS_MODEL`, `ALLOWED_ORIGIN` (Production + Preview)                                                                    |
 | `.env` local       | Tem a chave; `ALLOWED_ORIGIN=https://localhost:5173,http://localhost:3000`                                                                                                |
 | CI                 | GitHub Actions (`.github/workflows/ci.yml`); repo público, status via `https://api.github.com/repos/HudsonMenezes/ecoscan/actions/runs`                                   |
-| OpenAI             | Projeto "EcoScan" criado. **Pendente (P1):** confirmar o limite de gasto e a regra de rate limit no Vercel Firewall                                                       |
+| OpenAI             | Projeto "EcoScan" criado; **limite de gasto de US$ 5** definido (2026-10-15). **Pendente (P1):** regra de rate limit no Vercel Firewall para `/api/*`                     |
 
 ## Decisões e armadilhas já resolvidas
 
