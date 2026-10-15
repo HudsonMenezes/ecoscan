@@ -95,5 +95,5 @@ test('câmera negada mostra o aviso e o "Enviar foto"', async ({ page }) => {
   await page.getByRole('button', { name: 'Abrir câmera' }).click();
 
   await expect(page.getByText('Sem permissão para usar a câmera')).toBeVisible();
-  await expect(page.getByLabel('Enviar foto')).toHaveAttribute('capture', 'environment');
+  await expect(page.getByLabel('Enviar foto')).toHaveAttribute('accept', 'image/*');
 });

@@ -205,7 +205,7 @@ Meta: 80% de cobertura em `src/shared/lib`. A UI é coberta pelos testes de comp
 - [ ] Deploy na Vercel acessível por HTTPS; o Lighthouse indica que o app é **instalável** e dá **Acessibilidade ≥ 95**.
 - [ ] Home mostra os 3 botões e cada um leva à rota correta (E2E).
 - [ ] Num celular real, `useCamera` abre a câmera traseira e `capture()` devolve um JPEG de no máximo 1024px.
-- [ ] Se a câmera for negada, aparece o botão "Enviar foto" (input `accept="image/*" capture="environment"`).
+- [ ] Se a câmera for negada, aparece o botão "Enviar foto" (input `accept="image/*"`, **sem** `capture`, para o celular oferecer câmera e galeria; decidido em 2026-10-15).
 - [ ] `AppStorage` devolve `null` para dados ausentes ou inválidos, sem lançar exceção.
 - [ ] No computador: a webcam abre com o preview espelhado e a foto não espelhada; câmera e envio ficam lado a lado; arrastar e soltar funciona; o banner "Melhor no celular" mostra um QR que abre o site e pode ser dispensado.
 - [ ] `api/health.ts` responde `200` e confirma que `OPENAI_API_KEY` está configurada, sem revelá-la.

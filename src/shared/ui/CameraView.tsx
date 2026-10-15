@@ -90,10 +90,10 @@ export function CameraView({ onCapture }: CameraViewProps) {
       >
         <ImageIcon size={32} />
         <span>{strings.camera.upload}</span>
+        {/* Sem o atributo capture: o celular oferece câmera e galeria. */}
         <input
           type="file"
           accept="image/*"
-          capture="environment"
           className="visually-hidden"
           disabled={busy}
           onChange={handleFile}

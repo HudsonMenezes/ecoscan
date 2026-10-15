@@ -80,7 +80,8 @@ describe('CameraView', () => {
     expect(screen.queryByRole('button', { name: strings.camera.capture })).toBeNull();
     const input = uploadInput();
     expect(input).toHaveAttribute('accept', 'image/*');
-    expect(input).toHaveAttribute('capture', 'environment');
+    // Sem capture: o celular oferece câmera e galeria.
+    expect(input).not.toHaveAttribute('capture');
   });
 
   it('a foto enviada passa pelo redimensionamento antes de chegar ao onCapture', async () => {
