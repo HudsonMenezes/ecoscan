@@ -171,7 +171,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Verificar:** testes unitários e de componente com `speechSynthesis` falso; manual no celular
   - **Arquivos:** `tts/browserTts.ts`, `tts/useSpeech.ts`, `components/VoiceDock.tsx`, `*.test.ts(x)`, `src/app/Layout.tsx`
 
-- [ ] **V3: `/api/tts` + reserva OpenAI com cache** · M · deps: V2, T2
+- [x] **V3: `/api/tts` + reserva OpenAI com cache** · M · deps: V2, T2
   - Handler com Zod (1–600 caracteres), origem e instruções de estilo; `openaiTts` com cache em memória; `useSpeech` cai para OpenAI sem voz pt-BR ou com `VITE_TTS_PROVIDER=openai`.
   - **Aceite:** testes do handler (400/403/`audio/mpeg`); o fallback é acionado sem voz pt-BR; "repetir" não chama a API de novo.
   - **Verificar:** `npm test -- api/tts voice/tts`; manual forçando `VITE_TTS_PROVIDER=openai`

@@ -4,8 +4,12 @@
 export const SPEECH_RATE = 0.95;
 const LANG = 'pt-BR';
 
+export type TtsProvider = 'browser' | 'openai';
+
 export type Tts = {
   readonly supported: boolean;
+  /** Quem vai falar a próxima frase. */
+  provider(): TtsProvider;
   /** Para o que estiver falando e fala o texto. Resolve quando termina, é interrompida ou falha. */
   speak(text: string): Promise<void>;
   stop(): void;
@@ -49,6 +53,7 @@ export function createBrowserTts(
   if (!synth || !Utterance) {
     return {
       supported: false,
+      provider: () => 'browser',
       speak: () => Promise.resolve(),
       stop: () => {},
       isSpeaking: () => false,
@@ -58,6 +63,7 @@ export function createBrowserTts(
 
   return {
     supported: true,
+    provider: () => 'browser',
     speak(text) {
       synth.cancel();
       if (!text.trim()) {
