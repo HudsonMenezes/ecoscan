@@ -43,12 +43,11 @@ async function seedRecentScan(page: Page) {
   );
 }
 
-test('lê o QR do ponto pelo app e credita o descarte', async ({ page }) => {
+test('a câmera liga sozinha, lê o QR do ponto e credita o descarte', async ({ page }) => {
   await cameraShowingQr(page, 'https://ecoscan-v1.vercel.app/descartar?ponto=escola-demo');
   await seedRecentScan(page);
 
   await page.goto('/descartar');
-  await page.getByRole('button', { name: 'Ler QR do ponto' }).click();
 
   await expect(page.getByRole('heading', { name: 'Parabéns!' })).toBeVisible();
   await expect(page).toHaveURL(/\/descartar\?ponto=escola-demo$/);
@@ -59,7 +58,6 @@ test('QR de outro site → "não é um ponto do EcoScan" e "Ler outro QR"', asyn
   await cameraShowingQr(page, 'https://exemplo.com/promocao');
 
   await page.goto('/descartar');
-  await page.getByRole('button', { name: 'Ler QR do ponto' }).click();
 
   await expect(page.getByRole('alert')).toContainText('Esse QR não é um ponto do EcoScan.');
   await expect(page.getByRole('button', { name: 'Ler outro QR' })).toBeVisible();

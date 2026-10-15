@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { strings } from '@/config/strings';
-import { useCamera } from '@/shared/lib/camera';
+import { useCamera, useHasCamera } from '@/shared/lib/camera';
+import { useIsDesktop } from '@/shared/lib/useMediaQuery';
 import { AlertIcon, QrIcon } from '@/shared/ui/icons';
 import { parsePointUrl } from '../qr/parsePointUrl';
 import { useQrReader } from '../qr/useQrReader';
 
 const { disposal } = strings;
 
-// Leitor de QR dentro do app. A câmera só abre no toque (como no scanner).
+// Leitor de QR dentro do app. A câmera liga sozinha ao abrir (como no scanner);
+// o botão "Ler QR do ponto" fica como reserva.
 // QR do EcoScan → onPoint(id); qualquer outro QR → aviso e "Ler outro QR".
 export function QrReader({ onPoint }: { onPoint: (pointId: string) => void }) {
   const { state, videoRef, start, stop } = useCamera();
   const [invalid, setInvalid] = useState(false);
+
+  // No computador, só depois de saber que há webcam. Sem guarda por ref: no
+  // StrictMode a limpeza do useCamera invalida o primeiro pedido (ver CameraView).
+  const isDesktop = useIsDesktop();
+  const hasCamera = useHasCamera();
+  const shouldAutoStart = isDesktop ? hasCamera === true : true;
+  useEffect(() => {
+    if (shouldAutoStart) void start();
+  }, [shouldAutoStart, start]);
 
   useQrReader(videoRef, state.status === 'ready' && !invalid, (text) => {
     const pointId = parsePointUrl(text);
