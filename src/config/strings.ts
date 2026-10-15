@@ -141,6 +141,12 @@ export const strings = {
     timeout: 'Demorou demais para analisar. Tente de novo.',
     unavailable: 'Não consegui analisar a foto agora. Tente de novo.',
   },
+  voice: {
+    dockLabel: 'Voz',
+    listen: 'Ouvir esta tela',
+    stop: 'Parar de falar',
+    voiceMode: 'Modo voz: cada tela fala sozinha ao abrir',
+  },
   scanner: {
     loading: 'Analisando a foto…',
     loadingSpeech: 'Estou analisando a foto. Espere um pouquinho.',

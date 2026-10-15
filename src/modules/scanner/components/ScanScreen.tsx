@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { strings } from '@/config/strings';
 import { useScreen } from '@/shared/lib/screen';
 import { CameraView, type CameraControl } from '@/shared/ui/CameraView';
+import { HeaderTools } from '@/shared/ui/HeaderTools';
 import { ChevronLeftIcon } from '@/shared/ui/icons';
 import { useScan } from '../hooks/useScan';
 import { describeScanScreen } from './describeScanScreen';
@@ -41,7 +42,9 @@ export function ScanScreen() {
           <ChevronLeftIcon size={24} />
         </Link>
         <h1 className="scan-screen__title">{title}</h1>
-        <span className="scan-screen__spacer" aria-hidden="true" />
+        <div className="scan-screen__tools">
+          <HeaderTools />
+        </div>
       </header>
 
       {(state.status === 'idle' || state.status === 'capturing') && (

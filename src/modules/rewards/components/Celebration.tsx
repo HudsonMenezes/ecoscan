@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { strings } from '@/config/strings';
+import { HeaderTools } from '@/shared/ui/HeaderTools';
 import { BoltIcon, CheckIcon, CloseIcon, CoinIcon } from '@/shared/ui/icons';
 import type { LedgerEntry } from '../model/ledger';
 import type { Level } from '../model/levels';
@@ -46,6 +47,7 @@ export function Celebration({ entry, leveledUp, onScanAnother }: CelebrationProp
         <Link to="/" className="round-button round-button--on-dark" aria-label={success.close}>
           <CloseIcon size={24} />
         </Link>
+        <HeaderTools />
       </div>
 
       <div className="celebration__body">

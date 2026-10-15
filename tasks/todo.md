@@ -165,7 +165,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Verificar:** `npm test -- voice/model`
   - **Arquivos:** `src/modules/voice/model/commands.ts`, `parseCommand.ts`, `parseCommand.test.ts`
 
-- [ ] **V2: TTS do navegador + VoiceDock (🔊 e Modo voz)** · M · deps: T5
+- [x] **V2: TTS do navegador + VoiceDock (🔊 e Modo voz)** · M · deps: T5
   - `pickPtBrVoice`, `browserTts`, `useSpeech` (só browser por enquanto); `VoiceDock` montado em `src/app`; Modo voz persistido em `ecoscan:voice-settings` e fala automática ao trocar de tela.
   - **Aceite:** 🔊 lê o `speech` da tela e um segundo toque para a fala; com o Modo voz ligado, a tela fala ao abrir.
   - **Verificar:** testes unitários e de componente com `speechSynthesis` falso; manual no celular

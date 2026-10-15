@@ -17,7 +17,7 @@ Permitir que uma pessoa **que não sabe ler nem escrever** use o EcoScan do come
 
 ### VoiceDock (sempre visível)
 
-Barra fixa no rodapé de todas as telas, montada pelo `src/app/` (raiz de composição):
+Botões no **canto superior direito** de todas as telas, montados pelo `src/app/` (raiz de composição). Decisão de 2026-10-15: o rodapé ficou com a barra de navegação da nova identidade visual. Nas telas com barra própria (scanner em tela cheia, comemoração), o app entrega uma versão compacta só com 🔊 e 🎤 pelo `<HeaderTools />` de `src/shared/ui`:
 
 | Botão    | Ícone             | Ação                                                                                                |
 | -------- | ----------------- | --------------------------------------------------------------------------------------------------- |

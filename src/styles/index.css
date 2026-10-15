@@ -41,10 +41,95 @@ body {
 }
 
 .layout__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
   width: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-2) var(--space-2) 0;
+}
+
+/* Em telas bem estreitas, a marca fica só com o ícone (o nome segue no aria-label). */
+@media (max-width: 359px) {
+  .layout__wordmark {
+    display: none;
+  }
+}
+
+/* Botões de voz: sempre no canto superior direito */
+.voice-dock {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.voice-dock__listen,
+.voice-dock__mode {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.voice-dock__listen {
+  width: var(--touch-target-home);
+  height: var(--touch-target-home);
+  border: 0;
+  background: var(--color-green);
+  color: var(--color-green-text);
+  box-shadow: var(--shadow-card);
+}
+
+/* Ondas enquanto fala */
+.voice-dock__listen--active::after {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--color-accent);
+  border-radius: 50%;
+  content: '';
+  animation: voice-wave 1.2s ease-out infinite;
+}
+
+@keyframes voice-wave {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
+.voice-dock__mode {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border: 2px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text-muted);
+}
+
+.voice-dock__mode[aria-pressed='true'] {
+  border-color: var(--color-green);
+  background: var(--color-green-soft);
+  color: var(--color-green);
+}
+
+/* Sobre fundo escuro (câmera, comemoração), o 🔊 usa o broto. */
+.scan-screen--dark .voice-dock__listen,
+.celebration .voice-dock__listen {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.scan-screen--dark .voice-dock__listen--active::after,
+.celebration .voice-dock__listen--active::after {
+  border-color: #fff;
 }
 
 .layout__home {
@@ -774,8 +859,14 @@ a.action-button {
 
 .scan-screen__bar {
   display: grid;
-  grid-template-columns: var(--touch-target) 1fr var(--touch-target);
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-1);
   align-items: center;
+}
+
+.scan-screen__tools {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .scan-screen__title {
@@ -1426,7 +1517,8 @@ a.action-button {
 
 .celebration__top {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .round-button--on-dark {
@@ -1618,6 +1710,10 @@ a.action-button {
   }
 
   .scan-loading__spinner {
+    animation: none;
+  }
+
+  .voice-dock__listen--active::after {
     animation: none;
   }
 }

@@ -203,3 +203,32 @@ export function BinIcon(props: IconProps) {
     </IconSvg>
   );
 }
+
+export function SpeakerIcon(props: IconProps) {
+  return (
+    <IconSvg {...props}>
+      <path d="M11 5L6 9H3v6h3l5 4z" />
+      <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+      <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+    </IconSvg>
+  );
+}
+
+export function StopIcon(props: IconProps) {
+  return (
+    <IconSvg {...props}>
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+    </IconSvg>
+  );
+}
+
+// Cabeça de perfil falando: o Modo voz (cada tela fala ao abrir).
+export function VoiceModeIcon(props: IconProps) {
+  return (
+    <IconSvg {...props}>
+      <path d="M9 21v-3H7a2 2 0 0 1-2-2v-3l-2-1 2-3.5A6.5 6.5 0 0 1 17 9c0 2-1 3.5-2 4.5V21" />
+      <path d="M19 8a4 4 0 0 1 0 5" />
+      <path d="M21.5 6a7.5 7.5 0 0 1 0 9" />
+    </IconSvg>
+  );
+}
