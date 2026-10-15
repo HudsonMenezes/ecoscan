@@ -1,14 +1,14 @@
 # Progresso: EcoScan
 
 > Ponto de retomada entre sessões. Atualize ao concluir cada tarefa.
-> Última atualização: 2026-10-15
+> Última atualização: 2026-10-15 (fim da sessão)
 
 ## Onde estamos
 
 - **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), P2 (CI)
-- **Em andamento:** **T11: telas do scanner.** Código, testes e E2E prontos e no ar; **falta o teste manual do Hudson** (escanear uma pilha real no celular e um objeto pelo computador). Depois, marcar a T11 no `todo.md`.
-- **Depois:** T12 (orientação local de Duque de Caxias + E2E) → **Checkpoint B**
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), P2 (CI)
+- **Próxima:** **T12: orientação local de Duque de Caxias + E2E do scanner** (ver [`todo.md`](todo.md)). Pesquisar só **fontes oficiais** (prefeitura, programas de logística reversa), com URL e data de verificação em `localGuidance.ts`; categoria sem fonte não mostra o bloco. A T12 **não chama a OpenAI** (o E2E intercepta `/api/scan`).
+- **Depois:** **Checkpoint B** (revisão com o Hudson). Itens: critérios da SPEC-scanner, deploy, escanear 3 objetos reais no celular, conferir manualmente que os logs da Vercel não têm imagens. Pendências conhecidas: a correção "com acentos" da retentativa ainda não foi testada com a IA (só aparece em ~5% dos casos); o eval completo do scan-v5 ficou pela metade (95% e 86%, 0 perigosas) e só deve ser repetido com o ok do Hudson, por causa do orçamento.
 
 ## Como retomar
 

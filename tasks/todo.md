@@ -88,7 +88,7 @@
   - **Verificar:** `npm test -- scanner`
   - **Arquivos:** `src/modules/scanner/api/scanImage.ts`, `hooks/useScan.ts`, `model/lastScan.ts`, `index.ts`, `*.test.ts`
 
-- [ ] **T11: Telas do scanner (ScanScreen, ResultCard, RetryHint)** · M · deps: T6, T10, T5
+- [x] **T11: Telas do scanner (ScanScreen, ResultCard, RetryHint)** · M · deps: T6, T10, T5
   - Substitui o `CameraView` provisório; ResultCard com cor/ícone do catálogo, "Por que aqui?" para itens compostos, botão Descartar → `/descartar`; registra `speech` (`spokenSummary` + `categoryReason`) e a ação `capture` via `useScreen`. O texto da IA é renderizado como texto puro.
   - **Aceite:** estados carregando/resultado/tente-de-novo/erro renderizados; o bloco composto só aparece com `isComposite`; fala e ações registradas.
   - **Verificar:** testes de componente; **manual:** escanear uma pilha real pelo celular e um objeto pela webcam do computador (layout lado a lado da T6b mantido)
