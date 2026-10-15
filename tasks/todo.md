@@ -16,7 +16,8 @@
 
 - [ ] **T2: Deploy na Vercel + `api/health` + headers de segurança** · S · deps: T1 · 👤 precisa de você (login/link Vercel, env vars)
   - `api/health.ts` (200, informa se a chave existe sem revelá-la); `api/_lib/http.ts` (`assertAllowedOrigin`, `jsonError`); `vercel.json` com CSP, `X-Content-Type-Options` e `Referrer-Policy`.
-  - **Aceite:** URL de produção em HTTPS; `/api/health` → `{ ok: true, openaiKey: true }`; headers presentes; teste do handler com origem inválida → 403.
+  - Domínio: `ecoscan-v1.vercel.app`; `ALLOWED_ORIGIN` aceita produção + `localhost` (deploys de preview via `VERCEL_URL`).
+  - **Aceite:** `https://ecoscan-v1.vercel.app` no ar; `/api/health` → `{ ok: true, openaiKey: true }`; headers presentes; teste do handler com origem inválida → 403.
   - **Verificar:** `npm test`; `curl -I <url>` mostra os headers; `curl <url>/api/health`
   - **Arquivos:** `api/health.ts`, `api/_lib/http.ts`, `api/_lib/http.test.ts`, `vercel.json`
 
@@ -190,7 +191,7 @@
   - **Verificar:** script + teste manual de rajada
   - **Arquivos:** `scripts/check-secrets.ts`, `package.json`, `vercel.json`
 
-- [ ] **P2: CI no GitHub Actions** · S · deps: T1 · ❓ aguarda aprovação (pergunta em aberto no plano)
+- [ ] **P2: CI no GitHub Actions** · S · deps: T1 · aprovada; pode ser feita logo após T1
   - Workflow: install → lint → typecheck → test → build → check:secrets → E2E (Chromium).
   - **Aceite:** o workflow passa no push para `main`.
   - **Verificar:** execução verde no GitHub

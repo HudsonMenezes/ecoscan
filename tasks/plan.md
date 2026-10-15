@@ -55,7 +55,11 @@ As fases 3a e 3b são independentes e podem ser feitas em paralelo, porque `voic
 | Rate limit do Vercel Firewall indisponível no seu plano | Médio | Conferir em P1; alternativa: limitador em memória por instância (fraco) ou Upstash (perguntar antes) |
 | Fotos de banco limpas demais inflando o eval | Médio | Mínimo de 5 imagens "difíceis"; trocar por fotos reais quando houver |
 
+## Decisões do plano
+
+- **Domínio de produção:** `https://ecoscan-v1.vercel.app` (já reservado). É o `ALLOWED_ORIGIN` de produção e o `QR_BASE_URL` do QR de demonstração.
+- **CI no GitHub Actions:** incluída (P2), aprovada em 2026-10-15.
+
 ## Perguntas em aberto
 
-1. **CI no GitHub Actions** (lint, typecheck, testes e build em cada push): não está nas specs. Incluo como tarefa P2? *(recomendado: sim)*
-2. **Domínio:** `ecoscan.vercel.app` pode já estar em uso. Algum outro nome de subdomínio preferido (ex.: `ecoscan-caxias.vercel.app`)?
+- Nenhuma no momento.
