@@ -135,7 +135,7 @@
   - **Verificar:** teste unitário com frame de imagem de QR; manual nos dois aparelhos
   - **Arquivos:** `qr/useQrReader.ts`, `qr/useQrReader.test.ts`, `components/DiscardScreen.tsx`
 
-- [ ] **R5: Gerador do QR de demonstração + página A4** · S · deps: R2 · 👤 imprimir
+- [x] **R5: Gerador do QR de demonstração + página A4** · S · deps: R2 · 👤 imprimir
   - `npm run qr:demo` lê `QR_BASE_URL` e gera SVG, PNG 1024px e HTML A4 em `print/`; o PNG fica commitado.
   - **Aceite:** o QR gerado abre `<produção>/descartar?ponto=escola-demo` pela câmera nativa.
   - **Verificar:** rodar o script; ler o PNG com o celular
