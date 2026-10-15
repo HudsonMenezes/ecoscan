@@ -47,7 +47,7 @@
   - **Feito (2026-10-15):** celular real ok. Webcam não testada manualmente (o computador do Hudson não tem câmera; o caso "sem câmera" foi validado). `Enviar foto` ficou **sem** `capture` para oferecer a galeria.
   - **Arquivos:** `src/shared/lib/camera/useCamera.ts`, `resizeImage.ts`, `resizeImage.test.ts`, `src/shared/ui/CameraView.tsx`, `CameraView.test.tsx`
 
-- [ ] **T6b: Experiência no computador (lado a lado, arrastar e soltar, "Melhor no celular")** · M · deps: T6
+- [x] **T6b: Experiência no computador (lado a lado, arrastar e soltar, "Melhor no celular")** · M · deps: T6
   - Em `pointer: fine`, câmera e "Enviar foto" lado a lado, com área de arrastar e soltar; `DesktopHint` com QR estático do site (`npm run qr:site` → `public/qr-site.svg`, `qrcode` em devDependencies), dispensável e salvo em `ecoscan:desktop-hint-dismissed`.
   - **Aceite:** no desktop, o layout lado a lado e o arrastar e soltar funcionam; o banner aparece só sem toque e some ao dispensar (persistindo); o QR abre `https://ecoscan-v1.vercel.app`; o celular não muda.
   - **Verificar:** testes de componente (mock de `matchMedia`); E2E em viewport desktop; ler o QR da tela com o celular

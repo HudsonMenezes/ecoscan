@@ -3,7 +3,9 @@
 export const strings = {
   appName: 'EcoScan',
   layout: {
-    home: 'Voltar para o início',
+    // Complemento do nome acessível do link do topo, que começa pelo texto
+    // visível ("EcoScan") para quem usa controle por voz (WCAG 2.5.3).
+    homeHint: ', voltar para o início',
   },
   home: {
     title: 'EcoScan',

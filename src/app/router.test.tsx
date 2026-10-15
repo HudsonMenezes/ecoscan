@@ -29,7 +29,9 @@ describe('router', () => {
   it('o link de início volta para a Home', async () => {
     renderAt('/carteira');
 
-    await userEvent.click(await screen.findByRole('link', { name: strings.layout.home }));
+    await userEvent.click(
+      await screen.findByRole('link', { name: strings.appName + strings.layout.homeHint }),
+    );
 
     expect(screen.getByRole('heading', { name: strings.home.title })).toBeInTheDocument();
   });

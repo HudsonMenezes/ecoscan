@@ -33,7 +33,7 @@ for (const { button, path, heading } of routes) {
     await expect(page).toHaveURL(path);
     await expect(page.getByRole('heading', { name: heading })).toBeVisible();
 
-    await page.getByRole('link', { name: 'Voltar para o início' }).click();
+    await page.getByRole('link', { name: 'EcoScan, voltar para o início' }).click();
     await expect(page).toHaveURL('/');
   });
 }

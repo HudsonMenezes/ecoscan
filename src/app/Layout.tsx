@@ -12,7 +12,11 @@ export function Layout() {
       <div className="layout">
         {!isHome && (
           <header className="layout__header">
-            <Link to="/" className="layout__home" aria-label={strings.layout.home}>
+            <Link
+              to="/"
+              className="layout__home"
+              aria-label={strings.appName + strings.layout.homeHint}
+            >
               <HomeIcon size={28} />
               <span>{strings.appName}</span>
             </Link>
