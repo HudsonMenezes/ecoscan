@@ -17,6 +17,17 @@ export default defineConfig({
     // O precache do service worker concorre com as requisições do teste e deixa
     // a navegação instável. O PWA é validado pelo Lighthouse no Checkpoint A.
     serviceWorkers: 'block',
+    // A tela de boas-vindas da primeira visita fica marcada como vista; o
+    // welcome.spec.ts limpa isso para testá-la.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: `http://localhost:${PORT}`,
+          localStorage: [{ name: 'ecoscan:welcome', value: '{"seen":true}' }],
+        },
+      ],
+    },
   },
   projects: [
     {

@@ -183,7 +183,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Verificar:** testes com `SpeechRecognition` falso; manual Android + iPhone
   - **Arquivos:** `stt/useVoiceCommand.ts`, `stt/useVoiceCommand.test.ts`, `components/VoiceDock.tsx`
 
-- [ ] **V5: WelcomeGate + aviso de privacidade + página Sobre** · S · deps: V2
+- [x] **V5: WelcomeGate + aviso de privacidade + página Sobre** · S · deps: V2
   - Primeira visita: botão "▶️ Começar" desbloqueia o áudio, fala a apresentação e liga o Modo voz; aviso de privacidade do reconhecimento de voz; rota `/sobre`.
   - **Aceite:** aparece só na primeira visita; o aviso está presente nas duas telas.
   - **Verificar:** testes de componente

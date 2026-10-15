@@ -242,3 +242,11 @@ export function MicIcon(props: IconProps) {
     </IconSvg>
   );
 }
+
+export function PlayIcon(props: IconProps) {
+  return (
+    <IconSvg {...props}>
+      <path d="M7 4.5v15l13-7.5z" />
+    </IconSvg>
+  );
+}

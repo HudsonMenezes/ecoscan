@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router';
 import { strings } from '@/config/strings';
-import { VoiceAutoSpeak, VoiceDock } from '@/modules/voice';
+import { VoiceAutoSpeak, VoiceDock, WelcomeGate } from '@/modules/voice';
 import { ScreenProvider } from '@/shared/lib/screen';
 import { HeaderToolsProvider } from '@/shared/ui/HeaderTools';
 import { LeafIcon } from '@/shared/ui/icons';
@@ -20,6 +20,7 @@ export function Layout() {
     <ScreenProvider>
       <HeaderToolsProvider tools={COMPACT_VOICE}>
         <VoiceAutoSpeak />
+        <WelcomeGate />
         <div className={fullScreen ? 'layout layout--full' : 'layout'}>
           {!fullScreen && (
             <header className="layout__header">

@@ -199,6 +199,101 @@ body {
   padding: 0;
 }
 
+/* Boas-vindas (primeira visita): por cima de tudo, um botão só */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: var(--color-green);
+  color: #fff;
+  text-align: center;
+}
+
+.welcome__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.welcome__mark {
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
+  color: var(--color-green);
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+
+.welcome__text {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.welcome__start {
+  width: 100%;
+  min-height: 5rem;
+  margin-top: var(--space-2);
+  font-size: 1.5rem;
+}
+
+.welcome__privacy {
+  max-width: var(--content-max-width);
+  margin: var(--space-2) auto 0;
+  color: var(--color-green-soft);
+  font-size: 0.9375rem;
+}
+
+/* Página Sobre */
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.about__title {
+  margin: 0;
+}
+
+.about p {
+  margin: 0;
+}
+
+.about__section h2 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-size-lg);
+}
+
+.about__section ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.home__about {
+  align-self: center;
+  padding: var(--space-1);
+  color: var(--color-green);
+  font-weight: 600;
+}
+
 /* Barra de navegação inferior */
 .bottom-nav {
   position: fixed;

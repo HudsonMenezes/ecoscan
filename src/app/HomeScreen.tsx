@@ -65,6 +65,10 @@ export function HomeScreen({ now = new Date() }: { now?: Date }) {
           <p>{tipOfTheDay(now)}</p>
         </div>
       </aside>
+
+      <Link to="/sobre" className="home__about">
+        {strings.about.link}
+      </Link>
     </div>
   );
 }

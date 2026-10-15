@@ -156,6 +156,29 @@ export const strings = {
       'Não consegui usar o microfone. Libere o microfone para este site nas configurações do navegador.',
     micError: 'O reconhecimento de voz não funcionou agora. Tente de novo.',
   },
+  privacy: {
+    voice:
+      'Quando você toca no microfone, o navegador envia sua fala para ser transformada em texto. O EcoScan não grava nem guarda sua voz.',
+  },
+  welcome: {
+    title: 'Bem-vindo ao EcoScan!',
+    text: 'Eu mostro onde descartar cada objeto e falo tudo o que aparece na tela.',
+    start: 'Começar',
+    speech:
+      'Olá! Eu sou o EcoScan. Vou falar tudo o que aparece na tela. Toque no alto-falante para ouvir de novo, ou no microfone para falar comigo.',
+  },
+  about: {
+    link: 'Sobre o EcoScan e privacidade',
+    title: 'Sobre o EcoScan',
+    intro:
+      'O EcoScan ajuda a descobrir onde descartar cada objeto e premia quem descarta certo. É um projeto de uma escola de Duque de Caxias (RJ).',
+    privacyTitle: 'Privacidade',
+    photo:
+      'A foto do objeto vai para uma inteligência artificial só para identificar o material. Ela não é guardada.',
+    data: 'Seu nível, suas moedas e seu histórico ficam só neste aparelho. Não pedimos nome, e-mail nem login.',
+    camera:
+      'A câmera liga quando você abre as telas Escanear e Descartar, e desliga quando você sai.',
+  },
   scanner: {
     loading: 'Analisando a foto…',
     loadingSpeech: 'Estou analisando a foto. Espere um pouquinho.',

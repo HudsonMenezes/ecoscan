@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router';
+import { AboutScreen } from './AboutScreen';
 import { HomeScreen } from './HomeScreen';
 import { Layout } from './Layout';
 
@@ -29,6 +30,7 @@ export function createRoutes(): RouteObject[] {
             Component: async () => (await import('@/modules/rewards')).WalletScreen,
           },
         },
+        { path: 'sobre', Component: AboutScreen },
         { path: '*', element: <Navigate to="/" replace /> },
       ],
     },

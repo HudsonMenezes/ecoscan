@@ -197,7 +197,7 @@ Meta: 80% de cobertura em `src/shared/lib`. A UI é coberta pelos testes de comp
 
 - **Sempre:** rodar `lint`, `typecheck` e `test` antes de considerar uma tarefa concluída; validar dados externos com Zod; manter textos em `strings.ts`; testar em viewport de 360px.
 - **Perguntar antes:** adicionar dependências fora da stack acima; mudar a hospedagem (Vercel); introduzir Supabase ou login; mudar a estrutura de pastas ou os ids de módulo.
-- **Nunca:** expor `OPENAI_API_KEY` no front-end (nada de `VITE_OPENAI_*`); commitar `.env`; gravar ou logar as fotos enviadas; usar a câmera ou o microfone sem uma ação explícita do usuário; depender só de texto para comunicar uma ação.
+- **Nunca:** expor `OPENAI_API_KEY` no front-end (nada de `VITE_OPENAI_*`); commitar `.env`; gravar ou logar as fotos enviadas; usar o microfone sem um toque no 🎤 (a câmera liga ao abrir as telas Escanear e Descartar, porque abrir a tela já é a escolha do usuário: decisão do Hudson em 2026-10-15); depender só de texto para comunicar uma ação.
 
 ## Critérios de sucesso
 

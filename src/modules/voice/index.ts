@@ -1,5 +1,6 @@
 // API pública do voice. Outros módulos importam só daqui.
 export { VoiceAutoSpeak, VoiceDock } from './components/VoiceDock';
+export { WelcomeGate } from './components/WelcomeGate';
 export { useSpeech } from './tts/useSpeech';
 export type { Speech } from './tts/useSpeech';
 export { useVoiceMode } from './model/voiceSettings';
