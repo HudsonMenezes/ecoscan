@@ -48,6 +48,14 @@ export const strings = {
     qrAlt: 'QR code que abre o EcoScan no celular',
     dismiss: 'Fechar aviso',
   },
+  scanErrors: {
+    network: 'Sem internet. Confira a conexão e tente de novo.',
+    rateLimited: 'Muitas fotos seguidas. Espere um pouco e tente de novo.',
+    tooLarge: 'A foto ficou grande demais. Tente tirar outra.',
+    invalidImage: 'Não consegui ler essa foto. Tente tirar outra.',
+    timeout: 'Demorou demais para analisar. Tente de novo.',
+    unavailable: 'Não consegui analisar a foto agora. Tente de novo.',
+  },
   cameraTest: {
     result: 'Foto pronta',
     again: 'Tirar outra',

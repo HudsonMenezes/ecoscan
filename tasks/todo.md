@@ -82,7 +82,7 @@
   - **Verificar:** `npm run eval:scanner` (relatório colado na descrição do commit)
   - **Arquivos:** `tests/eval/scanner/*` (imagens, `expected.json`, `SOURCES.md`), `scripts/eval-scanner.ts`
 
-- [ ] **T10: Cliente + `useScan` + `LastScan`** · M · deps: T7, T8, T3
+- [x] **T10: Cliente + `useScan` + `LastScan`** · M · deps: T7, T8, T3
   - `scanImage()` (fetch + Zod + mapeamento de erros para mensagens); máquina de estados `useScan`; `getLastScan`/`saveLastScan` com `id` uuid (não salva `desconhecido`); `index.ts` público.
   - **Aceite:** transições idle → capturing → loading → result | error testadas; `desconhecido` não persiste; erros de rede/429/5xx viram mensagens amigáveis.
   - **Verificar:** `npm test -- scanner`

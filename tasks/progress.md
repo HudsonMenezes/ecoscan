@@ -6,9 +6,9 @@
 ## Onde estamos
 
 - **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), P2 (CI)
-- **Próxima:** **T10: cliente + `useScan` + `LastScan`** (ver [`todo.md`](todo.md)).
-- **Depois:** T11 (telas do scanner; teste no celular) → T12 (orientação local de Duque de Caxias + E2E) → **Checkpoint B**
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), P2 (CI)
+- **Próxima:** **T11: telas do scanner** (ScanScreen, ResultCard, RetryHint). Precisa de teste manual do Hudson no celular.
+- **Depois:** T12 (orientação local de Duque de Caxias + E2E) → **Checkpoint B**
 
 ## Como retomar
 
