@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { interceptScan } from './helpers/scan.ts';
 
-// Descarte pelo link do QR (como a câmera nativa abre), depois de um scan real com
+// Fluxo de recompensas: descarte pelo link do QR (como a câmera nativa abre), depois de um scan real com
 // a câmera falsa e /api/scan interceptado.
 const PET = {
   identified: true,
@@ -53,6 +53,14 @@ test('escanear → link do QR → comemoração; repetir o link → "já foi con
   await page.goto(QR_LINK);
   await expect(page.getByRole('heading', { name: 'Parabéns!' })).toBeVisible();
   expect(await ledgerSize(page)).toBe(2);
+
+  // A carteira reflete o ledger: 2 garrafas PET = 20 XP e 10 moedas.
+  await page.getByRole('link', { name: 'Minha carteira' }).click();
+  await expect(page).toHaveURL(/\/carteira$/);
+  await expect(page.getByRole('heading', { name: 'Semente' })).toBeVisible();
+  await expect(page.locator('.wallet-totals dd')).toHaveText(['20', '10']);
+  await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '40');
+  await expect(page.locator('.wallet-history__item')).toHaveCount(2);
 });
 
 test('link do QR sem ter escaneado → pede para escanear primeiro', async ({ page }) => {

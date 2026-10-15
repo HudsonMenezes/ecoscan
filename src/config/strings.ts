@@ -65,6 +65,20 @@ export const strings = {
   wallet: {
     title: 'Minha carteira',
     speech: 'Aqui você vê seu nível, seus pontos e suas moedas.',
+    level: (number: number) => `Nível ${number}`,
+    coinsLabel: 'Moedas',
+    toNext: (xp: number, level: string) => `Faltam ${xp} XP para o nível ${level}`,
+    maxLevel: 'Você chegou ao nível mais alto!',
+    progressLabel: 'Progresso até o próximo nível',
+    historyTitle: 'Seus descartes',
+    empty: 'Você ainda não descartou nada. Escaneie um item para começar!',
+    scan: 'Escanear item',
+    gain: (xp: number, coins: number) =>
+      `+${xp} XP · +${coins} ${coins === 1 ? 'moeda' : 'moedas'}`,
+    summarySpeech: (level: string, xp: number, coins: number) =>
+      `Você está no nível ${level}, com ${xp} pontos de experiência e ${coins} ${coins === 1 ? 'moeda' : 'moedas'}.`,
+    toNextSpeech: (xp: number) => `Faltam ${xp} pontos para o próximo nível.`,
+    maxLevelSpeech: 'Você chegou ao nível mais alto. Parabéns!',
   },
   camera: {
     open: 'Abrir câmera',
@@ -116,5 +130,4 @@ export const strings = {
     retrySpeech:
       'Não consegui identificar o objeto. Tente de novo num lugar com mais luz, com só o objeto na foto.',
   },
-  placeholder: 'Em construção.',
 } as const;

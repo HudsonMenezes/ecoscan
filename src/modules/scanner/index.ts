@@ -5,3 +5,4 @@ export type { CategoryInfo } from './model/categories';
 export { getLastScan } from './model/lastScan';
 export type { LastScan } from './model/lastScan';
 export { ScanScreen } from './components/ScanScreen';
+export { CategoryIcon } from './components/CategoryIcon';

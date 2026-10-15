@@ -496,10 +496,143 @@ a.action-button {
   gap: var(--space-1);
 }
 
-/* Telas provisórias */
-.placeholder h1 {
-  margin-top: 0;
+/* Carteira */
+.wallet-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.wallet-screen p {
+  margin: 0;
+}
+
+.wallet-level {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.wallet-level__icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.wallet-level__number {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.wallet-level__name {
+  margin: 0;
   font-size: var(--font-size-xl);
+  color: var(--color-green);
+}
+
+.wallet-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wallet-progress__bar {
+  height: 1.25rem;
+  overflow: hidden;
+  border: 2px solid var(--color-green);
+  border-radius: 999px;
+  background: var(--color-bg);
+}
+
+.wallet-progress__bar span {
+  display: block;
+  height: 100%;
+  background: var(--color-green);
+}
+
+.wallet-totals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.wallet-totals div {
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.wallet-totals dt {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.wallet-totals dd {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.wallet-history__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-lg);
+}
+
+.wallet-history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wallet-history__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border-bottom: 1px solid var(--color-surface);
+}
+
+.wallet-history__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+}
+
+.wallet-history__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.wallet-history__name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.wallet-history__meta {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.wallet-history__gain {
+  color: var(--color-green);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.wallet-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 /* Descarte */

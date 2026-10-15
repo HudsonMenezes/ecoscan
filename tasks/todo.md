@@ -141,7 +141,7 @@
   - **Verificar:** rodar o script; ler o PNG com o celular
   - **Arquivos:** `scripts/generate-qr.ts`, `print/qr-escola-demo.{svg,png,html}`
 
-- [ ] **R6: Carteira + E2E de rewards** · M · deps: R3
+- [x] **R6: Carteira + E2E de rewards** · M · deps: R3
   - `WalletScreen` (nível com ícone, barra de XP, moedas, histórico com cor/ícone da categoria); `speech` com saldo e quanto falta para o próximo nível. E2E da spec (incluindo repetição da URL e um segundo scan do mesmo material).
   - **Aceite:** a carteira reflete o ledger; E2E verde.
   - **Verificar:** `npm run test:e2e -- rewards`
