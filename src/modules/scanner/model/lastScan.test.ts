@@ -23,6 +23,7 @@ const can: ScanResult = {
   disposal: 'Coleta seletiva.',
   categoryReason: 'É de metal.',
   consequence: 'Desperdiça um material reciclável.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma lata. Coleta seletiva.',
 };
 

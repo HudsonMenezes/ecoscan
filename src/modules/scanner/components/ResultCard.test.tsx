@@ -16,6 +16,7 @@ const carton: ScanResult = {
   disposal: 'Enxágue, amasse e coloque na coleta seletiva.',
   categoryReason: 'É quase toda de papel; as recicladoras separam o plástico e o alumínio.',
   consequence: 'Ocupa espaço no aterro por muitos anos.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma caixa longa vida. Vai para a coleta seletiva.',
 };
 
@@ -41,17 +42,25 @@ describe('ResultCard', () => {
     expect(screen.getByText(carton.consequence)).toBeInTheDocument();
   });
 
-  it('item composto mostra o bloco "Por que aqui?"', () => {
+  it('explica o destino com um título que se entende sozinho ("Por que na lixeira azul?")', () => {
     renderCard(carton);
 
-    expect(screen.getByRole('heading', { name: strings.scanner.why })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Por que na lixeira azul?' })).toBeInTheDocument();
     expect(screen.getByText(carton.categoryReason)).toBeInTheDocument();
   });
 
-  it('item simples não mostra o bloco "Por que aqui?"', () => {
+  it('item simples também explica o porquê (todo resultado ensina)', () => {
     renderCard({ ...carton, isComposite: false });
 
-    expect(screen.queryByRole('heading', { name: strings.scanner.why })).toBeNull();
+    expect(screen.getByRole('heading', { name: CATEGORIES.papel.whyTitle })).toBeInTheDocument();
+  });
+
+  it('mostra o que acontece se descartar errado e o que se ganha descartando certo', () => {
+    renderCard(carton);
+
+    expect(screen.getByRole('heading', { name: strings.scanner.consequence })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: strings.scanner.benefit })).toBeInTheDocument();
+    expect(screen.getByText(carton.benefit)).toBeInTheDocument();
   });
 
   it('item perigoso mostra o destino, não uma lixeira', () => {

@@ -26,6 +26,8 @@ export type CategoryInfo = {
   conamaColor: string; // nome da cor, para quem não distingue cores e para a fala
   icon: CategoryIcon;
   destination: string;
+  // Título do bloco que explica o destino, para leigos (ex.: "Por que na lixeira azul?").
+  whyTitle: string;
   hazardous: boolean; // perigoso: nunca pode ir para o lixo comum nem para a reciclável comum
 };
 
@@ -42,6 +44,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'azul',
     icon: 'paper',
     destination: 'Coleta seletiva',
+    whyTitle: 'Por que na lixeira azul?',
     hazardous: false,
   },
   plastico: {
@@ -52,6 +55,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'vermelho',
     icon: 'plastic',
     destination: 'Coleta seletiva',
+    whyTitle: 'Por que na lixeira vermelha?',
     hazardous: false,
   },
   metal: {
@@ -62,6 +66,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'amarelo',
     icon: 'metal',
     destination: 'Coleta seletiva',
+    whyTitle: 'Por que na lixeira amarela?',
     hazardous: false,
   },
   vidro: {
@@ -72,6 +77,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'verde',
     icon: 'glass',
     destination: 'Coleta seletiva',
+    whyTitle: 'Por que na lixeira verde?',
     hazardous: false,
   },
   organico: {
@@ -82,6 +88,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'marrom',
     icon: 'organic',
     destination: 'Compostagem ou lixo orgânico',
+    whyTitle: 'Por que na lixeira marrom?',
     hazardous: false,
   },
   rejeito: {
@@ -92,6 +99,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'cinza',
     icon: 'trash',
     destination: 'Lixo comum',
+    whyTitle: 'Por que no lixo comum?',
     hazardous: false,
   },
   pilhas_baterias: {
@@ -100,6 +108,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     ...ORANGE,
     icon: 'battery',
     destination: 'Ponto de coleta específico',
+    whyTitle: 'Por que no ponto de coleta de pilhas?',
     hazardous: true,
   },
   eletronicos: {
@@ -108,6 +117,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     ...ORANGE,
     icon: 'electronics',
     destination: 'Ponto de coleta de eletroeletrônicos',
+    whyTitle: 'Por que no ponto de coleta de eletrônicos?',
     hazardous: true,
   },
   lampadas: {
@@ -116,6 +126,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     ...ORANGE,
     icon: 'lamp',
     destination: 'Ponto de coleta específico',
+    whyTitle: 'Por que no ponto de coleta de lâmpadas?',
     hazardous: true,
   },
   medicamentos: {
@@ -124,6 +135,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     ...ORANGE,
     icon: 'medicine',
     destination: 'Farmácias coletoras',
+    whyTitle: 'Por que na farmácia?',
     hazardous: true,
   },
   oleo_cozinha: {
@@ -132,6 +144,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     ...ORANGE,
     icon: 'oil',
     destination: 'Ponto de coleta de óleo',
+    whyTitle: 'Por que no ponto de coleta de óleo?',
     hazardous: true,
   },
   desconhecido: {
@@ -142,6 +155,7 @@ export const CATEGORIES: Record<Category, CategoryInfo> = {
     conamaColor: 'nenhuma',
     icon: 'unknown',
     destination: 'Nenhum: tire outra foto',
+    whyTitle: 'Por que tirar outra foto?',
     hazardous: false,
   },
 };

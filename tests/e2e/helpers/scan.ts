@@ -10,6 +10,7 @@ export const BATTERY_RESULT = {
   disposal: 'Não jogue no lixo comum. Leve a um ponto de coleta de pilhas.',
   categoryReason: 'Pilhas têm metais pesados e precisam de coleta especial.',
   consequence: 'Libera metais pesados que contaminam o solo e a água.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma pilha. Leve a um ponto de coleta de pilhas.',
 };
 

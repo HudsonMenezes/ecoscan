@@ -2,6 +2,7 @@
 import { z } from 'zod';
 import {
   applyConfidenceRules,
+  firstInvalidChar,
   ScanResultSchema,
   type ScanResult,
 } from '../src/shared/contracts/index.js';
@@ -49,7 +50,7 @@ async function identifyWaste(
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {
       const raw = await Promise.race([
-        model(imageBase64, controller.signal),
+        model(imageBase64, controller.signal, attempts),
         new Promise<never>((_, reject) => {
           timer = setTimeout(() => {
             controller.abort();
@@ -60,8 +61,14 @@ async function identifyWaste(
       const parsed = ScanResultSchema.safeParse(JSON.parse(raw));
       if (parsed.success) return { ok: true, result: parsed.data, attempts, rejections };
       // Schema inválido: tenta de novo.
+      const output = JSON.parse(raw) as Record<string, unknown>;
       rejections.push(
-        ...parsed.error.issues.map((issue) => `schema:${issue.path.join('.')}:${issue.code}`),
+        ...parsed.error.issues.map((issue) => {
+          const base = `schema:${issue.path.join('.')}:${issue.code}`;
+          const value = output[String(issue.path[0])];
+          const char = issue.code === 'invalid_format' && typeof value === 'string';
+          return char ? `${base}:${firstInvalidChar(value) ?? '?'}` : base;
+        }),
       );
     } catch (error) {
       if (error instanceof TimeoutError) {

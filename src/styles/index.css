@@ -447,6 +447,13 @@ a.action-button {
   background: var(--color-surface);
 }
 
+.result-card__benefit {
+  padding: var(--space-2);
+  border-left: 6px solid var(--color-green);
+  border-radius: 0.5rem;
+  background: #e2f1e6;
+}
+
 .result-card__actions {
   display: flex;
   flex-direction: column;

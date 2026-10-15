@@ -49,6 +49,7 @@ const battery: ScanResult = {
   disposal: 'Leve a um ponto de coleta de pilhas.',
   categoryReason: 'Tem metais pesados.',
   consequence: 'Contamina o solo e a água.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma pilha. Leve a um ponto de coleta.',
 };
 
@@ -104,7 +105,7 @@ describe('ScanScreen', () => {
 
     await takePhoto();
     expect(screen.getByRole('status')).toHaveTextContent(strings.scanner.loading);
-    expect(current.speech).toBe(strings.scanner.loadingSpeech);
+    await vi.waitFor(() => expect(current.speech).toBe(strings.scanner.loadingSpeech));
 
     await act(async () => resolve(battery));
     expect(await screen.findByRole('heading', { name: battery.itemName })).toBeInTheDocument();
@@ -119,7 +120,7 @@ describe('ScanScreen', () => {
 
     await takePhoto();
 
-    await screen.findByRole('heading', { name: strings.scanner.why });
+    await screen.findByRole('heading', { name: 'Por que no ponto de coleta de pilhas?' });
     await vi.waitFor(() =>
       expect(current.speech).toBe(`${battery.spokenSummary} ${battery.categoryReason}`),
     );
@@ -132,7 +133,7 @@ describe('ScanScreen', () => {
     await takePhoto();
 
     expect(await screen.findByText(strings.scanner.retryTitle)).toBeInTheDocument();
-    expect(current.speech).toBe(strings.scanner.retrySpeech);
+    await vi.waitFor(() => expect(current.speech).toBe(strings.scanner.retrySpeech));
     expect(getLastScan()).toBeNull();
 
     await userEvent.click(screen.getByRole('button', { name: strings.scanner.newPhoto }));
@@ -147,7 +148,7 @@ describe('ScanScreen', () => {
 
     await takePhoto();
     expect(await screen.findByRole('alert')).toHaveTextContent(strings.scanErrors.network);
-    expect(current.speech).toBe(strings.scanErrors.network);
+    await vi.waitFor(() => expect(current.speech).toBe(strings.scanErrors.network));
 
     await userEvent.click(screen.getByRole('button', { name: strings.scanner.tryAgain }));
 

@@ -18,6 +18,7 @@ const battery: ScanResult = {
   disposal: 'Leve a um ponto de coleta de pilhas.',
   categoryReason: 'Pilhas têm metais pesados.',
   consequence: 'Contamina o solo e a água.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'Isso é uma pilha. Leve a um ponto de coleta.',
 };
 
@@ -124,6 +125,8 @@ describe('POST /api/scan', () => {
 
     expect(response.status).toBe(200);
     expect(model).toHaveBeenCalledTimes(2);
+    // A retentativa é marcada, para o modelo mudar o pedido e não repetir o defeito.
+    expect(model.mock.calls.map((call) => call[2])).toEqual([1, 2]);
   });
 
   it('resposta inválida duas vezes → 502, sem terceira tentativa', async () => {

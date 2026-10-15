@@ -2,6 +2,9 @@
 // Uso:
 //   npm run eval:scanner                         # http://localhost:3000 (npx vercel dev)
 //   npm run eval:scanner -- https://ecoscan-v1.vercel.app
+//   npm run eval:scanner -- --only=01,19,A2       # só alguns casos (mais barato)
+// O orçamento da OpenAI é pequeno (US$ 5): rode o eval completo só quando o prompt
+// ou o modelo mudar, e prefira --only para conferir um ajuste pontual.
 // Não importa nada de src/: o Node roda este arquivo direto (type stripping) e não
 // resolve os imports `.js` → `.ts` do contrato compartilhado.
 import { readFile, writeFile } from 'node:fs/promises';
@@ -23,6 +26,9 @@ type Result = {
   isComposite: boolean;
   categoryReason: string;
   itemName: string;
+  disposal: string;
+  consequence: string;
+  benefit: string;
 };
 
 type Row = Case & {
@@ -46,10 +52,19 @@ const MATERIAL_WORDS = /papel|papelão|plástic|alumínio|metal|película|camada
 const TARGETS = { accuracy: 0.85, p50: 5_000, p95: 10_000 };
 
 const dir = new URL('../tests/eval/scanner/', import.meta.url);
-const baseUrl = (process.argv[2] ?? process.env.EVAL_URL ?? 'http://localhost:3000').replace(
-  /\/$/,
-  '',
-);
+const args = process.argv.slice(2);
+const baseUrl = (
+  args.find((arg) => !arg.startsWith('--')) ??
+  process.env.EVAL_URL ??
+  'http://localhost:3000'
+).replace(/\/$/, '');
+// --only=01,19,A2: roda só os casos cujo id começa com esses prefixos (economiza crédito).
+const only = args
+  .find((arg) => arg.startsWith('--only='))
+  ?.slice('--only='.length)
+  .split(',')
+  .filter(Boolean);
+const COST_PER_IMAGE_USD = 0.004;
 
 function percentile(values: number[], p: number) {
   const sorted = [...values].sort((a, b) => a - b);
@@ -80,8 +95,11 @@ async function scan(testCase: Case): Promise<Row> {
   };
 }
 
-const cases = JSON.parse(await readFile(new URL('expected.json', dir), 'utf8')) as Case[];
-console.log(`Eval do scanner: ${cases.length} imagens → ${baseUrl}/api/scan\n`);
+const allCases = JSON.parse(await readFile(new URL('expected.json', dir), 'utf8')) as Case[];
+const cases = only ? allCases.filter((c) => only.some((p) => c.id.startsWith(p))) : allCases;
+console.log(
+  `Eval do scanner: ${cases.length} imagens → ${baseUrl}/api/scan (custo estimado ~US$ ${(cases.length * COST_PER_IMAGE_USD).toFixed(2)})\n`,
+);
 
 const rows: Row[] = [];
 for (const testCase of cases) {
@@ -124,6 +142,19 @@ const table = rows
   )
   .join('\n');
 
+const texts = rows
+  .filter((r) => r.result && r.result.category !== 'desconhecido')
+  .map(
+    (r) =>
+      `### ${r.id}: ${r.result!.itemName} (${r.result!.category})
+
+- **Como descartar:** ${r.result!.disposal}
+- **Por quê:** ${r.result!.categoryReason}
+- **Se descartar errado:** ${r.result!.consequence}
+- **Descartando certo:** ${r.result!.benefit}`,
+  )
+  .join('\n\n');
+
 const report = `# Relatório do eval do scanner
 
 - Data: ${new Date().toISOString()}
@@ -142,6 +173,10 @@ const report = `# Relatório do eval do scanner
 | | Caso | Esperado | Obtido | Confiança | Composto | ms | Notas |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 ${table}
+
+## Textos gerados (para revisar a qualidade)
+
+${texts}
 `;
 
 await writeFile(new URL('last-report.md', dir), report);

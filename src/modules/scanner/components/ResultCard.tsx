@@ -46,16 +46,19 @@ export function ResultCard({
         <p>{result.disposal}</p>
       </section>
 
-      {result.isComposite && (
-        <section className="result-card__section result-card__why">
-          <h3>{strings.scanner.why}</h3>
-          <p>{result.categoryReason}</p>
-        </section>
-      )}
+      <section className="result-card__section result-card__why">
+        <h3>{info.whyTitle}</h3>
+        <p>{result.categoryReason}</p>
+      </section>
 
       <section className="result-card__section">
         <h3>{strings.scanner.consequence}</h3>
         <p>{result.consequence}</p>
+      </section>
+
+      <section className="result-card__section result-card__benefit">
+        <h3>{strings.scanner.benefit}</h3>
+        <p>{result.benefit}</p>
       </section>
 
       <div className="result-card__actions">

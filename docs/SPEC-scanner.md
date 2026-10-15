@@ -63,7 +63,7 @@ Itens com vários materiais (caixa longa vida, embalagem de salgadinho, copo de 
 | Cartela de remédio (blister)         | `medicamentos` | Pode ter resto de remédio; vai para a farmácia coletora junto com a caixa                          |
 | Copo de papel de café                | `rejeito`      | Tem uma película plástica interna que impede a reciclagem comum do papel                           |
 
-Na interface, quando `isComposite` é verdadeiro, o ResultCard mostra um bloco **"Por que aqui?"** com o `categoryReason`. O módulo `voice` também lê esse bloco.
+Na interface, **todo** resultado mostra um bloco que explica o destino, com um título que se entende sozinho, vindo do catálogo (ex.: **"Por que na lixeira azul?"**, **"Por que no ponto de coleta de pilhas?"**), seguido do `categoryReason`. Em itens compostos, o texto cita cada material, e o módulo `voice` também lê esse trecho. (Alterado em 2026-10-15 a pedido do Hudson: o título antigo "Por que aqui?" confundia, e o app deve ensinar estudantes e pessoas leigas.)
 
 ### Orientação local: Duque de Caxias (RJ)
 
@@ -102,8 +102,9 @@ export const ScanResultSchema = z.object({
   confidence: z.enum(['alta', 'media', 'baixa']),
   isComposite: z.boolean(), // item feito de vários materiais (ex.: longa vida)
   disposal: z.string().max(240), // como descartar, 1–2 frases
-  categoryReason: z.string().max(240), // por que esse destino; obrigatório e detalhado se isComposite
-  consequence: z.string().max(240), // o que acontece se descartar errado
+  categoryReason: z.string().max(360), // por que esse destino, para leigos; cita os materiais se isComposite
+  consequence: z.string().max(360), // o que acontece se descartar errado: dano concreto e por quanto tempo
+  benefit: z.string().max(240), // o que se ganha descartando certo (em que vira, quem ajuda)
   spokenSummary: z.string().max(280), // frase única e simples para o TTS
 });
 ```
@@ -142,7 +143,7 @@ O prompt fica versionado em `api/_lib/prompts/scan.ts`, com uma constante `PROMP
 | API                 | Responses API com `text.format` = `json_schema` (`strict: true`) |
 | Imagem              | `input_image`, `detail: "auto"`                                  |
 | Raciocínio          | menor esforço suportado pelo modelo, priorizando latência        |
-| `max_output_tokens` | 600                                                              |
+| `max_output_tokens` | 900 (textos educativos mais longos)                              |
 | Timeout             | 20 s (o front mostra o erro e oferece "tentar de novo")          |
 
 SDK: pacote oficial `openai` (Node), usado **só** em `api/`.

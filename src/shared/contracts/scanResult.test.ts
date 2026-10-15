@@ -12,6 +12,7 @@ const battery: ScanResult = {
   disposal: 'Não jogue no lixo comum. Leve a um ponto de coleta de pilhas.',
   categoryReason: 'Pilhas têm metais pesados e precisam de coleta especial.',
   consequence: 'Libera metais pesados que contaminam o solo e a água.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'Isso é uma pilha. Leve a um ponto de coleta de pilhas.',
 };
 
@@ -24,8 +25,9 @@ describe('ScanResultSchema', () => {
     ['itemName', 60],
     ['material', 60],
     ['disposal', 240],
-    ['categoryReason', 240],
-    ['consequence', 240],
+    ['categoryReason', 360],
+    ['consequence', 360],
+    ['benefit', 240],
     ['spokenSummary', 280],
   ] as const)('rejeita %s acima de %i caracteres', (field, max) => {
     expect(ScanResultSchema.safeParse({ ...battery, [field]: 'a'.repeat(max) }).success).toBe(true);

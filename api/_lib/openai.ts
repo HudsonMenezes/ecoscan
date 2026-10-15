@@ -1,12 +1,12 @@
 import OpenAI from 'openai';
 import { z } from 'zod';
 import { ScanResultSchema } from '../../src/shared/contracts/index.js';
-import { SCAN_SYSTEM_PROMPT, SCAN_USER_TEXT } from './prompts/scan.js';
+import { SCAN_RETRY_USER_TEXT, SCAN_SYSTEM_PROMPT, SCAN_USER_TEXT } from './prompts/scan.js';
 
 type Env = Record<string, string | undefined>;
 
 export const DEFAULT_MODEL = 'gpt-5.4-mini';
-export const MAX_OUTPUT_TOKENS = 600;
+export const MAX_OUTPUT_TOKENS = 900; // textos educativos mais longos (scan-v5)
 
 // O modo strict dos Structured Outputs não aceita maxLength/minLength, e o `pattern`
 // dele não garante as classes Unicode que usamos. Esses limites ficam no prompt e o
@@ -33,7 +33,13 @@ export function toStrictJsonSchema(schema: z.ZodType): Record<string, unknown> {
 export const SCAN_JSON_SCHEMA = toStrictJsonSchema(ScanResultSchema);
 
 // O que o handler precisa da IA: foto → texto JSON cru. Injetável nos testes.
-export type ScanModel = (imageBase64: string, signal: AbortSignal) => Promise<string>;
+// `attempt` 2 é a retentativa: ela precisa ser diferente da primeira, senão o modelo
+// repete o mesmo defeito (ex.: a mesma palavra em árabe).
+export type ScanModel = (
+  imageBase64: string,
+  signal: AbortSignal,
+  attempt?: number,
+) => Promise<string>;
 
 // Resposta que não serve (recusa, cortada por limite de tokens, vazia).
 export class InvalidModelOutputError extends Error {}
@@ -47,7 +53,8 @@ function getClient(env: Env) {
 }
 
 export function createOpenAIScanModel(env: Env = process.env): ScanModel {
-  return async (imageBase64, signal) => {
+  return async (imageBase64, signal, attempt = 1) => {
+    const isRetry = attempt > 1;
     const response = await getClient(env).responses.create(
       {
         model: env.OPENAI_MODEL || DEFAULT_MODEL,
@@ -56,7 +63,7 @@ export function createOpenAIScanModel(env: Env = process.env): ScanModel {
           {
             role: 'user',
             content: [
-              { type: 'input_text', text: SCAN_USER_TEXT },
+              { type: 'input_text', text: isRetry ? SCAN_RETRY_USER_TEXT : SCAN_USER_TEXT },
               {
                 type: 'input_image',
                 image_url: `data:image/jpeg;base64,${imageBase64}`,
@@ -73,7 +80,9 @@ export function createOpenAIScanModel(env: Env = process.env): ScanModel {
             schema: SCAN_JSON_SCHEMA,
           },
         },
-        reasoning: { effort: 'none' }, // menor esforço do gpt-5.4-mini: prioriza latência
+        // `none` (o menor do gpt-5.4-mini) prioriza a latência; a retentativa usa `low`
+        // para seguir outro caminho de geração.
+        reasoning: { effort: isRetry ? 'low' : 'none' },
         max_output_tokens: MAX_OUTPUT_TOKENS,
         store: false, // a OpenAI não guarda a foto nem a resposta (LGPD)
       },

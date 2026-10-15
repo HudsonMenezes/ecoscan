@@ -15,6 +15,7 @@ const result: ScanResult = {
   disposal: 'Ponto de coleta de pilhas.',
   categoryReason: 'Tem metais pesados.',
   consequence: 'Contamina o solo.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma pilha.',
 };
 const lastScan: LastScan = {

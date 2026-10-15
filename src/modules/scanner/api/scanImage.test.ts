@@ -13,6 +13,7 @@ const result: ScanResult = {
   disposal: 'Coleta seletiva, no recipiente vermelho.',
   categoryReason: 'É feita de plástico.',
   consequence: 'Demora centenas de anos para se decompor.',
+  benefit: 'Reciclando, o material vira um produto novo e o ambiente fica mais limpo.',
   spokenSummary: 'É uma garrafa PET. Coloque na coleta seletiva.',
 };
 

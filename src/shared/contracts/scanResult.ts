@@ -28,6 +28,14 @@ export const ConfidenceSchema = z.enum(['alta', 'media', 'baixa']);
 // O modelo às vezes mistura outra escrita (ex.: uma palavra em árabe); isso reprova
 // a resposta e o servidor tenta de novo.
 const LATIN_TEXT = /^[\p{Script=Latin}\p{M}\p{N}\p{P}\p{S}\p{Zs}]*$/u;
+const NOT_LATIN_CHAR = /[^\p{Script=Latin}\p{M}\p{N}\p{P}\p{S}\p{Zs}]/u;
+
+// Código Unicode do primeiro caractere fora da regra (ex.: "U+0645"), para diagnóstico
+// nos logs sem expor o texto.
+export function firstInvalidChar(value: string): string | null {
+  const match = NOT_LATIN_CHAR.exec(value);
+  return match ? `U+${match[0].codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}` : null;
+}
 const text = (max: number) => z.string().max(max).regex(LATIN_TEXT);
 
 export const ScanResultSchema = z.object({
@@ -38,8 +46,9 @@ export const ScanResultSchema = z.object({
   confidence: ConfidenceSchema,
   isComposite: z.boolean(), // item feito de vários materiais (ex.: longa vida)
   disposal: text(240), // como descartar, 1–2 frases
-  categoryReason: text(240), // por que esse destino; detalhado se isComposite
-  consequence: text(240), // o que acontece se descartar errado
+  categoryReason: text(360), // por que esse destino, explicado para leigos; cita os materiais se isComposite
+  consequence: text(360), // o que acontece se descartar errado: dano concreto e por quanto tempo
+  benefit: text(240), // o que se ganha descartando certo (reciclagem, quem se beneficia)
   spokenSummary: text(280), // frase única e simples para o TTS
 });
 export type ScanResult = z.infer<typeof ScanResultSchema>;
