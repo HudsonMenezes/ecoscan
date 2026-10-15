@@ -76,7 +76,7 @@
   - **Verificar:** `npm test -- api/scan`; `curl` local com uma imagem de teste
   - **Arquivos:** `api/scan.ts`, `api/scan.test.ts`, `api/_lib/openai.ts`, `api/_lib/prompts/scan.ts`
 
-- [ ] **T9: Conjunto de eval + script (risco: rodar cedo)** · M · deps: T8
+- [x] **T9: Conjunto de eval + script (risco: rodar cedo)** · M · deps: T8
   - Montar 22 imagens de bancos livres (≥ 5 difíceis, sem pessoas) com `SOURCES.md` (URL, autor, licença); `expected.json`; `npm run eval:scanner` com relatório de acurácia, falhas perigosas e latência p50/p95.
   - **Aceite:** acurácia ≥ 85% (≥ 19/22), **zero** perigosos classificados errado, p50 ≤ 5 s e p95 ≤ 10 s. Se falhar: iterar o prompt (subindo `PROMPT_VERSION`) até passar, ou trazer para você decidir.
   - **Verificar:** `npm run eval:scanner` (relatório colado na descrição do commit)
