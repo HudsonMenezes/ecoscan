@@ -7,6 +7,7 @@
 Permitir que uma pessoa **que não sabe ler nem escrever** use o EcoScan do começo ao fim: ela **ouve** o que cada tela diz e **fala** para navegar e agir.
 
 **Histórias de usuário:**
+
 - Como usuário, em qualquer tela toco no botão grande 🔊 e ouço o que a tela diz e o que posso fazer nela.
 - Como usuário, depois de escanear uma pilha, ouço: o que é, como descartar e o que acontece se descartar errado.
 - Como usuário, toco no 🎤 e digo "escanear", "tirar foto", "descartar", "minhas moedas", "repetir" ou "ajuda", e o app faz isso.
@@ -18,11 +19,11 @@ Permitir que uma pessoa **que não sabe ler nem escrever** use o EcoScan do come
 
 Barra fixa no rodapé de todas as telas, montada pelo `src/app/` (raiz de composição):
 
-| Botão | Ícone | Ação |
-|---|---|---|
-| Ouvir | 🔊 | Lê o `speech` da tela atual (`useCurrentScreen`). Se já estiver falando, para |
-| Falar | 🎤 | Escuta um comando (push-to-talk, uma frase). Some se o navegador não suportar reconhecimento de voz |
-| Modo voz | 🗣️ (liga/desliga) | Com ele ligado, cada tela fala sozinha ao abrir. Fica salvo em `ecoscan:voice-settings` |
+| Botão    | Ícone             | Ação                                                                                                |
+| -------- | ----------------- | --------------------------------------------------------------------------------------------------- |
+| Ouvir    | 🔊                | Lê o `speech` da tela atual (`useCurrentScreen`). Se já estiver falando, para                       |
+| Falar    | 🎤                | Escuta um comando (push-to-talk, uma frase). Some se o navegador não suportar reconhecimento de voz |
+| Modo voz | 🗣️ (liga/desliga) | Com ele ligado, cada tela fala sozinha ao abrir. Fica salvo em `ecoscan:voice-settings`             |
 
 Botões com no mínimo 64px, ícone + cor, e estado visual claro (ex.: animação de ondas enquanto fala ou escuta).
 
@@ -32,21 +33,23 @@ Navegadores bloqueiam áudio automático antes de o usuário tocar na tela. Por 
 
 ## Fala (TTS)
 
-| Provedor | Quando é usado |
-|---|---|
-| `browser`: `speechSynthesis` | Padrão (`VITE_TTS_PROVIDER=browser`). Escolhe a melhor voz `pt-BR` disponível (prioridade para vozes locais/"natural"). Velocidade de 0,95 |
-| `openai`: `POST /api/tts` → `gpt-4o-mini-tts` | **Reserva automática** quando o aparelho não tem voz `pt-BR`, ou forçado com `VITE_TTS_PROVIDER=openai` |
+| Provedor                                      | Quando é usado                                                                                                                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `browser`: `speechSynthesis`                  | Padrão (`VITE_TTS_PROVIDER=browser`). Escolhe a melhor voz `pt-BR` disponível (prioridade para vozes locais/"natural"). Velocidade de 0,95 |
+| `openai`: `POST /api/tts` → `gpt-4o-mini-tts` | **Reserva automática** quando o aparelho não tem voz `pt-BR`, ou forçado com `VITE_TTS_PROVIDER=openai`                                    |
 
 ### API: `POST /api/tts`
 
 ```ts
 // Request
-{ text: string }          // 1–600 caracteres
+{
+  text: string;
+} // 1–600 caracteres
 // 200 → audio/mpeg (stream)
 // 400 invalid_text · 403 forbidden_origin · 429 rate_limited · 502 tts_unavailable
 ```
 
-- Modelo `process.env.OPENAI_TTS_MODEL` (padrão `gpt-4o-mini-tts`) com uma voz fixa. Instruções de estilo: *"português do Brasil, devagar, tom amigável e acolhedor, para crianças e adultos"*.
+- Modelo `process.env.OPENAI_TTS_MODEL` (padrão `gpt-4o-mini-tts`) com uma voz fixa. Instruções de estilo: _"português do Brasil, devagar, tom amigável e acolhedor, para crianças e adultos"_.
 - Mesma proteção do `/api/scan`: origem, Zod, rate limit e limite de tamanho. O endpoint só aceita texto, então o pior abuso possível é gastar TTS, que fica limitado pelo budget da OpenAI.
 - Cache no cliente: os áudios gerados ficam num `Map` em memória (chave = hash do texto) durante a sessão, para "repetir" não gerar uma nova chamada.
 
@@ -56,16 +59,16 @@ Navegadores bloqueiam áudio automático antes de o usuário tocar na tela. Por 
 - **Detecção de suporte:** se a API não existir (ex.: Firefox), o 🎤 não aparece e o resto do app continua funcionando.
 - O texto reconhecido é normalizado (minúsculas, sem acentos e sem pontuação) e comparado com uma tabela de frases. Não há IA nessa parte, porque o resultado precisa ser previsível e sem custo.
 
-| Intenção | Frases (exemplos) | Efeito |
-|---|---|---|
-| `nav:home` | início, menu, voltar, começo | `/` |
-| `nav:scan` | escanear, tirar foto, foto, câmera, o que é isso | `/escanear` |
-| `nav:discard` | descartar, jogar fora, qr, ponto de coleta | `/descartar` |
-| `nav:wallet` | carteira, moedas, pontos, saldo, meu nível | `/carteira` (a tela fala o saldo pelo `speech` dela) |
-| `repeat` | repetir, de novo, ouvir, fala de novo | Relê o `speech` da tela |
-| `help` | ajuda, o que eu posso falar | Fala os comandos disponíveis **nesta** tela |
-| `action:<id>` | rótulos das `ScreenAction` da tela (ex.: "capturar", "tirar agora" para `capture`) | Executa `action.run()` |
-| — | qualquer outra coisa | "Não entendi. Você pode dizer: …" + sugestões da tela |
+| Intenção      | Frases (exemplos)                                                                  | Efeito                                                |
+| ------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `nav:home`    | início, menu, voltar, começo                                                       | `/`                                                   |
+| `nav:scan`    | escanear, tirar foto, foto, câmera, o que é isso                                   | `/escanear`                                           |
+| `nav:discard` | descartar, jogar fora, qr, ponto de coleta                                         | `/descartar`                                          |
+| `nav:wallet`  | carteira, moedas, pontos, saldo, meu nível                                         | `/carteira` (a tela fala o saldo pelo `speech` dela)  |
+| `repeat`      | repetir, de novo, ouvir, fala de novo                                              | Relê o `speech` da tela                               |
+| `help`        | ajuda, o que eu posso falar                                                        | Fala os comandos disponíveis **nesta** tela           |
+| `action:<id>` | rótulos das `ScreenAction` da tela (ex.: "capturar", "tirar agora" para `capture`) | Executa `action.run()`                                |
+| —             | qualquer outra coisa                                                               | "Não entendi. Você pode dizer: …" + sugestões da tela |
 
 Os sinônimos ficam em `src/modules/voice/model/commands.ts` e são fáceis de ampliar.
 
@@ -73,8 +76,8 @@ Os sinônimos ficam em `src/modules/voice/model/commands.ts` e são fáceis de a
 
 ```ts
 // src/modules/voice/index.ts
-export { VoiceDock } from './components/VoiceDock';          // montado por src/app
-export { WelcomeGate } from './components/WelcomeGate';      // primeira visita
+export { VoiceDock } from './components/VoiceDock'; // montado por src/app
+export { WelcomeGate } from './components/WelcomeGate'; // primeira visita
 export function useSpeech(): {
   speak(text: string): Promise<void>;
   stop(): void;
@@ -86,11 +89,11 @@ export function parseCommand(transcript: string, actions: ScreenAction[]): Voice
 
 O `voice` **não importa** `scanner` nem `rewards`. Ele só lê `useCurrentScreen()` do app-shell. Cabe a cada tela registrar uma fala útil:
 
-| Tela | `speech` registrado (exemplo) |
-|---|---|
-| Home | "Bem-vindo ao EcoScan. Toque no botão verde para escanear um objeto, no azul para descartar, ou no amarelo para ver suas moedas." |
-| Resultado | `spokenSummary` + (se composto) "Por que aqui? " + `categoryReason` |
-| Carteira | "Você está no nível Broto, com 120 pontos de experiência e 35 moedas." |
+| Tela      | `speech` registrado (exemplo)                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Home      | "Bem-vindo ao EcoScan. Toque no botão verde para escanear um objeto, no azul para descartar, ou no amarelo para ver suas moedas." |
+| Resultado | `spokenSummary` + (se composto) "Por que aqui? " + `categoryReason`                                                               |
+| Carteira  | "Você está no nível Broto, com 120 pontos de experiência e 35 moedas."                                                            |
 
 ## Estrutura do módulo
 
@@ -121,14 +124,14 @@ export function pickPtBrVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVo
 
 ## Estratégia de testes
 
-| Nível | Ferramenta | O que cobre |
-|---|---|---|
-| Unitário | Vitest (table-driven) | `parseCommand`: cada sinônimo, acentos/maiúsculas, ações da tela, frase desconhecida; `pickPtBrVoice`; normalização |
-| Unitário | Vitest + fakes | `useSpeech`: usa o browser quando há voz pt-BR e cai para openai quando não há; o cache evita uma segunda chamada |
-| Handler | Vitest + OpenAI mockado | `/api/tts`: 400 para texto vazio ou > 600 caracteres, 403 para origem inválida, retorno `audio/mpeg` |
-| Componente | Testing Library | O 🎤 some sem suporte; o 🔊 lê o `speech` da tela; o Modo voz persiste |
-| E2E | Playwright com `speechSynthesis` e `SpeechRecognition` falsos (injetados via `addInitScript`) | Comando "escanear" na home → `/escanear`; "repetir" no resultado → fala o `spokenSummary` |
-| Manual | Celulares reais | Android/Chrome e iOS/Safari: qualidade da voz, reconhecimento no barulho de sala de aula |
+| Nível      | Ferramenta                                                                                    | O que cobre                                                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Unitário   | Vitest (table-driven)                                                                         | `parseCommand`: cada sinônimo, acentos/maiúsculas, ações da tela, frase desconhecida; `pickPtBrVoice`; normalização |
+| Unitário   | Vitest + fakes                                                                                | `useSpeech`: usa o browser quando há voz pt-BR e cai para openai quando não há; o cache evita uma segunda chamada   |
+| Handler    | Vitest + OpenAI mockado                                                                       | `/api/tts`: 400 para texto vazio ou > 600 caracteres, 403 para origem inválida, retorno `audio/mpeg`                |
+| Componente | Testing Library                                                                               | O 🎤 some sem suporte; o 🔊 lê o `speech` da tela; o Modo voz persiste                                              |
+| E2E        | Playwright com `speechSynthesis` e `SpeechRecognition` falsos (injetados via `addInitScript`) | Comando "escanear" na home → `/escanear`; "repetir" no resultado → fala o `spokenSummary`                           |
+| Manual     | Celulares reais                                                                               | Android/Chrome e iOS/Safari: qualidade da voz, reconhecimento no barulho de sala de aula                            |
 
 ## Limites
 
@@ -138,7 +141,7 @@ export function pickPtBrVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVo
 
 ## Privacidade
 
-O reconhecimento de voz do Chrome (Android e desktop) **envia o áudio para servidores do Google** para fazer a transcrição. O Safari pode fazer o mesmo com servidores da Apple. O EcoScan não grava nem guarda nada, mas a tela de boas-vindas e a página "Sobre" avisam: *"Quando você toca no microfone, o navegador envia sua fala para ser transformada em texto."*
+O reconhecimento de voz do Chrome (Android e desktop) **envia o áudio para servidores do Google** para fazer a transcrição. O Safari pode fazer o mesmo com servidores da Apple. O EcoScan não grava nem guarda nada, mas a tela de boas-vindas e a página "Sobre" avisam: _"Quando você toca no microfone, o navegador envia sua fala para ser transformada em texto."_
 
 ## Critérios de sucesso
 

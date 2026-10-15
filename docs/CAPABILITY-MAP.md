@@ -13,12 +13,12 @@ Projeto para um hackathon escolar sobre reciclagem. É um site (PWA mobile-first
 
 ## Módulos
 
-| Id do módulo | Responsabilidade | Depende de |
-|---|---|---|
-| `app-shell` | Base do PWA: rotas, layout acessível, acesso à câmera, interface `AppStorage` (localStorage hoje, Supabase no futuro), configuração e o proxy serverless | — |
-| `scanner` | Captura a foto, chama `gpt-5.4-mini` (visão + Structured Outputs) pelo proxy e devolve o resultado: item, material, categoria, modo de descarte e consequência do descarte incorreto | `app-shell` |
-| `voice` | Lê o conteúdo em voz alta (Web Speech por padrão, `gpt-4o-mini-tts` como reserva) e aceita comandos de voz no navegador. Consome o `ScreenContext` do app-shell, sem importar telas | `app-shell` |
-| `rewards` | Lê o QR de demonstração (um único ponto) e, se houver scan recente, credita XP e moedas. Mostra nível, saldo e extrato | `app-shell`, `scanner` |
+| Id do módulo | Responsabilidade                                                                                                                                                                     | Depende de             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- |
+| `app-shell`  | Base do PWA: rotas, layout acessível, acesso à câmera, interface `AppStorage` (localStorage hoje, Supabase no futuro), configuração e o proxy serverless                             | —                      |
+| `scanner`    | Captura a foto, chama `gpt-5.4-mini` (visão + Structured Outputs) pelo proxy e devolve o resultado: item, material, categoria, modo de descarte e consequência do descarte incorreto | `app-shell`            |
+| `voice`      | Lê o conteúdo em voz alta (Web Speech por padrão, `gpt-4o-mini-tts` como reserva) e aceita comandos de voz no navegador. Consome o `ScreenContext` do app-shell, sem importar telas  | `app-shell`            |
+| `rewards`    | Lê o QR de demonstração (um único ponto) e, se houver scan recente, credita XP e moedas. Mostra nível, saldo e extrato                                                               | `app-shell`, `scanner` |
 
 Ordem de construção: `app-shell` → `scanner` → `voice`, `rewards` (em paralelo)
 

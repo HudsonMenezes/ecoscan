@@ -9,6 +9,7 @@ Criar a base sobre a qual `scanner`, `voice` e `rewards` serão construídos: um
 **Usuários:** alunos e a comunidade escolar, inclusive pessoas não alfabetizadas, usando celulares Android ou iOS de entrada pelo navegador.
 
 **Histórias de usuário:**
+
 - Como usuário, abro o site no celular e vejo três botões grandes, com ícone e cor: **Escanear**, **Descartar (QR)** e **Minha carteira**.
 - Como usuário, posso "instalar" o site na tela inicial e ele abre como um app.
 - Como usuário que nega a câmera, ainda consigo enviar uma foto da galeria.
@@ -16,18 +17,19 @@ Criar a base sobre a qual `scanner`, `voice` e `rewards` serão construídos: um
 
 ## Stack
 
-| Item | Escolha |
-|---|---|
-| Linguagem | TypeScript (strict) |
-| UI | React + Vite |
-| Rotas | React Router |
-| PWA | `vite-plugin-pwa` (manifest + service worker para o app shell) |
-| Validação | Zod (dados vindos do storage e da API) |
-| Backend | Vercel Serverless Functions em `api/` (Node 20+) |
-| Hospedagem | Vercel (HTTPS, necessário para câmera e microfone) |
+| Item        | Escolha                                                                     |
+| ----------- | --------------------------------------------------------------------------- |
+| Linguagem   | TypeScript (strict)                                                         |
+| UI          | React + Vite                                                                |
+| Rotas       | React Router                                                                |
+| PWA         | `vite-plugin-pwa` (manifest + service worker para o app shell)              |
+| Validação   | Zod (dados vindos do storage e da API)                                      |
+| Runtime     | Node 24 LTS (`.nvmrc` + `engines` no `package.json`, que a Vercel respeita) |
+| Backend     | Vercel Serverless Functions em `api/`                                       |
+| Hospedagem  | Vercel (HTTPS, necessário para câmera e microfone)                          |
 | HTTPS local | `@vitejs/plugin-basic-ssl`, para testar a câmera no celular pela rede local |
-| Testes | Vitest + Testing Library; Playwright para E2E |
-| Qualidade | ESLint + Prettier |
+| Testes      | Vitest + Testing Library; Playwright para E2E                               |
+| Qualidade   | ESLint + Prettier                                                           |
 
 As versões ficam fixadas no `package.json` no momento do scaffold (última estável de cada uma).
 
@@ -106,8 +108,8 @@ export function useCamera(): {
 ```ts
 // src/shared/lib/screen/useScreen.ts  (adicionado em 2026-10-15 para desacoplar o voice das telas)
 export type ScreenAction = {
-  id: 'capture' | 'retry' | 'discard' | 'scan-again';   // ampliável
-  label: string;                                          // nome falado/mostrado
+  id: 'capture' | 'retry' | 'discard' | 'scan-again'; // ampliável
+  label: string; // nome falado/mostrado
   run: () => void;
 };
 
@@ -119,12 +121,12 @@ export function useCurrentScreen(): { speech: string; actions: ScreenAction[] };
 
 Rotas (os outros módulos preenchem as telas; o shell só cria placeholders):
 
-| Rota | Tela | Dono |
-|---|---|---|
-| `/` | Home com 3 botões grandes | app-shell |
-| `/escanear` | Câmera + resultado | scanner |
-| `/descartar` | Leitor do QR de descarte | rewards |
-| `/carteira` | XP, nível, moedas, extrato | rewards |
+| Rota         | Tela                       | Dono      |
+| ------------ | -------------------------- | --------- |
+| `/`          | Home com 3 botões grandes  | app-shell |
+| `/escanear`  | Câmera + resultado         | scanner   |
+| `/descartar` | Leitor do QR de descarte   | rewards   |
+| `/carteira`  | XP, nível, moedas, extrato | rewards   |
 
 ## Estilo de código
 
@@ -138,7 +140,7 @@ Rotas (os outros módulos preenchem as telas; o shell só cria placeholders):
 type BigActionButtonProps = {
   to: string;
   icon: React.ReactNode;
-  label: string;      // também é o texto falado pelo módulo voice
+  label: string; // também é o texto falado pelo módulo voice
   color: 'green' | 'blue' | 'amber';
 };
 
@@ -172,22 +174,22 @@ O EcoScan é pensado para o celular, mas **funciona no computador** (adicionado 
 
 Modelo de ameaça: o front é público e o usuário controla tudo que roda no navegador. A única coisa a proteger de verdade é a **chave da OpenAI e o crédito associado a ela**. Também é preciso proteger as **fotos**, que podem mostrar alunos menores de idade (LGPD).
 
-| Risco | Mitigação |
-|---|---|
-| Vazamento da chave | `OPENAI_API_KEY` só como variável de ambiente da Vercel, marcada como *Sensitive*, e lida apenas em `api/`. O navegador nunca fala com a OpenAI. Ao fazer o build, verificar que a chave não está no bundle (`grep -r "sk-" dist/` precisa voltar vazio). |
+| Risco                                                          | Mitigação                                                                                                                                                                                                                                                                                                |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Vazamento da chave                                             | `OPENAI_API_KEY` só como variável de ambiente da Vercel, marcada como _Sensitive_, e lida apenas em `api/`. O navegador nunca fala com a OpenAI. Ao fazer o build, verificar que a chave não está no bundle (`grep -r "sk-" dist/` precisa voltar vazio).                                                |
 | Abuso do endpoint (`/api/*` é público e pode gastar o crédito) | Limite de gasto (budget) no projeto da OpenAI; chave restrita por projeto; regra de rate limit no Vercel Firewall por IP; validar o tamanho (≤ 1 MB) e o tipo (`image/jpeg`) do payload com Zod; `max_output_tokens` fixo; checagem de `Origin` (só para barrar uso casual, porque pode ser falsificada) |
-| Metadados da foto (GPS/EXIF) | `capture()` e o upload da galeria sempre passam por um canvas e são recodificados em JPEG, o que remove o EXIF |
-| Retenção das fotos | O backend não grava imagens nem respostas; logs registram só status, latência e categoria. Nada de foto em `console.log` |
-| Dados no localStorage | Só XP, moedas e histórico de categorias, sem nenhum dado pessoal. O usuário pode editar esses dados; isso é aceito na demo |
-| XSS | Nada de `dangerouslySetInnerHTML`; o texto vindo da IA é renderizado como texto puro; CSP via `vercel.json` |
+| Metadados da foto (GPS/EXIF)                                   | `capture()` e o upload da galeria sempre passam por um canvas e são recodificados em JPEG, o que remove o EXIF                                                                                                                                                                                           |
+| Retenção das fotos                                             | O backend não grava imagens nem respostas; logs registram só status, latência e categoria. Nada de foto em `console.log`                                                                                                                                                                                 |
+| Dados no localStorage                                          | Só XP, moedas e histórico de categorias, sem nenhum dado pessoal. O usuário pode editar esses dados; isso é aceito na demo                                                                                                                                                                               |
+| XSS                                                            | Nada de `dangerouslySetInnerHTML`; o texto vindo da IA é renderizado como texto puro; CSP via `vercel.json`                                                                                                                                                                                              |
 
 ## Estratégia de testes
 
-| Nível | Ferramenta | O que cobre |
-|---|---|---|
-| Unitário | Vitest | `LocalStorageAdapter` (inclui JSON corrompido → `null`), redimensionamento do `capture()` |
-| Componente | Testing Library | Home renderiza os 3 botões com `aria-label`; fallback de upload aparece quando a câmera é negada |
-| E2E | Playwright (viewport Pixel 5, câmera falsa do Chromium) | Abrir home → navegar até cada rota; manifest do PWA válido |
+| Nível      | Ferramenta                                              | O que cobre                                                                                      |
+| ---------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Unitário   | Vitest                                                  | `LocalStorageAdapter` (inclui JSON corrompido → `null`), redimensionamento do `capture()`        |
+| Componente | Testing Library                                         | Home renderiza os 3 botões com `aria-label`; fallback de upload aparece quando a câmera é negada |
+| E2E        | Playwright (viewport Pixel 5, câmera falsa do Chromium) | Abrir home → navegar até cada rota; manifest do PWA válido                                       |
 
 Meta: 80% de cobertura em `src/shared/lib`. A UI é coberta pelos testes de componente e E2E, sem meta numérica.
 

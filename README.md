@@ -18,12 +18,12 @@ Projeto desenvolvido para um hackathon escolar com o tema **reciclagem**.
 
 ## Funcionalidades (v1)
 
-| Módulo | O que faz |
-|---|---|
-| `app-shell` | PWA instalável, mobile-first, navegação por ícones grandes, acesso à câmera |
-| `scanner` | Identificação por foto com OpenAI `gpt-5.4-mini` (visão) |
-| `voice` | Leitura em voz alta (Web Speech; `gpt-4o-mini-tts` opcional) e comandos de voz |
-| `rewards` | QR de demonstração que valida o descarte; XP, nível, moedas e extrato |
+| Módulo      | O que faz                                                                      |
+| ----------- | ------------------------------------------------------------------------------ |
+| `app-shell` | PWA instalável, mobile-first, navegação por ícones grandes, acesso à câmera    |
+| `scanner`   | Identificação por foto com OpenAI `gpt-5.4-mini` (visão)                       |
+| `voice`     | Leitura em voz alta (Web Speech; `gpt-4o-mini-tts` opcional) e comandos de voz |
+| `rewards`   | QR de demonstração que valida o descarte; XP, nível, moedas e extrato          |
 
 Mapa de módulos e ordem de construção: [`docs/CAPABILITY-MAP.md`](docs/CAPABILITY-MAP.md).
 
@@ -52,15 +52,15 @@ Câmera e microfone exigem HTTPS. Em desenvolvimento, `npm run dev` sobe o Vite 
 
 ## Variáveis de ambiente
 
-| Variável | Onde é usada | Descrição |
-|---|---|---|
-| `OPENAI_API_KEY` | `api/` (servidor) | Chave da OpenAI. **Nunca** expor no front |
-| `OPENAI_MODEL` | `api/` | Modelo de visão (padrão `gpt-5.4-mini`) |
-| `OPENAI_TTS_MODEL` | `api/` | Modelo de voz (padrão `gpt-4o-mini-tts`) |
-| `ALLOWED_ORIGIN` | `api/` | Origem aceita nas chamadas a `/api/*` |
-| `VITE_TTS_PROVIDER` | front-end | `browser` (padrão) ou `openai` |
+| Variável            | Onde é usada      | Descrição                                 |
+| ------------------- | ----------------- | ----------------------------------------- |
+| `OPENAI_API_KEY`    | `api/` (servidor) | Chave da OpenAI. **Nunca** expor no front |
+| `OPENAI_MODEL`      | `api/`            | Modelo de visão (padrão `gpt-5.4-mini`)   |
+| `OPENAI_TTS_MODEL`  | `api/`            | Modelo de voz (padrão `gpt-4o-mini-tts`)  |
+| `ALLOWED_ORIGIN`    | `api/`            | Origem aceita nas chamadas a `/api/*`     |
+| `VITE_TTS_PROVIDER` | front-end         | `browser` (padrão) ou `openai`            |
 
-Em produção, configure as variáveis no painel da Vercel e marque `OPENAI_API_KEY` como *Sensitive*.
+Em produção, configure as variáveis no painel da Vercel e marque `OPENAI_API_KEY` como _Sensitive_.
 
 ## Segurança e privacidade
 

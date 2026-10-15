@@ -13,6 +13,7 @@ O usuário fotografa um objeto e recebe, em linguagem simples:
 O resultado também alimenta os módulos `voice` (uma frase curta para ser falada) e `rewards` (a categoria do último scan, que habilita o descarte pelo QR).
 
 **Histórias de usuário:**
+
 - Como usuário, toco em **Escanear**, aponto para a pilha, toco no botão de captura e em poucos segundos vejo o resultado com ícone e cor da categoria.
 - Como usuário, se a foto estiver ruim, o app me diz para tentar de novo e como melhorar a foto (mais luz, só o objeto), em vez de chutar uma resposta.
 - Como usuário, depois do resultado vejo um botão **Descartar** que me leva ao QR (módulo `rewards`).
@@ -36,31 +37,31 @@ O resultado também alimenta os módulos `voice` (uma frase curta para ser falad
 
 O catálogo é **local e fixo**, baseado no padrão de cores da **Resolução CONAMA 275/2001** e nos sistemas de logística reversa brasileiros. A IA só **escolhe** a categoria; cor, ícone e tipo de destino vêm do catálogo, para a interface ficar consistente.
 
-| `category` | Rótulo | Cor (CONAMA) | Destino típico |
-|---|---|---|---|
-| `papel` | Papel e papelão | Azul | Coleta seletiva |
-| `plastico` | Plástico | Vermelho | Coleta seletiva |
-| `metal` | Metal | Amarelo | Coleta seletiva |
-| `vidro` | Vidro | Verde | Coleta seletiva |
-| `organico` | Orgânico | Marrom | Compostagem / lixo orgânico |
-| `rejeito` | Não reciclável | Cinza | Lixo comum |
-| `pilhas_baterias` | Pilhas e baterias | Laranja (perigoso) | Ponto de coleta específico |
-| `eletronicos` | Eletrônicos | Laranja (perigoso) | Ponto de coleta de eletroeletrônicos |
-| `lampadas` | Lâmpadas | Laranja (perigoso) | Ponto de coleta específico |
-| `medicamentos` | Medicamentos | Laranja (perigoso) | Farmácias coletoras |
-| `oleo_cozinha` | Óleo de cozinha | Laranja (perigoso) | Ponto de coleta de óleo |
-| `desconhecido` | Não identificado | — | Nenhum (pede nova foto) |
+| `category`        | Rótulo            | Cor (CONAMA)       | Destino típico                       |
+| ----------------- | ----------------- | ------------------ | ------------------------------------ |
+| `papel`           | Papel e papelão   | Azul               | Coleta seletiva                      |
+| `plastico`        | Plástico          | Vermelho           | Coleta seletiva                      |
+| `metal`           | Metal             | Amarelo            | Coleta seletiva                      |
+| `vidro`           | Vidro             | Verde              | Coleta seletiva                      |
+| `organico`        | Orgânico          | Marrom             | Compostagem / lixo orgânico          |
+| `rejeito`         | Não reciclável    | Cinza              | Lixo comum                           |
+| `pilhas_baterias` | Pilhas e baterias | Laranja (perigoso) | Ponto de coleta específico           |
+| `eletronicos`     | Eletrônicos       | Laranja (perigoso) | Ponto de coleta de eletroeletrônicos |
+| `lampadas`        | Lâmpadas          | Laranja (perigoso) | Ponto de coleta específico           |
+| `medicamentos`    | Medicamentos      | Laranja (perigoso) | Farmácias coletoras                  |
+| `oleo_cozinha`    | Óleo de cozinha   | Laranja (perigoso) | Ponto de coleta de óleo              |
+| `desconhecido`    | Não identificado  | —                  | Nenhum (pede nova foto)              |
 
 ### Itens compostos
 
 Itens com vários materiais (caixa longa vida, embalagem de salgadinho, copo de papel plastificado, blister de remédio) são classificados pelo **destino mais correto na prática**, e o app **explica o porquê** em `categoryReason`. Exemplos de referência, que também entram no prompt:
 
-| Item | Categoria | Por quê (resumo) |
-|---|---|---|
-| Caixa longa vida | `papel` | É ~75% papel; a coleta seletiva aceita e as recicladoras separam o papel do plástico e do alumínio |
-| Embalagem de salgadinho (metalizada) | `rejeito` | Plástico e alumínio grudados em camadas finas; pouquíssimas recicladoras aceitam |
-| Cartela de remédio (blister) | `medicamentos` | Pode ter resto de remédio; vai para a farmácia coletora junto com a caixa |
-| Copo de papel de café | `rejeito` | Tem uma película plástica interna que impede a reciclagem comum do papel |
+| Item                                 | Categoria      | Por quê (resumo)                                                                                   |
+| ------------------------------------ | -------------- | -------------------------------------------------------------------------------------------------- |
+| Caixa longa vida                     | `papel`        | É ~75% papel; a coleta seletiva aceita e as recicladoras separam o papel do plástico e do alumínio |
+| Embalagem de salgadinho (metalizada) | `rejeito`      | Plástico e alumínio grudados em camadas finas; pouquíssimas recicladoras aceitam                   |
+| Cartela de remédio (blister)         | `medicamentos` | Pode ter resto de remédio; vai para a farmácia coletora junto com a caixa                          |
+| Copo de papel de café                | `rejeito`      | Tem uma película plástica interna que impede a reciclagem comum do papel                           |
 
 Na interface, quando `isComposite` é verdadeiro, o ResultCard mostra um bloco **"Por que aqui?"** com o `categoryReason`. O módulo `voice` também lê esse bloco.
 
@@ -79,7 +80,9 @@ A IA **nunca** gera endereços, nomes de locais ou horários, para evitar invent
 
 ```ts
 // Request (JSON)
-{ imageBase64: string }            // JPEG em base64, sem prefixo "data:", ≤ 1 MB decodificado
+{
+  imageBase64: string;
+} // JPEG em base64, sem prefixo "data:", ≤ 1 MB decodificado
 
 // 200 → ScanResult
 // 400 { error: 'invalid_image' }  413 { error: 'image_too_large' }
@@ -93,19 +96,20 @@ A IA **nunca** gera endereços, nomes de locais ou horários, para evitar invent
 // src/modules/scanner/model/scanResult.ts  (compartilhado com api/ via src/shared)
 export const ScanResultSchema = z.object({
   identified: z.boolean(),
-  itemName: z.string().max(60),                 // "Pilha alcalina AA"
-  material: z.string().max(60),                 // "Zinco, manganês, aço"
-  category: CategorySchema,                     // enum da tabela acima
+  itemName: z.string().max(60), // "Pilha alcalina AA"
+  material: z.string().max(60), // "Zinco, manganês, aço"
+  category: CategorySchema, // enum da tabela acima
   confidence: z.enum(['alta', 'media', 'baixa']),
-  isComposite: z.boolean(),                     // item feito de vários materiais (ex.: longa vida)
-  disposal: z.string().max(240),                // como descartar, 1–2 frases
-  categoryReason: z.string().max(240),          // por que esse destino; obrigatório e detalhado se isComposite
-  consequence: z.string().max(240),             // o que acontece se descartar errado
-  spokenSummary: z.string().max(280),           // frase única e simples para o TTS
+  isComposite: z.boolean(), // item feito de vários materiais (ex.: longa vida)
+  disposal: z.string().max(240), // como descartar, 1–2 frases
+  categoryReason: z.string().max(240), // por que esse destino; obrigatório e detalhado se isComposite
+  consequence: z.string().max(240), // o que acontece se descartar errado
+  spokenSummary: z.string().max(280), // frase única e simples para o TTS
 });
 ```
 
 Regras de negócio aplicadas **no servidor** depois da resposta da IA:
+
 - `confidence === 'baixa'` ou `identified === false` → resposta com `category: 'desconhecido'`, e o front mostra a tela de "tente de novo".
 - O texto passa pelo Zod. Se falhar, o servidor faz **1 retry** e, se falhar de novo, devolve `502`.
 
@@ -113,8 +117,8 @@ Regras de negócio aplicadas **no servidor** depois da resposta da IA:
 
 ```ts
 export type { ScanResult, Category };
-export { CATEGORIES } from './model/categories';      // cor, ícone, rótulo
-export function getLastScan(): LastScan | null;       // usado por rewards
+export { CATEGORIES } from './model/categories'; // cor, ícone, rótulo
+export function getLastScan(): LastScan | null; // usado por rewards
 // LastScan = { id: string /* uuid */; category: Category; itemName: string; scannedAt: string /* ISO */ }
 // persistido via AppStorage em 'ecoscan:last-scan'; scans 'desconhecido' não são salvos
 ```
@@ -132,14 +136,14 @@ O prompt fica versionado em `api/_lib/prompts/scan.ts`, com uma constante `PROMP
 
 ## Parâmetros da OpenAI
 
-| Parâmetro | Valor |
-|---|---|
-| Modelo | `process.env.OPENAI_MODEL` (padrão `gpt-5.4-mini`) |
-| API | Responses API com `text.format` = `json_schema` (`strict: true`) |
-| Imagem | `input_image`, `detail: "auto"` |
-| Raciocínio | menor esforço suportado pelo modelo, priorizando latência |
-| `max_output_tokens` | 600 |
-| Timeout | 20 s (o front mostra o erro e oferece "tentar de novo") |
+| Parâmetro           | Valor                                                            |
+| ------------------- | ---------------------------------------------------------------- |
+| Modelo              | `process.env.OPENAI_MODEL` (padrão `gpt-5.4-mini`)               |
+| API                 | Responses API com `text.format` = `json_schema` (`strict: true`) |
+| Imagem              | `input_image`, `detail: "auto"`                                  |
+| Raciocínio          | menor esforço suportado pelo modelo, priorizando latência        |
+| `max_output_tokens` | 600                                                              |
+| Timeout             | 20 s (o front mostra o erro e oferece "tentar de novo")          |
 
 SDK: pacote oficial `openai` (Node), usado **só** em `api/`.
 
@@ -171,7 +175,7 @@ Segue a [SPEC-app-shell](SPEC-app-shell.md#estilo-de-código). Os handlers da `a
 ```ts
 // api/scan.ts
 export default async function handler(req: Request): Promise<Response> {
-  const origin = assertAllowedOrigin(req);            // 403 se inválida
+  const origin = assertAllowedOrigin(req); // 403 se inválida
   if (!origin.ok) return origin.response;
 
   const body = ScanRequestSchema.safeParse(await req.json().catch(() => null));
@@ -184,19 +188,20 @@ export default async function handler(req: Request): Promise<Response> {
 
 ## Estratégia de testes
 
-| Nível | Ferramenta | O que cobre |
-|---|---|---|
-| Unitário | Vitest | `ScanResultSchema`; `applyConfidenceRules` (baixa → desconhecido); `getLastScan` (não salva desconhecido) |
-| Handler | Vitest + cliente OpenAI mockado | 400/403/413, retry após JSON inválido, 502 no segundo erro, timeout → 504 |
-| Componente | Testing Library | Estados carregando / resultado / "tente de novo" / erro de rede; botão Descartar presente; `useScreen` registra `spokenSummary` (+ `categoryReason` se composto) como fala e `capture` como ação |
-| E2E | Playwright + `/api/scan` interceptado | Escanear (câmera falsa) → ResultCard com a cor certa → botão Descartar leva a `/descartar` |
-| **Eval (IA real)** | `npm run eval:scanner` | ~20 fotos de objetos comuns → acurácia de categoria e latência |
+| Nível              | Ferramenta                            | O que cobre                                                                                                                                                                                      |
+| ------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Unitário           | Vitest                                | `ScanResultSchema`; `applyConfidenceRules` (baixa → desconhecido); `getLastScan` (não salva desconhecido)                                                                                        |
+| Handler            | Vitest + cliente OpenAI mockado       | 400/403/413, retry após JSON inválido, 502 no segundo erro, timeout → 504                                                                                                                        |
+| Componente         | Testing Library                       | Estados carregando / resultado / "tente de novo" / erro de rede; botão Descartar presente; `useScreen` registra `spokenSummary` (+ `categoryReason` se composto) como fala e `capture` como ação |
+| E2E                | Playwright + `/api/scan` interceptado | Escanear (câmera falsa) → ResultCard com a cor certa → botão Descartar leva a `/descartar`                                                                                                       |
+| **Eval (IA real)** | `npm run eval:scanner`                | ~20 fotos de objetos comuns → acurácia de categoria e latência                                                                                                                                   |
 
 O eval **não roda no CI** (custa dinheiro e depende de rede). Ele roda manualmente antes de cada mudança de prompt ou de modelo.
 
 Conjunto do eval (inicial): pilha AA, bateria de celular, garrafa PET, sacola plástica, isopor, lata de alumínio, tampinha metálica, garrafa de vidro, pote de vidro, caixa de papelão, folha de caderno, caixa de leite (longa vida), casca de banana, guardanapo usado, celular velho, carregador, lâmpada fluorescente, cartela de remédio, garrafa com óleo usado, fralda. Mais 2 compostos: embalagem de salgadinho e copo de papel de café.
 
 **Origem das imagens:** bancos de uso livre, como Wikimedia Commons (só CC0, domínio público ou CC BY), Pexels e Unsplash. Regras:
+
 - Nenhuma pessoa identificável na imagem.
 - Cada imagem é registrada em `tests/eval/scanner/SOURCES.md` com URL, autor e licença, com atribuição quando a licença exigir.
 - Pelo menos 5 imagens "difíceis" (fundo bagunçado, pouca luz, objeto pequeno ou parcial). Fotos de banco são limpas demais e superestimam a acurácia em relação a fotos tiradas no celular.

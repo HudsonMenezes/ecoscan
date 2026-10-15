@@ -7,7 +7,8 @@
 Recompensar o descarte correto. O usuário escaneia o item, vai até o ponto de coleta, lê o **QR code** e ganha **XP** (que sobe o nível) e **moedas** (o saldo). Na v1 existe **um único QR de demonstração**, e as moedas ainda não podem ser trocadas por nada. O código fica preparado para vários pontos e para um catálogo de benefícios.
 
 **Histórias de usuário:**
-- Como usuário, depois de escanear uma garrafa PET, toco em **Descartar**, aponto a câmera para o QR do ponto de coleta e vejo/ouço: *"Parabéns! Você ganhou 10 XP e 5 moedas."*
+
+- Como usuário, depois de escanear uma garrafa PET, toco em **Descartar**, aponto a câmera para o QR do ponto de coleta e vejo/ouço: _"Parabéns! Você ganhou 10 XP e 5 moedas."_
 - Como usuário, também posso ler o QR com a **câmera normal do celular**: ele abre o EcoScan já validando o descarte.
 - Como usuário, abro **Minha carteira** e vejo meu nível (com ícone), a barra de XP até o próximo nível, minhas moedas e o histórico do que descartei.
 - Como usuário que tentou ler o QR sem ter escaneado nada, o app me explica que primeiro preciso escanear o item.
@@ -51,24 +52,24 @@ Na v1 o ponto aceita todas as categorias, exceto `desconhecido`, que nunca gera 
 
 Ficam configuráveis em `model/rewardRules.ts`. Itens perigosos valem mais, porque descartá-los certo dá mais trabalho e tem mais impacto:
 
-| Grupo | Categorias | XP | Moedas |
-|---|---|---|---|
-| Perigosos | `pilhas_baterias`, `eletronicos`, `lampadas`, `medicamentos`, `oleo_cozinha` | 20 | 10 |
-| Recicláveis | `papel`, `plastico`, `metal`, `vidro` | 10 | 5 |
-| Outros | `organico`, `rejeito` | 5 | 2 |
+| Grupo       | Categorias                                                                   | XP  | Moedas |
+| ----------- | ---------------------------------------------------------------------------- | --- | ------ |
+| Perigosos   | `pilhas_baterias`, `eletronicos`, `lampadas`, `medicamentos`, `oleo_cozinha` | 20  | 10     |
+| Recicláveis | `papel`, `plastico`, `metal`, `vidro`                                        | 10  | 5      |
+| Outros      | `organico`, `rejeito`                                                        | 5   | 2      |
 
 ### Níveis
 
-| Nível | Nome | Ícone | XP mínimo |
-|---|---|---|---|
-| 1 | Semente | 🌰 | 0 |
-| 2 | Broto | 🌱 | 50 |
-| 3 | Muda | 🌿 | 150 |
-| 4 | Árvore | 🌳 | 300 |
-| 5 | Floresta | 🌲🌳 | 500 |
-| 6 | Guardião do Planeta | 🌎 | 800 |
+| Nível | Nome                | Ícone | XP mínimo |
+| ----- | ------------------- | ----- | --------- |
+| 1     | Semente             | 🌰    | 0         |
+| 2     | Broto               | 🌱    | 50        |
+| 3     | Muda                | 🌿    | 150       |
+| 4     | Árvore              | 🌳    | 300       |
+| 5     | Floresta            | 🌲🌳  | 500       |
+| 6     | Guardião do Planeta | 🌎    | 800       |
 
-Ao subir de nível aparece uma comemoração específica, com fala: *"Você subiu para o nível Muda!"*.
+Ao subir de nível aparece uma comemoração específica, com fala: _"Você subiu para o nível Muda!"_.
 
 ## Dados: ledger
 
@@ -100,23 +101,23 @@ export function claimDisposal(input: {
   pointId: string;
   lastScan: LastScan | null;
   ledger: LedgerEntry[];
-  now: Date;                  // relógio injetado, para os testes
-}): ClaimResult;              // { ok: true; entry; leveledUp: Level | null } | { ok: false; reason: ClaimError }
+  now: Date; // relógio injetado, para os testes
+}): ClaimResult; // { ok: true; entry; leveledUp: Level | null } | { ok: false; reason: ClaimError }
 
 export type ClaimError =
-  | 'unknown_point' | 'no_scan' | 'scan_expired' | 'already_claimed' | 'category_not_accepted';
+  'unknown_point' | 'no_scan' | 'scan_expired' | 'already_claimed' | 'category_not_accepted';
 ```
 
 `claimDisposal` é **pura**. O hook `useDisposal` lê o `LastScan` e o ledger, chama a função, persiste o resultado e registra a fala da tela via `useScreen`.
 
 ## Telas
 
-| Rota | Conteúdo | `speech` (voice) |
-|---|---|---|
-| `/descartar` | Leitor de QR em tela cheia, com moldura e instrução ilustrada | "Aponte a câmera para o QR code do ponto de coleta." |
-| `/descartar` (sucesso) | Confete + moedas animadas, `+XP` e `+moedas`, botão "Escanear outro" | "Parabéns! Você descartou <item> corretamente e ganhou <xp> pontos e <moedas> moedas." |
-| `/descartar` (erro) | Ícone + mensagem curta + uma ação (ex.: "Escanear item") | A própria mensagem |
-| `/carteira` | Nível com ícone, barra de XP, moedas, histórico (ícone/cor da categoria, item, +XP/+moedas, data) | "Você está no nível <nome>, com <xp> pontos de experiência e <moedas> moedas. Faltam <n> pontos para o próximo nível." |
+| Rota                   | Conteúdo                                                                                          | `speech` (voice)                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `/descartar`           | Leitor de QR em tela cheia, com moldura e instrução ilustrada                                     | "Aponte a câmera para o QR code do ponto de coleta."                                                                   |
+| `/descartar` (sucesso) | Confete + moedas animadas, `+XP` e `+moedas`, botão "Escanear outro"                              | "Parabéns! Você descartou <item> corretamente e ganhou <xp> pontos e <moedas> moedas."                                 |
+| `/descartar` (erro)    | Ícone + mensagem curta + uma ação (ex.: "Escanear item")                                          | A própria mensagem                                                                                                     |
+| `/carteira`            | Nível com ícone, barra de XP, moedas, histórico (ícone/cor da categoria, item, +XP/+moedas, data) | "Você está no nível <nome>, com <xp> pontos de experiência e <moedas> moedas. Faltam <n> pontos para o próximo nível." |
 
 ## Estrutura do módulo
 
@@ -162,13 +163,13 @@ export function claimDisposal({ pointId, lastScan, ledger, now }: ClaimInput): C
 
 ## Estratégia de testes
 
-| Nível | Ferramenta | O que cobre |
-|---|---|---|
-| Unitário | Vitest (table-driven) | `claimDisposal`: cada `ClaimError` e o caminho feliz; expiração exatamente em 10 min; `getWallet` e as fronteiras de nível (49/50, 799/800); `parsePointUrl` (URL válida, outro domínio, sem parâmetro, lixo) |
-| Unitário | Vitest | Ledger inválido no storage → carteira vazia, sem crash |
-| Componente | Testing Library | Sucesso mostra +XP/+moedas; cada erro mostra a ação certa; a carteira renderiza o histórico |
-| E2E | Playwright | `LastScan` semeado → abrir `/descartar?ponto=escola-demo` → comemoração → `/carteira` com saldo atualizado; repetir a URL → "já foi contado"; novo scan do mesmo material → recompensado de novo |
-| Manual | Celular real | Ler o QR impresso pelo leitor do app **e** pela câmera nativa (Android e iPhone) |
+| Nível      | Ferramenta            | O que cobre                                                                                                                                                                                                   |
+| ---------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unitário   | Vitest (table-driven) | `claimDisposal`: cada `ClaimError` e o caminho feliz; expiração exatamente em 10 min; `getWallet` e as fronteiras de nível (49/50, 799/800); `parsePointUrl` (URL válida, outro domínio, sem parâmetro, lixo) |
+| Unitário   | Vitest                | Ledger inválido no storage → carteira vazia, sem crash                                                                                                                                                        |
+| Componente | Testing Library       | Sucesso mostra +XP/+moedas; cada erro mostra a ação certa; a carteira renderiza o histórico                                                                                                                   |
+| E2E        | Playwright            | `LastScan` semeado → abrir `/descartar?ponto=escola-demo` → comemoração → `/carteira` com saldo atualizado; repetir a URL → "já foi contado"; novo scan do mesmo material → recompensado de novo              |
+| Manual     | Celular real          | Ler o QR impresso pelo leitor do app **e** pela câmera nativa (Android e iPhone)                                                                                                                              |
 
 Meta: 100% de cobertura de linhas em `model/` e `qr/parsePointUrl.ts`.
 
