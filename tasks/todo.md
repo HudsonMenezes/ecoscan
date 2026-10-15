@@ -102,9 +102,9 @@
 
 ### ✅ Checkpoint B: scanner
 
-- [ ] Critérios da [SPEC-scanner](../docs/SPEC-scanner.md#critérios-de-sucesso) atendidos (eval, injeção de prompt, foto vazia, retry)
-- [ ] Deploy atualizado; escanear 3 objetos reais no celular
-- [ ] Logs da Vercel sem imagens
+- [x] Critérios da [SPEC-scanner](../docs/SPEC-scanner.md#critérios-de-sucesso) atendidos (eval, injeção de prompt, foto vazia, retry)
+- [x] Deploy atualizado; escanear objetos reais no celular (Hudson: pano de microfibra e relógio, 2026-10-15)
+- [x] Logs da Vercel sem imagens (conferido pelo Hudson em 2026-10-15)
 - [ ] **Revisão com você antes de seguir**
 
 ---

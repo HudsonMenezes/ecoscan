@@ -54,7 +54,7 @@ export function ResultCard({
         <p>{result.categoryReason}</p>
       </section>
 
-      <section className="result-card__section">
+      <section className="result-card__section result-card__consequence">
         <h3>{strings.scanner.consequence}</h3>
         <p>{result.consequence}</p>
       </section>

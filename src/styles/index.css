@@ -447,6 +447,18 @@ a.action-button {
   background: var(--color-surface);
 }
 
+/* Alerta: o que acontece se descartar errado. */
+.result-card__consequence {
+  padding: var(--space-2);
+  border-left: 6px solid var(--color-red);
+  border-radius: 0.5rem;
+  background: var(--color-red-surface);
+}
+
+.result-card__consequence h3 {
+  color: var(--color-red);
+}
+
 .result-card__benefit {
   padding: var(--space-2);
   border-left: 6px solid var(--color-green);

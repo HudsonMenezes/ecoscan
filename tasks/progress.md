@@ -7,7 +7,7 @@
 
 - **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
 - **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), P2 (CI)
-- **Próxima:** **Checkpoint B** (revisão com o Hudson). Itens: critérios da SPEC-scanner, deploy, escanear 3 objetos reais no celular, conferir manualmente que os logs da Vercel não têm imagens. Pendências conhecidas: a correção "com acentos" da retentativa ainda não foi testada com a IA (só aparece em ~5% dos casos); o eval completo do scan-v5 ficou pela metade (95% e 86%, 0 perigosas) e só deve ser repetido com o ok do Hudson, por causa do orçamento.
+- **Próxima:** **Checkpoint B**: só falta o ok final do Hudson para o box vermelho de "O que acontece se descartar errado?" (pedido dele na revisão). Testes no celular e logs da Vercel já conferidos por ele (2026-10-15). **Eval completo do scan-v5: o Hudson decidiu não repetir** (os testes feitos bastam). Depois: fase 3 (3a Rewards e 3b Voice, independentes).
 
 ## Como retomar
 
