@@ -62,6 +62,7 @@ src/
     ui/                   → Componentes base (BigActionButton, Screen, IconLabel)
     lib/storage/          → Interface AppStorage + LocalStorageAdapter
     lib/camera/           → Hook useCamera + fallback de upload de arquivo
+    lib/screen/           → ScreenContext + useScreen (fala e ações da tela atual)
     lib/api/              → Cliente HTTP tipado para /api/*
   config/                 → Config pública (feature flags, constantes)
   test/                   → Setup do Vitest e mocks compartilhados
@@ -70,7 +71,7 @@ tests/e2e/                → Specs do Playwright
 docs/                     → Mapa de capacidades e specs
 ```
 
-Regra: um módulo **não importa** de outro módulo irmão por caminho interno. Ele consome apenas o `index.ts` público do outro (ex.: `voice` importa `@/modules/scanner`, nunca `@/modules/scanner/components/...`).
+Regra: um módulo **não importa** de outro módulo irmão por caminho interno. Ele consome apenas o `index.ts` público do outro (ex.: `rewards` importa `@/modules/scanner`, nunca `@/modules/scanner/components/...`). Imports entre módulos seguem a direção do [mapa](CAPABILITY-MAP.md). `src/app/` é a **raiz de composição**: só ela pode importar qualquer módulo (ex.: monta o `VoiceDock` do `voice` no layout).
 
 ## Contratos que este módulo expõe
 
@@ -100,6 +101,20 @@ export function useCamera(): {
   stop(): void;
   capture(): Promise<Blob>; // JPEG redimensionado para no máximo 1024px no lado maior
 };
+```
+
+```ts
+// src/shared/lib/screen/useScreen.ts  (adicionado em 2026-10-15 para desacoplar o voice das telas)
+export type ScreenAction = {
+  id: 'capture' | 'retry' | 'discard' | 'scan-again';   // ampliável
+  label: string;                                          // nome falado/mostrado
+  run: () => void;
+};
+
+// Cada tela declara o que pode ser falado e quais ações aceita por comando de voz.
+// O voice lê isso pelo ScreenContext, sem importar nenhum módulo de tela.
+export function useScreen(screen: { speech: string; actions?: ScreenAction[] }): void;
+export function useCurrentScreen(): { speech: string; actions: ScreenAction[] };
 ```
 
 Rotas (os outros módulos preenchem as telas; o shell só cria placeholders):

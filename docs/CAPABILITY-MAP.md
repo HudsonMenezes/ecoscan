@@ -17,10 +17,12 @@ Projeto para um hackathon escolar sobre reciclagem. É um site (PWA mobile-first
 |---|---|---|
 | `app-shell` | Base do PWA: rotas, layout acessível, acesso à câmera, interface `AppStorage` (localStorage hoje, Supabase no futuro), configuração e o proxy serverless | — |
 | `scanner` | Captura a foto, chama `gpt-5.4-mini` (visão + Structured Outputs) pelo proxy e devolve o resultado: item, material, categoria, modo de descarte e consequência do descarte incorreto | `app-shell` |
-| `voice` | Lê o conteúdo em voz alta (Web Speech por padrão, `gpt-4o-mini-tts` como opção configurável) e aceita comandos de voz no navegador | `app-shell`, `scanner` |
+| `voice` | Lê o conteúdo em voz alta (Web Speech por padrão, `gpt-4o-mini-tts` como reserva) e aceita comandos de voz no navegador. Consome o `ScreenContext` do app-shell, sem importar telas | `app-shell` |
 | `rewards` | Lê o QR de demonstração (um único ponto) e, se houver scan recente, credita XP e moedas. Mostra nível, saldo e extrato | `app-shell`, `scanner` |
 
 Ordem de construção: `app-shell` → `scanner` → `voice`, `rewards` (em paralelo)
+
+> Revisão 2026-10-15: `voice` deixou de depender de `scanner`. As telas expõem a fala e as ações pelo `useScreen` (app-shell), e o `src/app/` (raiz de composição) monta o `VoiceDock`. A ordem de construção não muda.
 
 ## Fora do escopo da v1 (preparado, mas não implementado)
 

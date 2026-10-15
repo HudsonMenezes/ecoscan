@@ -1,6 +1,6 @@
 # Spec: scanner
 
-> Módulo 2 de 4. Depende de [`app-shell`](SPEC-app-shell.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **rascunho, aguardando revisão**.
+> Módulo 2 de 4. Depende de [`app-shell`](SPEC-app-shell.md). Veja [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Status: **aprovada em 2026-10-15**.
 
 ## Objetivo
 
@@ -27,7 +27,7 @@ O resultado também alimenta os módulos `voice` (uma frase curta para ser falad
   │                      ◄── ScanResult validado (Zod)
   ├─ estado "carregando" (animação + frase de espera)
   └─ ResultCard: ícone/cor da categoria, nome, como descartar, consequência
-       ├─ [Ouvir]     → voice (módulo 3)
+       ├─ [Ouvir]     → botão global do VoiceDock (voice), que lê o `speech` registrado pela tela via useScreen
        ├─ [Descartar] → /descartar (rewards)
        └─ [Escanear outro]
 ```
@@ -115,7 +115,7 @@ Regras de negócio aplicadas **no servidor** depois da resposta da IA:
 export type { ScanResult, Category };
 export { CATEGORIES } from './model/categories';      // cor, ícone, rótulo
 export function getLastScan(): LastScan | null;       // usado por rewards
-// LastScan = { category: Category; itemName: string; scannedAt: string /* ISO */ }
+// LastScan = { id: string /* uuid */; category: Category; itemName: string; scannedAt: string /* ISO */ }
 // persistido via AppStorage em 'ecoscan:last-scan'; scans 'desconhecido' não são salvos
 ```
 
@@ -188,7 +188,7 @@ export default async function handler(req: Request): Promise<Response> {
 |---|---|---|
 | Unitário | Vitest | `ScanResultSchema`; `applyConfidenceRules` (baixa → desconhecido); `getLastScan` (não salva desconhecido) |
 | Handler | Vitest + cliente OpenAI mockado | 400/403/413, retry após JSON inválido, 502 no segundo erro, timeout → 504 |
-| Componente | Testing Library | Estados carregando / resultado / "tente de novo" / erro de rede; botões Ouvir e Descartar presentes |
+| Componente | Testing Library | Estados carregando / resultado / "tente de novo" / erro de rede; botão Descartar presente; `useScreen` registra `spokenSummary` (+ `categoryReason` se composto) como fala e `capture` como ação |
 | E2E | Playwright + `/api/scan` interceptado | Escanear (câmera falsa) → ResultCard com a cor certa → botão Descartar leva a `/descartar` |
 | **Eval (IA real)** | `npm run eval:scanner` | ~20 fotos de objetos comuns → acurácia de categoria e latência |
 
@@ -226,6 +226,8 @@ Conjunto do eval (inicial): pilha AA, bateria de celular, garrafa PET, sacola pl
 - **Itens compostos:** destino mais correto na prática, com explicação do porquê (`isComposite` + `categoryReason`).
 - **Fotos do eval:** bancos de imagens de uso livre, com origem e licença registradas em `SOURCES.md`.
 
+- **Confirmação local:** por ora, o catálogo de Duque de Caxias usa **apenas fontes oficiais públicas** (prefeitura, programas de logística reversa). Não há confirmação presencial na v1; ela pode ser feita no futuro por alguém da escola. Categorias sem fonte oficial ficam com a orientação genérica.
+
 ## Perguntas em aberto
 
-- Se não houver fonte oficial e atual para algum ponto de descarte em Duque de Caxias, a categoria fica só com a orientação genérica. Alguém da escola pode confirmar os ecopontos/pontos de entrega que eles conhecem?
+- Nenhuma no momento.
