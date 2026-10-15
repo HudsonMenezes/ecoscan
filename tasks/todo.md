@@ -1,6 +1,6 @@
 # Tarefas: EcoScan
 
-> Plano: [`plan.md`](plan.md) · Specs: [`docs/`](../docs/CAPABILITY-MAP.md)
+> **Retomando? Comece por [`progress.md`](progress.md).** · Plano: [`plan.md`](plan.md) · Specs: [`docs/`](../docs/CAPABILITY-MAP.md)
 > Definição de pronto (vale para toda tarefa): `npm run lint`, `npm run typecheck` e `npm test` limpos; build ok; commit pequeno referenciando a tarefa (ex.: `feat(scanner): T8 …`).
 > Tamanhos: XS (1 arquivo) · S (1–2) · M (3–5). Arquivos de configuração do scaffold não contam no limite.
 
