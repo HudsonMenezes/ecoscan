@@ -5,10 +5,10 @@
 
 ## Onde estamos
 
-- **Fase atual:** 1, Fundação (`app-shell`)
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), P2 (CI)
-- **Em andamento:** **Checkpoint A** (revisão da fase 1 com o Hudson). Verificações automáticas feitas em 2026-10-15; falta a aprovação dele.
-- **Depois:** Fase 2 (scanner), começando pela T7. A T9 (eval) é o maior risco do projeto.
+- **Fase atual:** 2, Scanner (Checkpoint A aprovado em 2026-10-15)
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), P2 (CI)
+- **Próxima:** **T8: `POST /api/scan`** (OpenAI + Structured Outputs). Conferir na documentação oficial o modelo, a Responses API e o parâmetro de raciocínio antes de codar.
+- **Depois:** T9 (eval, maior risco do projeto) → T10 → T11 → T12 → **Checkpoint B**
 
 ## Como retomar
 
@@ -43,3 +43,4 @@
 - **E2E da câmera:** o Chromium precisa de `--use-fake-device-for-media-stream` **e** `--use-fake-ui-for-media-stream` (sem o segundo, o `getUserMedia` dá `NotSupportedError` mesmo com a permissão concedida). A câmera falsa entrega 640x480 ou 1920x1080, então os testes verificam "lado maior ≤ 1024", e não um tamanho fixo.
 - **QR do site:** `npm run qr:site` gera `public/qr-site.svg` (commitado). A URL fica em `scripts/generate-site-qr.ts`; se o domínio mudar, rodar de novo.
 - **Sem webcam no computador:** `useHasCamera` usa `enumerateDevices` (sem pedir permissão) e, só no desktop, esconde o "Abrir câmera". No celular a câmera é sempre oferecida, porque alguns navegadores só listam câmeras depois da permissão.
+- **Contrato compartilhado (`src/shared/contracts/`):** usado pelo front e pelo `api/`. Não pode importar `@/`, e os imports relativos usam `.js` (o `tsc` do `api/` com `nodenext` aceita, conferido). Rodar esses arquivos direto com `node` (type stripping) **falha**, porque o Node não troca `.js` por `.ts`. Na T9, o script de eval precisa contornar isso (por exemplo, rodando pelo Vitest/Vite, ou com outro runner).

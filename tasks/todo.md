@@ -58,13 +58,13 @@
 - [x] Todos os critérios de sucesso da [SPEC-app-shell](../docs/SPEC-app-shell.md#critérios-de-sucesso), exceto rate limit e budget (ficam para P1)
 - [x] Lighthouse no deploy: instalável, Acessibilidade ≥ 95 (2026-10-15: Acessibilidade 100, Boas práticas 100, Performance 99–100 nas 4 rotas; instalabilidade via CDP `Page.getInstallabilityErrors` sem erros, porque o Lighthouse 12 não tem mais a categoria PWA)
 - [x] `grep -r "sk-" dist/` vazio (o literal acha `mask-type` do React DOM; o padrão de chave real `sk-[A-Za-z0-9_-]{20,}` volta vazio; a P1 automatiza isso com esse padrão)
-- [ ] **Revisão com você antes de seguir**
+- [x] **Revisão com você antes de seguir** (aprovado em 2026-10-15)
 
 ---
 
 ## Fase 2: Scanner
 
-- [ ] **T7: Modelo do scanner (categorias + `ScanResult` + regras de confiança)** · S · deps: T1
+- [x] **T7: Modelo do scanner (categorias + `ScanResult` + regras de confiança)** · S · deps: T1
   - Catálogo das 12 categorias (rótulo, cor CONAMA, ícone, destino); `ScanResultSchema` e `CategorySchema` em `src/shared`; `applyConfidenceRules`.
   - **Aceite:** `baixa`/`identified:false` → `desconhecido`; o schema rejeita textos acima dos limites; o enum bate com a tabela da spec.
   - **Verificar:** `npm test -- scanner/model`
