@@ -152,6 +152,14 @@ export function BigActionButton({ to, icon, label, color }: BigActionButtonProps
 }
 ```
 
+## Uso no computador
+
+O EcoScan é pensado para o celular, mas **funciona no computador** (adicionado em 2026-10-15):
+
+- **Câmera:** `useCamera` pede `facingMode: { ideal: 'environment' }`. No computador o navegador usa a webcam. Quando a câmera é frontal (`facingMode` do track = `user` ou desconhecido no desktop), o **preview é espelhado** (CSS `scaleX(-1)`), mas a **foto capturada não**.
+- **Layout:** em dispositivos sem toque (`matchMedia('(pointer: fine)')`), a tela do scanner mostra a **câmera e o "Enviar foto" lado a lado** e aceita **arrastar e soltar** uma imagem. Sem webcam, aparece só o envio de arquivo.
+- **Aviso "Melhor no celular":** um banner discreto e dispensável (a escolha fica salva em `ecoscan:desktop-hint-dismissed`) com um **QR que abre `https://ecoscan-v1.vercel.app`** no telefone. O QR é um SVG estático gerado em build (`npm run qr:site`, pacote `qrcode` como dependência de dev), sem biblioteca de QR no bundle.
+
 ## Acessibilidade (requisito do projeto, não opcional)
 
 - Alvos de toque de no mínimo 64px na home e 48px no resto.
@@ -197,6 +205,7 @@ Meta: 80% de cobertura em `src/shared/lib`. A UI é coberta pelos testes de comp
 - [ ] Num celular real, `useCamera` abre a câmera traseira e `capture()` devolve um JPEG de no máximo 1024px.
 - [ ] Se a câmera for negada, aparece o botão "Enviar foto" (input `accept="image/*" capture="environment"`).
 - [ ] `AppStorage` devolve `null` para dados ausentes ou inválidos, sem lançar exceção.
+- [ ] No computador: a webcam abre com o preview espelhado e a foto não espelhada; câmera e envio ficam lado a lado; arrastar e soltar funciona; o banner "Melhor no celular" mostra um QR que abre o site e pode ser dispensado.
 - [ ] `api/health.ts` responde `200` e confirma que `OPENAI_API_KEY` está configurada, sem revelá-la.
 - [ ] O bundle de produção (`dist/`) não contém a chave nem nenhuma variável `OPENAI_*`.
 - [ ] O projeto da OpenAI tem limite de gasto configurado e a Vercel tem uma regra de rate limit para `/api/*`.

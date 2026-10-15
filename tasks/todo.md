@@ -40,10 +40,16 @@
   - **Arquivos:** `src/shared/lib/screen/ScreenContext.tsx`, `useScreen.ts`, `useScreen.test.tsx`
 
 - [ ] **T6: `useCamera` + captura sem EXIF + fallback de upload** · M · deps: T4
-  - `getUserMedia` com a câmera traseira; estados da spec; `capture()` → canvas → JPEG ≤ 1024px; o upload da galeria passa pelo mesmo redimensionamento. `CameraView` de teste em `/escanear` (provisório).
-  - **Aceite:** câmera negada → botão "Enviar foto"; imagem de saída ≤ 1024px no maior lado e sem EXIF.
-  - **Verificar:** testes unitários de `resizeImage` e do fallback; **manual:** no celular real pela URL da Vercel, a câmera traseira abre e captura
+  - `getUserMedia` com `facingMode: { ideal: 'environment' }`; estados da spec; `capture()` → canvas → JPEG ≤ 1024px; o upload passa pelo mesmo redimensionamento. Câmera frontal/webcam → preview espelhado, foto **não** espelhada. `CameraView` de teste em `/escanear` (provisório).
+  - **Aceite:** câmera negada ou ausente → "Enviar foto"; saída ≤ 1024px e sem EXIF; webcam espelhada só no preview.
+  - **Verificar:** testes unitários de `resizeImage` e do fallback; **manual:** câmera traseira no celular real **e** webcam no computador, pela URL da Vercel
   - **Arquivos:** `src/shared/lib/camera/useCamera.ts`, `resizeImage.ts`, `resizeImage.test.ts`, `src/shared/ui/CameraView.tsx`, `CameraView.test.tsx`
+
+- [ ] **T6b: Experiência no computador (lado a lado, arrastar e soltar, "Melhor no celular")** · M · deps: T6
+  - Em `pointer: fine`, câmera e "Enviar foto" lado a lado, com área de arrastar e soltar; `DesktopHint` com QR estático do site (`npm run qr:site` → `public/qr-site.svg`, `qrcode` em devDependencies), dispensável e salvo em `ecoscan:desktop-hint-dismissed`.
+  - **Aceite:** no desktop, o layout lado a lado e o arrastar e soltar funcionam; o banner aparece só sem toque e some ao dispensar (persistindo); o QR abre `https://ecoscan-v1.vercel.app`; o celular não muda.
+  - **Verificar:** testes de componente (mock de `matchMedia`); E2E em viewport desktop; ler o QR da tela com o celular
+  - **Arquivos:** `src/shared/ui/CameraView.tsx`, `src/shared/ui/ImageDropZone.tsx`, `src/app/DesktopHint.tsx`, `scripts/generate-site-qr.ts`, `*.test.tsx`
 
 ### ✅ Checkpoint A: app-shell
 - [ ] Todos os critérios de sucesso da [SPEC-app-shell](../docs/SPEC-app-shell.md#critérios-de-sucesso), exceto rate limit e budget (ficam para P1)
@@ -82,7 +88,7 @@
 - [ ] **T11: Telas do scanner (ScanScreen, ResultCard, RetryHint)** · M · deps: T6, T10, T5
   - Substitui o `CameraView` provisório; ResultCard com cor/ícone do catálogo, "Por que aqui?" para itens compostos, botão Descartar → `/descartar`; registra `speech` (`spokenSummary` + `categoryReason`) e a ação `capture` via `useScreen`. O texto da IA é renderizado como texto puro.
   - **Aceite:** estados carregando/resultado/tente-de-novo/erro renderizados; o bloco composto só aparece com `isComposite`; fala e ações registradas.
-  - **Verificar:** testes de componente; **manual:** escanear uma pilha real pelo celular
+  - **Verificar:** testes de componente; **manual:** escanear uma pilha real pelo celular e um objeto pela webcam do computador (layout lado a lado da T6b mantido)
   - **Arquivos:** `src/modules/scanner/components/ScanScreen.tsx`, `ResultCard.tsx`, `RetryHint.tsx`, `*.test.tsx`
 
 - [ ] **T12: Orientação local de Duque de Caxias + E2E do scanner** · M · deps: T11

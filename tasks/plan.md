@@ -1,7 +1,7 @@
 # Plano de implementação: EcoScan
 
 > Baseado nas specs aprovadas em [`docs/`](../docs/CAPABILITY-MAP.md). Tarefas detalhadas (critérios, verificação, arquivos) em [`todo.md`](todo.md).
-> Status: **rascunho, aguardando revisão**.
+> Status: **aprovado em 2026-10-15**.
 
 ## Visão geral
 
@@ -21,7 +21,7 @@ A ordem segue o mapa: **app-shell → scanner → (voice ∥ rewards) → endure
 
 | Fase | Tarefas | Módulo |
 |---|---|---|
-| 1. Fundação | T1–T6 | app-shell |
+| 1. Fundação | T1–T6b | app-shell |
 | ✅ Checkpoint A | app-shell completo e no ar | |
 | 2. Scanner | T7–T12 | scanner |
 | ✅ Checkpoint B | escanear no celular real funciona; eval ≥ 85% | |
