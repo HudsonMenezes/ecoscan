@@ -14,7 +14,7 @@
   - **Verificar:** `npm run build && npm run lint && npm run typecheck && npm test`
   - **Arquivos:** `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`, `index.html`, `src/main.tsx`, `src/test/setup.ts`, `playwright.config.ts`
 
-- [ ] **T2: Deploy na Vercel + `api/health` + headers de segurança** · S · deps: T1 · 👤 precisa de você (login/link Vercel, env vars)
+- [x] **T2: Deploy na Vercel + `api/health` + headers de segurança** · S · deps: T1 · 👤 precisa de você (login/link Vercel, env vars)
   - `api/health.ts` (200, informa se a chave existe sem revelá-la); `api/_lib/http.ts` (`assertAllowedOrigin`, `jsonError`); `vercel.json` com CSP, `X-Content-Type-Options` e `Referrer-Policy`.
   - Domínio: `ecoscan-v1.vercel.app`; `ALLOWED_ORIGIN` aceita produção + `localhost` (deploys de preview via `VERCEL_URL`).
   - **Aceite:** `https://ecoscan-v1.vercel.app` no ar; `/api/health` → `{ ok: true, openaiKey: true }`; headers presentes; teste do handler com origem inválida → 403.
