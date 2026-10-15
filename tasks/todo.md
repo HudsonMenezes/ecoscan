@@ -129,7 +129,7 @@
   - **Verificar:** testes de componente; manual pelo link no celular
   - **Arquivos:** `hooks/useDisposal.ts`, `components/DiscardScreen.tsx`, `components/Celebration.tsx`, `*.test.tsx`
 
-- [ ] **R4: Leitor de QR dentro do app** · S · deps: R3, T6
+- [x] **R4: Leitor de QR dentro do app** · S · deps: R3, T6
   - `useQrReader`: `BarcodeDetector` quando existe, `jsQR` como fallback; integra ao `DiscardScreen` quando não há `?ponto`.
   - **Aceite:** lê o QR no Android (nativo) e no iPhone (jsQR); QR de outro site → "não é um ponto do EcoScan".
   - **Verificar:** teste unitário com frame de imagem de QR; manual nos dois aparelhos

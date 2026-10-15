@@ -33,11 +33,16 @@ export const strings = {
   },
   disposal: {
     readerHint:
-      'Use a câmera do celular para ler o QR do ponto de coleta. Ele abre o EcoScan e conta o seu descarte.',
+      'Você também pode ler o QR com a câmera do celular: ele abre o EcoScan e conta o seu descarte.',
     scanItem: 'Escanear item',
     scanNext: 'Escanear próximo',
     scanAnother: 'Escanear outro',
     readAnotherQr: 'Ler outro QR',
+    openReader: 'Ler QR do ponto',
+    readerAim: 'Aponte para o QR do ponto de coleta',
+    readerVideo: 'Imagem da câmera para ler o QR',
+    cameraFailed:
+      'Não consegui usar a câmera aqui. Abra a câmera do celular e aponte para o QR do ponto de coleta.',
     wallet: 'Minha carteira',
     errors: {
       unknown_point: 'Esse QR não é um ponto do EcoScan.',

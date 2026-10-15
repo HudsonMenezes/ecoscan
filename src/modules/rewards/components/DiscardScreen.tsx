@@ -2,12 +2,14 @@ import { useMemo } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { strings } from '@/config/strings';
 import { useScreen } from '@/shared/lib/screen';
-import { AlertIcon, QrIcon } from '@/shared/ui/icons';
+import { AlertIcon } from '@/shared/ui/icons';
 import { useDisposal } from '../hooks/useDisposal';
 import { Celebration } from './Celebration';
 import { describeDiscardScreen, errorAction, errorMessage } from './describeDiscardScreen';
+import { QrReader } from './QrReader';
 
-// /descartar?ponto=<id>: o link do QR (lido pela câmera nativa ou, na R4, pelo app).
+// /descartar?ponto=<id>: o link do QR, lido pela câmera nativa ou pelo leitor do app.
+// Sem ?ponto: o leitor do app, que navega para o link quando lê um QR do EcoScan.
 export function DiscardScreen() {
   const [params] = useSearchParams();
   const pointId = params.get('ponto');
@@ -35,11 +37,7 @@ function Disposal({ pointId }: { pointId: string | null }) {
       <h1 className="screen-title">{strings.discard.title}</h1>
 
       {state.status === 'reader' && (
-        <div className="discard-reader">
-          <QrIcon size={96} />
-          <p>{strings.discard.speech}</p>
-          <p>{strings.disposal.readerHint}</p>
-        </div>
+        <QrReader onPoint={(id) => void navigate(`/descartar?ponto=${encodeURIComponent(id)}`)} />
       )}
 
       {state.status === 'error' && <DisposalError state={state} nav={nav} />}

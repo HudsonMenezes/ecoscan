@@ -503,6 +503,31 @@ a.action-button {
 }
 
 /* Descarte */
+.qr-reader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.qr-reader p {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Moldura onde o QR deve caber: só guia o usuário, a leitura usa o quadro inteiro. */
+.qr-reader__frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(60%, 260px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 4px solid #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 35%);
+}
+
 .discard-reader,
 .discard-error,
 .celebration {
