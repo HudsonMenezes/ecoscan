@@ -75,3 +75,4 @@ Detalhes em [`docs/SPEC-app-shell.md`](docs/SPEC-app-shell.md#segurança-e-priva
 
 - [Mapa de capacidades](docs/CAPABILITY-MAP.md)
 - [Spec: app-shell](docs/SPEC-app-shell.md)
+- [Spec: scanner](docs/SPEC-scanner.md) (rascunho)
