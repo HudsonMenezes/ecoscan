@@ -189,7 +189,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Verificar:** testes de componente
   - **Arquivos:** `components/WelcomeGate.tsx`, `WelcomeGate.test.tsx`, `src/app/AboutScreen.tsx`, `src/config/strings.ts`
 
-- [ ] **V6: E2E de voz** · S · deps: V4, V5, T11
+- [x] **V6: E2E de voz** · S · deps: V4, V5, T11
   - `speechSynthesis` e `SpeechRecognition` falsos via `addInitScript`; roteiro: "escanear" → captura por voz → "repetir" fala o `spokenSummary`.
   - **Aceite:** E2E verde.
   - **Verificar:** `npm run test:e2e -- voice`
