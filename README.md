@@ -4,7 +4,7 @@ Aponte a câmera para um objeto e descubra **o que ele é**, **como descartá-lo
 
 Projeto desenvolvido para um hackathon escolar com o tema **reciclagem** (Duque de Caxias, RJ).
 
-**App no ar:** https://ecoscan-v1.vercel.app · **Folha A4 do ponto de descarte:** https://ecoscan-v1.vercel.app/imprimir/ponto-de-descarte.html
+**App no ar:** https://ecoscan-v1.vercel.app · **Folha A4 do ponto de descarte:** [página](https://ecoscan-v1.vercel.app/imprimir/ponto-de-descarte.html) · [PDF](https://ecoscan-v1.vercel.app/imprimir/ponto-de-descarte.pdf)
 
 > **Status:** v1 pronta para a demo. Testada num iPhone real (câmera, QR, voz e comandos pelo microfone); ainda não testada num Android real. Roteiro de apresentação: [`docs/DEMO.md`](docs/DEMO.md).
 
@@ -61,6 +61,7 @@ O `npm run dev` serve só o front-end. Para as funções de `api/`, o caminho no
 | `npm run check:secrets` | Falha se o `dist/` tiver a chave ou o nome de variáveis da OpenAI  |
 | `npm run eval:scanner`  | Avalia a IA com fotos de teste (**custa** ~US$ 0,10 por rodada)    |
 | `npm run qr:demo`       | Gera o QR do ponto de demonstração (`print/` e `public/imprimir/`) |
+| `npm run sheet:pdf`     | Gera o PDF da folha A4 (1 página) a partir da página publicada     |
 | `npm run icons`         | Gera os ícones do PWA em `public/`                                 |
 
 ## Variáveis de ambiente

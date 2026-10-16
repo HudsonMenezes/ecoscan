@@ -21,7 +21,8 @@
     "qr:site": "node scripts/generate-site-qr.ts",
     "eval:scanner": "node scripts/eval-scanner.ts",
     "qr:demo": "node scripts/generate-qr.ts",
-    "check:secrets": "node scripts/check-secrets.ts"
+    "check:secrets": "node scripts/check-secrets.ts",
+    "sheet:pdf": "node scripts/generate-sheet-pdf.ts"
   },
   "dependencies": {
     "jsqr": "1.4.0",
