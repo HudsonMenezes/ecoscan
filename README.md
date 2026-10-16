@@ -50,19 +50,20 @@ npm run dev               # Vite com HTTPS local (para testar câmera e microfon
 
 O `npm run dev` serve só o front-end. Para as funções de `api/`, o caminho normal é `npx vercel dev`, mas a CLI da Vercel 64.3.1 está quebrada (pede um `@vercel/build-utils` que não existe no npm). Enquanto isso, teste a API pelos testes de `api/` ou direto na produção.
 
-| Comando                 | O que faz                                                          |
-| ----------------------- | ------------------------------------------------------------------ |
-| `npm run build`         | Build de produção em `dist/`                                       |
-| `npm test`              | Testes unitários (Vitest)                                          |
-| `npm run test:e2e`      | Testes E2E (Playwright, com câmera e voz falsas e a CSP real)      |
-| `npm run lint`          | ESLint                                                             |
-| `npm run typecheck`     | TypeScript                                                         |
-| `npm run format`        | Prettier (a CI confere a formatação)                               |
-| `npm run check:secrets` | Falha se o `dist/` tiver a chave ou o nome de variáveis da OpenAI  |
-| `npm run eval:scanner`  | Avalia a IA com fotos de teste (**custa** ~US$ 0,10 por rodada)    |
-| `npm run qr:demo`       | Gera o QR do ponto de demonstração (`print/` e `public/imprimir/`) |
-| `npm run sheet:pdf`     | Gera o PDF da folha A4 (1 página) a partir da página publicada     |
-| `npm run icons`         | Gera os ícones do PWA em `public/`                                 |
+| Comando                 | O que faz                                                                        |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| `npm run build`         | Build de produção em `dist/`                                                     |
+| `npm test`              | Testes unitários (Vitest)                                                        |
+| `npm run test:e2e`      | Testes E2E (Playwright, com câmera e voz falsas e a CSP real)                    |
+| `npm run lint`          | ESLint                                                                           |
+| `npm run typecheck`     | TypeScript                                                                       |
+| `npm run format`        | Prettier (a CI confere a formatação)                                             |
+| `npm run check:secrets` | Falha se o `dist/` tiver a chave ou o nome de variáveis da OpenAI                |
+| `npm run eval:scanner`  | Avalia a IA com fotos de teste (**custa** ~US$ 0,10 por rodada)                  |
+| `npm run qr:demo`       | Gera o QR do ponto de demonstração (`print/` e `public/imprimir/`)               |
+| `npm run sheet:pdf`     | Gera o PDF da folha A4 (1 página) a partir da página publicada                   |
+| `npm run demo:pdf`      | Gera o PDF do roteiro da demo (`print/roteiro-da-demo.pdf`) para enviar à equipe |
+| `npm run icons`         | Gera os ícones do PWA em `public/`                                               |
 
 ## Variáveis de ambiente
 
