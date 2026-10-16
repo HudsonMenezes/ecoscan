@@ -1,7 +1,7 @@
 # Progresso: EcoScan
 
 > Ponto de retomada entre sessões. Atualize ao concluir cada tarefa.
-> Última atualização: 2026-10-16 (P3 pronta no código; falta o ensaio no celular)
+> Última atualização: 2026-10-16, fim da sessão (P3 no código; próxima ideia: landing page para o júri)
 
 ## Onde estamos
 
@@ -10,6 +10,7 @@
 - **P1 concluída em 2026-10-16:** `check:secrets`, CSP mais restrita e aplicada nos E2E, e regra no Vercel Firewall (rajada → 429). Ajustes pedidos pelo Hudson no mesmo dia: o microfone continuava aberto depois de um comando que navegava (corrigido; confirmado pelo Hudson no iPhone) e textos embaixo dos botões de voz.
 - **P3 (2026-10-16):** `docs/DEMO.md`, README atualizado e `robots.txt` (a regra de SPA servia o `index.html` em `/robots.txt`, e o SEO caía para 91). Lighthouse em produção (celular, Lighthouse 12 via `CHROME_PATH` do Chromium do Playwright): 97/100/100/100.
 - **Próxima:** o Hudson e a equipe ensaiam o roteiro do `DEMO.md` no celular e testam o QR impresso no local. Depois, o **Checkpoint final** (`todo.md`). Se aparecer um Android, testar nele no ensaio.
+- **Próxima ideia (decisão do Hudson em 2026-10-16, ainda não iniciada):** uma **landing page para o júri** do hackathon. **Nada técnico:** o objetivo é o júri se apaixonar pela ideia e pelo bem que o EcoScan faz para a sociedade (reciclagem, quem não sabe ler, Duque de Caxias). Abordagem combinada: endereço próprio (ex.: `/projeto`), nunca a raiz (a raiz é o app); página estática como a folha em `public/imprimir/` (CSS/JS em arquivo por causa da CSP, `navigateFallbackDenylist` no service worker); seções: problema → como funciona com prints reais do app → voz para quem não sabe ler → impacto local → privacidade → "Abrir o app" + QR → crédito da escola e da equipe. Começar por uma **spec curta de conteúdo** para o Hudson aprovar. Cuidados: sem fotos nem nomes completos de alunos (menores) sem autorização; só números com fonte (eval 21/22 e 0 respostas perigosas, IBGE, prefeitura); o ensaio da demo e o Checkpoint final têm prioridade. Perguntar o nome da escola e como a equipe quer ser creditada.
 
 ## Como retomar
 
