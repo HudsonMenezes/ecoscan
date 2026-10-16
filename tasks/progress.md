@@ -1,14 +1,14 @@
 # Progresso: EcoScan
 
 > Ponto de retomada entre sessões. Atualize ao concluir cada tarefa.
-> Última atualização: 2026-10-16 (P1 no código; falta a regra do Firewall; ajustes do microfone pedidos pelo Hudson)
+> Última atualização: 2026-10-16 (P1 concluída)
 
 ## Onde estamos
 
 - **Fase atual:** fase 4 (endurecimento e demo). **Checkpoint C aprovado** em 2026-10-16: no iPhone, as vozes, os comandos pelo 🎤 e as boas-vindas funcionaram. **Android não testado** (sem aparelho à mão; risco aceito pelo Hudson): leitor de QR, câmera nativa e roteiro por voz no Android ficam sem verificação real.
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; funcionou no iPhone, falta o Android), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI), V1 (`parseCommand`), V2 (fala do navegador + VoiceDock), V3 (`/api/tts` + reserva OpenAI), V4 (comandos de voz 🎤), V5 (boas-vindas + privacidade + `/sobre`), V6 (E2E de voz), Checkpoint C
-- **Em andamento:** **P1**. Feito: `check:secrets`, CSP mais restrita e aplicada nos E2E. **Falta (Hudson, no painel da Vercel):** regra de rate limit no Firewall para `/api/*` e o teste de rajada → 429. **Também em 2026-10-16 (pedidos do Hudson, testados no iPhone):** o microfone continuava aberto no navegador depois de um comando que navegava (corrigido; falta ele confirmar no iPhone) e textos embaixo dos botões de voz.
-- **Próxima:** fechar a P1 com o Firewall; depois, P3 (ensaio da demo). Se aparecer um Android, testar nele no ensaio.
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; funcionou no iPhone, falta o Android), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI), V1 (`parseCommand`), V2 (fala do navegador + VoiceDock), V3 (`/api/tts` + reserva OpenAI), V4 (comandos de voz 🎤), V5 (boas-vindas + privacidade + `/sobre`), V6 (E2E de voz), Checkpoint C, P1
+- **P1 concluída em 2026-10-16:** `check:secrets`, CSP mais restrita e aplicada nos E2E, e regra no Vercel Firewall (rajada → 429). Ajustes pedidos pelo Hudson no mesmo dia: o microfone continuava aberto depois de um comando que navegava (corrigido; **falta ele confirmar no iPhone**) e textos embaixo dos botões de voz.
+- **Próxima:** P3 (ensaio da demo). Se aparecer um Android, testar nele no ensaio.
 
 ## Como retomar
 
@@ -18,14 +18,14 @@
 
 ## Ambiente e infraestrutura
 
-| Item               | Estado                                                                                                                                                                    |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Produção           | https://ecoscan-v1.vercel.app (`/api/health` → `{"ok":true,"openaiKey":true}`)                                                                                            |
-| Vercel             | Projeto `hudsonmenezes-projects/ecoscan`, ligado ao GitHub (push em `main` = deploy de produção). CLI logada (`npx vercel ls ecoscan`, `npx vercel inspect --logs <url>`) |
-| Env vars na Vercel | `OPENAI_API_KEY` (Secret), `OPENAI_MODEL`, `OPENAI_TTS_MODEL`, `ALLOWED_ORIGIN` (Production + Preview)                                                                    |
-| `.env` local       | Tem a chave; `ALLOWED_ORIGIN=https://localhost:5173,http://localhost:3000`                                                                                                |
-| CI                 | GitHub Actions (`.github/workflows/ci.yml`); repo público, status via `https://api.github.com/repos/HudsonMenezes/ecoscan/actions/runs`                                   |
-| OpenAI             | Projeto "EcoScan" criado; **limite de gasto de US$ 5** definido (2026-10-15). **Pendente (P1):** regra de rate limit no Vercel Firewall para `/api/*`                     |
+| Item               | Estado                                                                                                                                                                                                                                                                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Produção           | https://ecoscan-v1.vercel.app (`/api/health` → `{"ok":true,"openaiKey":true}`)                                                                                                                                                                                                            |
+| Vercel             | Projeto `hudsonmenezes-projects/ecoscan`, ligado ao GitHub (push em `main` = deploy de produção). CLI logada (`npx vercel ls ecoscan`, `npx vercel inspect --logs <url>`)                                                                                                                 |
+| Env vars na Vercel | `OPENAI_API_KEY` (Secret), `OPENAI_MODEL`, `OPENAI_TTS_MODEL`, `ALLOWED_ORIGIN` (Production + Preview)                                                                                                                                                                                    |
+| `.env` local       | Tem a chave; `ALLOWED_ORIGIN=https://localhost:5173,http://localhost:3000`                                                                                                                                                                                                                |
+| CI                 | GitHub Actions (`.github/workflows/ci.yml`); repo público, status via `https://api.github.com/repos/HudsonMenezes/ecoscan/actions/runs`                                                                                                                                                   |
+| OpenAI             | Projeto "EcoScan" criado; **limite de gasto de US$ 5** definido (2026-10-15). Regra "Limite da API" no Vercel Firewall: `/api/` · 60 req/60 s por IP · 429 (Hobby: 1 regra). No dia da demo, todos no mesmo Wi-Fi dividem o limite (mesmo IP): se precisar, aumentar ou trocar para `Log` |
 
 ## Decisões e armadilhas já resolvidas
 

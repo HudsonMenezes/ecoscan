@@ -206,12 +206,12 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
 
 ## Fase 4: Endurecimento e demo
 
-- [ ] **P1: Endurecimento de segurança** · S · deps: Checkpoint C · 👤 budget e firewall
+- [x] **P1: Endurecimento de segurança** · S · deps: Checkpoint C · 👤 budget e firewall
   - Script `check:secrets` (falha se o `dist/` tiver `sk-` ou `OPENAI_`); revisão final da CSP; confirmar o budget da OpenAI e a regra de rate limit no Vercel Firewall para `/api/*`.
   - **Aceite:** `npm run check:secrets` verde; rajada de requisições a `/api/scan` → 429; budget configurado (print/confirmação).
   - **Verificar:** script + teste manual de rajada
   - **Arquivos:** `scripts/check-secrets.ts`, `package.json`, `vercel.json`
-  - **Estado (2026-10-16):** feito no código: `check:secrets` (na CI), CSP mais restrita e aplicada nos E2E (`csp.spec.ts`). Budget de US$ 5 confirmado em 2026-10-15. **Falta (👤 Hudson):** regra de rate limit no Vercel Firewall para `/api/*` e o teste de rajada → 429.
+  - **Concluída em 2026-10-16:** `check:secrets` (na CI), CSP mais restrita e aplicada nos E2E (`csp.spec.ts`), budget de US$ 5 (2026-10-15) e regra "Limite da API" no Vercel Firewall (`/api/` · 60 req/60 s por IP · 429). Rajada de 75 requisições a `/api/health` → 60 × 200 e 15 × 429.
 
 - [x] **P2: CI no GitHub Actions** · S · deps: T1 · aprovada; pode ser feita logo após T1
   - Workflow: install → lint → typecheck → test → build → check:secrets → E2E (Chromium).
