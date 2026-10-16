@@ -1,14 +1,15 @@
 # Progresso: EcoScan
 
 > Ponto de retomada entre sessões. Atualize ao concluir cada tarefa.
-> Última atualização: 2026-10-16 (P1 concluída)
+> Última atualização: 2026-10-16 (P3 pronta no código; falta o ensaio no celular)
 
 ## Onde estamos
 
 - **Fase atual:** fase 4 (endurecimento e demo). **Checkpoint C aprovado** em 2026-10-16: no iPhone, as vozes, os comandos pelo 🎤 e as boas-vindas funcionaram. **Android não testado** (sem aparelho à mão; risco aceito pelo Hudson): leitor de QR, câmera nativa e roteiro por voz no Android ficam sem verificação real.
 - **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; funcionou no iPhone, falta o Android), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI), V1 (`parseCommand`), V2 (fala do navegador + VoiceDock), V3 (`/api/tts` + reserva OpenAI), V4 (comandos de voz 🎤), V5 (boas-vindas + privacidade + `/sobre`), V6 (E2E de voz), Checkpoint C, P1
-- **P1 concluída em 2026-10-16:** `check:secrets`, CSP mais restrita e aplicada nos E2E, e regra no Vercel Firewall (rajada → 429). Ajustes pedidos pelo Hudson no mesmo dia: o microfone continuava aberto depois de um comando que navegava (corrigido; **falta ele confirmar no iPhone**) e textos embaixo dos botões de voz.
-- **Próxima:** P3 (ensaio da demo). Se aparecer um Android, testar nele no ensaio.
+- **P1 concluída em 2026-10-16:** `check:secrets`, CSP mais restrita e aplicada nos E2E, e regra no Vercel Firewall (rajada → 429). Ajustes pedidos pelo Hudson no mesmo dia: o microfone continuava aberto depois de um comando que navegava (corrigido; confirmado pelo Hudson no iPhone) e textos embaixo dos botões de voz.
+- **P3 (2026-10-16):** `docs/DEMO.md`, README atualizado e `robots.txt` (a regra de SPA servia o `index.html` em `/robots.txt`, e o SEO caía para 91). Lighthouse em produção (celular, Lighthouse 12 via `CHROME_PATH` do Chromium do Playwright): 97/100/100/100.
+- **Próxima:** o Hudson e a equipe ensaiam o roteiro do `DEMO.md` no celular e testam o QR impresso no local. Depois, o **Checkpoint final** (`todo.md`). Se aparecer um Android, testar nele no ensaio.
 
 ## Como retomar
 

@@ -224,6 +224,7 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
   - **Aceite:** roteiro executado de ponta a ponta no celular sem falhas.
   - **Verificar:** ensaio manual
   - **Arquivos:** `docs/DEMO.md`, `README.md`
+  - **Estado (2026-10-16):** feito: `docs/DEMO.md` (roteiro de 5 min, plano B, perguntas do júri), README atualizado, `public/robots.txt`. Lighthouse em produção (celular): Desempenho 97, Acessibilidade 100, Boas práticas 100, SEO 100. **Falta (👤 Hudson e a equipe):** ensaiar o roteiro no celular e testar o QR impresso no local.
 
 ### ✅ Checkpoint final
 
