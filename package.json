@@ -20,7 +20,8 @@
     "icons": "node scripts/generate-icons.ts",
     "qr:site": "node scripts/generate-site-qr.ts",
     "eval:scanner": "node scripts/eval-scanner.ts",
-    "qr:demo": "node scripts/generate-qr.ts"
+    "qr:demo": "node scripts/generate-qr.ts",
+    "check:secrets": "node scripts/check-secrets.ts"
   },
   "dependencies": {
     "jsqr": "1.4.0",

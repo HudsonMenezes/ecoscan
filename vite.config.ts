@@ -1,8 +1,22 @@
+import { readFileSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+
+// Os cabeçalhos de produção (CSP etc.) vêm do vercel.json. O `npm run preview` usa os mesmos,
+// para os E2E rodarem com a CSP de verdade.
+type VercelConfig = { headers: { source: string; headers: { key: string; value: string }[] }[] };
+const vercel = JSON.parse(
+  readFileSync(new URL('./vercel.json', import.meta.url), 'utf8'),
+) as VercelConfig;
+const productionHeaders = Object.fromEntries(
+  (vercel.headers.find((rule) => rule.source === '/(.*)')?.headers ?? []).map((h) => [
+    h.key,
+    h.value,
+  ]),
+);
 
 // https://vite.dev/config/
 export default defineConfig(({ command, isPreview }) => ({
@@ -39,4 +53,5 @@ export default defineConfig(({ command, isPreview }) => ({
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
+  preview: { headers: productionHeaders },
 }));

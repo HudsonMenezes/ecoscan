@@ -2,30 +2,42 @@ import { expect, test, type Page } from '@playwright/test';
 import QRCode from 'qrcode';
 
 // Leitor de QR do app com uma "câmera" que mostra um QR de verdade: o getUserMedia
-// devolve o stream de um canvas com a imagem do QR. Sem BarcodeDetector, para
-// exercitar o jsQR (o caminho do iPhone).
+// devolve o stream de um canvas com o QR desenhado módulo a módulo (uma imagem
+// `data:` seria bloqueada pela CSP). Sem BarcodeDetector, para exercitar o jsQR
+// (o caminho do iPhone).
 async function cameraShowingQr(page: Page, text: string) {
-  const qrDataUrl = await QRCode.toDataURL(text, { margin: 4, width: 480 });
-  await page.addInitScript((src) => {
+  const { modules } = QRCode.create(text);
+  const qr = { size: modules.size, dark: Array.from(modules.data, Boolean) };
+  await page.addInitScript(({ size, dark }) => {
     delete (window as { BarcodeDetector?: unknown }).BarcodeDetector;
     navigator.mediaDevices.getUserMedia = async () => {
       const canvas = document.createElement('canvas');
       canvas.width = 640;
       canvas.height = 480;
       const context = canvas.getContext('2d')!;
-      const image = new Image();
-      image.src = src;
-      await image.decode();
+      const quiet = 4; // margem branca, em módulos
+      const cell = Math.floor(420 / (size + 2 * quiet));
+      const side = cell * (size + 2 * quiet);
+      const left = (640 - side) / 2;
+      const top = (480 - side) / 2;
       const draw = () => {
         context.fillStyle = '#777';
         context.fillRect(0, 0, 640, 480);
-        context.drawImage(image, 120, 30, 420, 420);
+        context.fillStyle = '#fff';
+        context.fillRect(left, top, side, side);
+        context.fillStyle = '#000';
+        dark.forEach((on, i) => {
+          if (!on) return;
+          const x = left + (quiet + (i % size)) * cell;
+          const y = top + (quiet + Math.floor(i / size)) * cell;
+          context.fillRect(x, y, cell, cell);
+        });
         requestAnimationFrame(draw);
       };
       draw();
       return canvas.captureStream(15);
     };
-  }, qrDataUrl);
+  }, qr);
 }
 
 async function seedRecentScan(page: Page) {
