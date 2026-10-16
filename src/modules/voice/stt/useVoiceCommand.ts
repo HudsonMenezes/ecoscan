@@ -16,6 +16,7 @@ export type Recognition = {
   onerror: ((event: RecognitionErrorEvent) => void) | null;
   onend: (() => void) | null;
   start(): void;
+  stop(): void;
   abort(): void;
 };
 
@@ -32,6 +33,9 @@ export function getRecognitionCtor(
 }
 
 const ALTERNATIVES = 3;
+
+// Depois do stop(), quanto esperar pelo `end` antes de abortar e seguir (o iOS às vezes não avisa).
+export const END_TIMEOUT_MS = 1500;
 
 /**
  * `onResult` recebe as alternativas reconhecidas (a mais provável primeiro);
@@ -69,31 +73,48 @@ export function useVoiceCommand({
     recognition.continuous = false;
     recognition.maxAlternatives = ALTERNATIVES;
 
-    let heard = false;
+    // O resultado (ou o erro) só é entregue no fim, com o microfone já fechado: o comando
+    // costuma navegar e fazer a nova tela falar, e no iPhone o microfone ficava aberto.
+    let outcome = () => handlers.current.onError('no-speech');
+    let endTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const finish = () => {
+      if (recognitionRef.current !== recognition) return;
+      clearTimeout(endTimer);
+      recognitionRef.current = null;
+      setListening(false);
+      outcome();
+    };
+    const waitForEnd = () => {
+      clearTimeout(endTimer);
+      endTimer = setTimeout(() => {
+        if (recognitionRef.current !== recognition) return;
+        finish();
+        recognition.abort();
+      }, END_TIMEOUT_MS);
+    };
+
     recognition.onresult = (event) => {
       if (recognitionRef.current !== recognition) return;
       const first = event.results[0];
       const transcripts = first ? Array.from(first, (alt) => alt.transcript) : [];
-      heard = transcripts.some((text) => text.trim());
-      if (heard) handlers.current.onResult(transcripts);
+      if (!transcripts.some((text) => text.trim())) return;
+      outcome = () => handlers.current.onResult(transcripts);
+      recognition.stop();
+      waitForEnd();
     };
     recognition.onerror = (event) => {
       if (recognitionRef.current !== recognition || event.error === 'aborted') return;
-      heard = true; // já avisamos o motivo; o onend não repete
       const error: VoiceCommandError =
         event.error === 'not-allowed' || event.error === 'service-not-allowed'
           ? 'not-allowed'
           : event.error === 'no-speech'
             ? 'no-speech'
             : 'other';
-      handlers.current.onError(error);
+      outcome = () => handlers.current.onError(error);
+      waitForEnd();
     };
-    recognition.onend = () => {
-      if (recognitionRef.current !== recognition) return;
-      recognitionRef.current = null;
-      setListening(false);
-      if (!heard) handlers.current.onError('no-speech');
-    };
+    recognition.onend = finish;
 
     recognitionRef.current = recognition;
     setListening(true);

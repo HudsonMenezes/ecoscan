@@ -66,6 +66,7 @@ export async function installFakeSpeech(page: Page) {
       start() {
         setActive(this);
       }
+      stop() {}
       abort() {
         if (active === this) active = null;
         this.onerror?.({ error: 'aborted' });

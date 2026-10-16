@@ -13,6 +13,7 @@ export function createFakeRecognition() {
     onerror: Recognition['onerror'] = null;
     onend: Recognition['onend'] = null;
     started = false;
+    stopped = false;
     aborted = false;
 
     constructor() {
@@ -23,6 +24,11 @@ export function createFakeRecognition() {
       this.started = true;
     }
 
+    // No navegador, o fim chega depois (o teste chama `end()`).
+    stop() {
+      this.stopped = true;
+    }
+
     abort() {
       this.aborted = true;
       this.onerror?.({ error: 'aborted' });
@@ -31,24 +37,26 @@ export function createFakeRecognition() {
   }
 
   const last = () => instances[instances.length - 1]!;
+  const hear = (...alternatives: string[]) =>
+    last().onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] });
+  const end = () => last().onend?.();
 
   return {
     Ctor: FakeRecognition as unknown as RecognitionCtor,
     instances,
     last,
+    /** Só o resultado, sem o fim. */
+    hear,
+    end,
     /** Como no navegador: resultado e depois o fim. */
     say(...alternatives: string[]) {
-      const recognition = last();
-      recognition.onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] });
-      recognition.onend?.();
+      hear(...alternatives);
+      end();
     },
     fail(error: string) {
-      const recognition = last();
-      recognition.onerror?.({ error });
-      recognition.onend?.();
+      last().onerror?.({ error });
+      end();
     },
-    silence() {
-      last().onend?.();
-    },
+    silence: end,
   };
 }

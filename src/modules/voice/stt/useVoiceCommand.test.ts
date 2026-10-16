@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { createFakeRecognition } from '@/test/fakeRecognition';
-import { getRecognitionCtor, useVoiceCommand } from './useVoiceCommand';
+import { END_TIMEOUT_MS, getRecognitionCtor, useVoiceCommand } from './useVoiceCommand';
 
 function setup() {
   const fake = createFakeRecognition();
@@ -58,6 +58,43 @@ describe('useVoiceCommand', () => {
     expect(onResult).toHaveBeenCalledWith(['escanear', 'escalar']);
     expect(onError).not.toHaveBeenCalled();
     expect(hook.result.current.listening).toBe(false);
+  });
+
+  // iPhone (Hudson, 2026-10-16): o comando navegava e a nova tela falava com o reconhecimento ainda
+  // aberto, e o navegador continuava mostrando o microfone ligado.
+  it('ao ouvir a frase, fecha o microfone na hora e só executa o comando depois do fim', () => {
+    const { fake, onResult, hook } = setup();
+    act(() => hook.result.current.listen());
+
+    act(() => fake.hear('início'));
+
+    expect(fake.last().stopped).toBe(true);
+    expect(onResult).not.toHaveBeenCalled();
+
+    act(() => fake.end());
+
+    expect(onResult).toHaveBeenCalledExactlyOnceWith(['início']);
+    expect(hook.result.current.listening).toBe(false);
+  });
+
+  it('se o navegador não avisar o fim, aborta e executa o comando assim mesmo', () => {
+    vi.useFakeTimers();
+    try {
+      const { fake, onResult, hook } = setup();
+      act(() => hook.result.current.listen());
+      act(() => fake.hear('início'));
+
+      act(() => vi.advanceTimersByTime(END_TIMEOUT_MS));
+
+      expect(fake.last().aborted).toBe(true);
+      expect(onResult).toHaveBeenCalledExactlyOnceWith(['início']);
+      expect(hook.result.current.listening).toBe(false);
+
+      act(() => fake.end()); // um fim atrasado não executa de novo
+      expect(onResult).toHaveBeenCalledOnce();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it.each([
