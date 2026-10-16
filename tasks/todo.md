@@ -197,10 +197,10 @@ Proposta no canvas [EcoScan: proposta visual](https://claude.ai/artifact/EjUwYjn
 
 ### ✅ Checkpoint C: experiência completa
 
-- [ ] Critérios da [SPEC-voice](../docs/SPEC-voice.md#critérios-de-sucesso) e da [SPEC-rewards](../docs/SPEC-rewards.md#critérios-de-sucesso)
-- [ ] Roteiro completo **só por voz**: escanear → ouvir → descartar pelo QR impresso → ouvir o saldo
-- [ ] Testado em um Android e em um iPhone reais
-- [ ] **Revisão com você antes de seguir**
+- [x] Critérios da [SPEC-voice](../docs/SPEC-voice.md#critérios-de-sucesso) e da [SPEC-rewards](../docs/SPEC-rewards.md#critérios-de-sucesso)
+- [x] Roteiro completo **só por voz**: escanear → ouvir → descartar pelo QR impresso → ouvir o saldo
+- [x] Testado num iPhone real (vozes, comandos pelo 🎤 e boas-vindas). **Android não testado:** o Hudson não tinha um à mão e aceitou o risco (2026-10-16)
+- [x] **Revisão com você antes de seguir** (aprovada em 2026-10-16)
 
 ---
 

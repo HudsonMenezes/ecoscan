@@ -1,13 +1,13 @@
 # Progresso: EcoScan
 
 > Ponto de retomada entre sessões. Atualize ao concluir cada tarefa.
-> Última atualização: 2026-10-15, fim da sessão (fase 3b concluída; aguardando o Checkpoint C)
+> Última atualização: 2026-10-16 (Checkpoint C aprovado; começando a P1)
 
 ## Onde estamos
 
-- **Fase atual:** fase 3b (Voice) concluída no código em 2026-10-15. Agora: **Checkpoint C** (revisão do Hudson nos celulares).
-- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; funcionou no iPhone, falta o Android), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI), V1 (`parseCommand`), V2 (fala do navegador + VoiceDock), V3 (`/api/tts` + reserva OpenAI), V4 (comandos de voz 🎤), V5 (boas-vindas + privacidade + `/sobre`), V6 (E2E de voz)
-- **Próxima:** **Checkpoint C** (critérios em [`todo.md`](todo.md)). O Hudson testa nos celulares: (1) roteiro **só por voz** num Android e num iPhone: 🎤 "escanear" → 🎤 "capturar" → ouvir o resultado → 🎤 "descartar" → ler o QR impresso → 🎤 "minhas moedas"; (2) tela de boas-vindas num aparelho novo ou aba anônima; (3) ler o QR impresso num **Android**, pelo leitor do app e pela câmera nativa (no iPhone já funcionou). Ajustes que vierem da revisão vêm antes da **P1** (endurecimento: `check:secrets`, CSP, regra de rate limit no Vercel Firewall, que o Hudson configura no painel).
+- **Fase atual:** fase 4 (endurecimento e demo). **Checkpoint C aprovado** em 2026-10-16: no iPhone, as vozes, os comandos pelo 🎤 e as boas-vindas funcionaram. **Android não testado** (sem aparelho à mão; risco aceito pelo Hudson): leitor de QR, câmera nativa e roteiro por voz no Android ficam sem verificação real.
+- **Concluídas:** T1 (scaffold), T2 (deploy + `api/health` + headers), T3 (`AppStorage`), T4 (Home, rotas, ícones do PWA), T5 (`useScreen`), T6 (câmera), T6b (desktop), Checkpoint A, T7 (catálogo + contrato), T8 (`/api/scan`), T9 (eval: 95%, 0 perigosas), T10 (cliente + `useScan`), T11 (telas do scanner + textos educativos, aprovados pelo Hudson), T12 (orientação local + E2E do scanner), Checkpoint B, R1 (níveis, regras e ledger), R2 (`claimDisposal`, pontos, `parsePointUrl`; 100% de cobertura), R3 (descarte via link + comemoração; testado pelo Hudson no celular), R4 (leitor de QR no app; funcionou no iPhone, falta o Android), R5 (`npm run qr:demo` → `print/`), R6 (carteira + E2E de rewards), U1a–U1d (nova identidade visual), P2 (CI), V1 (`parseCommand`), V2 (fala do navegador + VoiceDock), V3 (`/api/tts` + reserva OpenAI), V4 (comandos de voz 🎤), V5 (boas-vindas + privacidade + `/sobre`), V6 (E2E de voz), Checkpoint C
+- **Próxima:** **P1** (endurecimento: `check:secrets`, revisão da CSP, regra de rate limit no Vercel Firewall para `/api/*`, que o Hudson configura no painel). Depois, P3 (ensaio da demo); se aparecer um Android, testar nele no ensaio.
 
 ## Como retomar
 
