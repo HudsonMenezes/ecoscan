@@ -148,6 +148,15 @@ export const strings = {
     voiceMode: 'Modo voz: cada tela fala sozinha ao abrir',
     command: 'Falar um comando',
     listening: 'Ouvindo… toque para cancelar',
+    // Escritos embaixo dos botões: a cor e a onda sozinhas não deixam claro o que está ligado.
+    captions: {
+      mode: 'Modo voz',
+      modeOn: 'Voz ligada',
+      listen: 'Ouvir',
+      stop: 'Parar',
+      command: 'Falar',
+      listening: 'Ouvindo…',
+    },
     help: (hints: string[]) =>
       `Você pode dizer: ${hints.slice(0, -1).join(', ')} ou ${hints[hints.length - 1]}.`,
     notUnderstood: (help: string) => `Não entendi. ${help}`,

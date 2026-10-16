@@ -46,6 +46,17 @@ beforeEach(() => {
 });
 
 describe('VoiceDock', () => {
+  // Pedido do Hudson (2026-10-16): só a cor e a onda não deixam claro que algo está ligado.
+  it('escreve embaixo de cada botão o que ele faz e quando está ligado', async () => {
+    setup();
+    expect(screen.getByText(voice.captions.mode)).toBeVisible();
+    expect(screen.getByText(voice.captions.listen)).toBeVisible();
+
+    await userEvent.click(modeButton());
+    expect(screen.getByText(voice.captions.modeOn)).toBeVisible();
+    expect(screen.getByText(voice.captions.stop)).toBeVisible(); // ligar o Modo voz já fala
+  });
+
   it('🔊 lê a fala da tela atual', async () => {
     const { fake } = setup();
     await userEvent.click(listenButton());

@@ -148,10 +148,12 @@ describe('VoiceDock: comandos de voz (🎤)', () => {
 
     const listening = screen.getByRole('button', { name: voice.listening });
     expect(listening).toHaveClass('voice-dock__mic--active');
+    expect(screen.getByText(voice.captions.listening)).toBeVisible(); // não só a cor e a onda
 
     await userEvent.click(listening);
     expect(recognition.last().aborted).toBe(true);
     expect(micButton()).toBeInTheDocument();
+    expect(screen.getByText(voice.captions.command)).toBeVisible();
   });
 
   it('para a fala do app antes de escutar (o microfone não ouve o próprio app)', async () => {

@@ -62,8 +62,32 @@ body {
 .voice-dock {
   display: flex;
   flex-shrink: 0;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-1);
+}
+
+/* Botão + texto embaixo; a 1ª linha tem a altura do maior botão, para os textos ficarem alinhados. */
+.voice-dock__item {
+  display: grid;
+  grid-template-rows: var(--touch-target-home) auto;
+  place-items: center;
+  gap: 2px;
+}
+
+.voice-dock__caption {
+  padding: 1px 6px;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* Ligado: o texto ganha fundo, para não depender só da cor do botão. */
+.voice-dock__caption--on {
+  background: var(--color-green);
+  color: var(--color-green-text);
 }
 
 .voice-dock__listen,
@@ -151,6 +175,17 @@ body {
 
 .scan-screen--dark .voice-dock__mic--active,
 .celebration .voice-dock__mic--active {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.scan-screen--dark .voice-dock__caption,
+.celebration .voice-dock__caption {
+  color: #fff;
+}
+
+.scan-screen--dark .voice-dock__caption--on,
+.celebration .voice-dock__caption--on {
   background: var(--color-accent);
   color: var(--color-accent-text);
 }
@@ -1847,4 +1882,27 @@ a.action-button {
   .voice-dock__mic--active::after {
     animation: none;
   }
+}
+
+/* Os botões de voz têm texto embaixo: o que fica ao lado deles se alinha pela linha
+   dos botões (64px), e não pelo centro do conjunto botão + texto. */
+.layout__header,
+.scan-screen__bar,
+.celebration__top {
+  align-items: start;
+}
+
+.layout__home {
+  min-height: var(--touch-target-home);
+}
+
+.scan-screen__title {
+  display: grid;
+  align-content: center;
+  min-height: var(--touch-target-home);
+}
+
+.scan-screen__bar > .round-button,
+.celebration__top > .round-button {
+  margin-top: calc((var(--touch-target-home) - var(--touch-target)) / 2);
 }
