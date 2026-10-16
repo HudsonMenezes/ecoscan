@@ -1,0 +1,438 @@
+/* Folha A4 do ponto de descarte. Medidas em mm para caber em uma página.
+   Cores das lixeiras: as mesmas de src/modules/scanner/model/categories.ts (CONAMA 275).
+   Se mudar uma cor lá, mude aqui também. */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Figtree;
+  src: url('/fonts/figtree-latin.woff2') format('woff2');
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+:root {
+  --cream: #f7f3ea;
+  --forest: #0e5f3a;
+  --forest-soft: #e3efe6;
+  --sprout: #b8e04a;
+  --ink: #1a1a1a;
+  --muted: #4a4a4a;
+  --papel: #1f5fae;
+  --plastico: #c62828;
+  --metal: #f2b01e;
+  --vidro: #1b7f3b;
+  --organico: #6d4c41;
+  --rejeito: #616161;
+  --perigoso: #ef6c00;
+  color-scheme: light;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  background: #d9d4c7;
+  color: var(--ink);
+  font-family: Figtree, system-ui, sans-serif;
+}
+
+.symbols {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  line-height: 1.05;
+}
+
+/* Barra só da tela: some na impressão */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 20px;
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.toolbar p {
+  flex: 1 1 260px;
+  margin: 0;
+}
+
+.toolbar button {
+  min-height: 48px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #fff;
+  font:
+    700 17px Figtree,
+    system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+
+.toolbar button:focus-visible {
+  outline: 3px solid var(--sprout);
+  outline-offset: 3px;
+}
+
+/* A folha */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5mm;
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto 24px;
+  padding: 10mm;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 6px 30px rgb(0 0 0 / 18%);
+}
+
+.hero {
+  padding: 5mm 8mm 6mm;
+  border-radius: 6mm;
+  background: var(--forest);
+  color: #fff;
+  text-align: center;
+}
+
+.hero__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5mm;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 15pt;
+  font-weight: 800;
+}
+
+.hero__brand img {
+  width: 10mm;
+  height: 10mm;
+}
+
+.hero h1 {
+  margin-top: 2mm;
+  font-size: 36pt;
+  font-weight: 800;
+}
+
+.hero__lead {
+  display: inline-block;
+  margin: 3mm 0 0;
+  padding: 1.5mm 5mm;
+  border-radius: 999px;
+  background: var(--sprout);
+  color: var(--forest);
+  font-size: 14pt;
+  font-weight: 800;
+}
+
+.middle {
+  display: grid;
+  grid-template-columns: 80mm 1fr;
+  gap: 7mm;
+  align-items: center;
+}
+
+.qr {
+  margin: 0;
+  padding: 4mm 4mm 3mm;
+  border: 1.2mm solid var(--forest);
+  border-radius: 6mm;
+  background: #fff;
+  text-align: center;
+}
+
+.qr img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.qr figcaption {
+  font-size: 12pt;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--forest);
+}
+
+.how h2,
+.guide h2 {
+  color: var(--forest);
+  font-size: 17pt;
+  font-weight: 800;
+}
+
+.steps {
+  display: grid;
+  gap: 3mm;
+  margin: 3mm 0 4mm;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  font-size: 12.5pt;
+  line-height: 1.3;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 9mm 1fr;
+  gap: 3mm;
+  align-items: center;
+  counter-increment: step;
+}
+
+.steps li::before {
+  display: grid;
+  place-items: center;
+  width: 9mm;
+  height: 9mm;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--sprout);
+  content: counter(step);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 14pt;
+  font-weight: 800;
+}
+
+.rewards {
+  width: 100%;
+  margin-top: 2.5mm;
+  border-collapse: separate;
+  border-spacing: 0 1.5mm;
+  font-size: 11.5pt;
+}
+
+.rewards th,
+.rewards td {
+  padding: 1.8mm 2.5mm;
+  background: var(--forest-soft);
+}
+
+.rewards th {
+  border-radius: 2mm 0 0 2mm;
+  text-align: left;
+  font-weight: 700;
+}
+
+.rewards td {
+  color: var(--forest);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.rewards td:last-child {
+  border-radius: 0 2mm 2mm 0;
+}
+
+.bins {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5mm;
+  margin: 2.5mm 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bin {
+  display: grid;
+  grid-template-columns: 13mm 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 3mm;
+  padding: 2.5mm 3mm;
+  border-radius: 4mm;
+  border-top: 2mm solid var(--bin);
+  background: #fff;
+}
+
+.bin svg {
+  grid-row: 1 / 4;
+  width: 13mm;
+  height: 15mm;
+}
+
+.bin strong {
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 13pt;
+  line-height: 1.1;
+}
+
+.bin__color {
+  justify-self: start;
+  margin: 0.8mm 0;
+  padding: 0.3mm 2.5mm;
+  border-radius: 999px;
+  background: var(--bin);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bin--metal .bin__color,
+.bin--perigoso .bin__color {
+  color: var(--ink);
+}
+
+.bin__examples {
+  color: var(--muted);
+  font-size: 10pt;
+  line-height: 1.3;
+}
+
+.bin--papel {
+  --bin: var(--papel);
+  color: var(--bin);
+}
+
+.bin--plastico {
+  --bin: var(--plastico);
+  color: var(--bin);
+}
+
+.bin--metal {
+  --bin: var(--metal);
+  color: var(--bin);
+}
+
+.bin--vidro {
+  --bin: var(--vidro);
+  color: var(--bin);
+}
+
+.bin--organico {
+  --bin: var(--organico);
+  color: var(--bin);
+}
+
+.bin--rejeito {
+  --bin: var(--rejeito);
+  color: var(--bin);
+}
+
+.bin--perigoso {
+  grid-column: 1 / -1;
+  grid-template-columns: 14mm 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  border: 0.8mm solid var(--perigoso);
+  border-top-width: 2mm;
+  --bin: var(--perigoso);
+  background: #fff4e8;
+  color: var(--bin);
+}
+
+.bin--perigoso svg {
+  grid-row: auto;
+  width: 14mm;
+  height: 14mm;
+}
+
+.bin--perigoso strong {
+  display: block;
+  margin-bottom: 0.8mm;
+  font-size: 14pt;
+}
+
+.bin--perigoso .bin__examples {
+  color: var(--ink);
+  font-size: 11pt;
+}
+
+.footer {
+  display: grid;
+  gap: 1mm;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer__tips {
+  padding: 2.5mm;
+  border-radius: 3mm;
+  background: var(--forest-soft);
+  font-size: 12pt;
+}
+
+.footer__site {
+  color: var(--forest);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 13pt;
+  font-weight: 800;
+}
+
+.footer__privacy {
+  color: var(--muted);
+  font-size: 9pt;
+}
+
+/* Na tela, a folha (210mm ≈ 794px) encolhe para caber na largura */
+@media screen and (max-width: 830px) {
+  .sheet {
+    zoom: 0.75;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .sheet {
+    zoom: 0.46;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .sheet {
+    zoom: 0.42;
+  }
+}
+
+@media print {
+  body {
+    background: none;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .sheet {
+    margin: 0;
+    box-shadow: none;
+  }
+}

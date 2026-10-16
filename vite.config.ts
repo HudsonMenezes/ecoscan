@@ -26,6 +26,9 @@ export default defineConfig(({ command, isPreview }) => ({
     command === 'serve' && !isPreview ? basicSsl() : null,
     VitePWA({
       registerType: 'autoUpdate',
+      // A folha A4 do ponto de descarte é uma página estática, não uma rota do app:
+      // sem isso, o service worker responderia com o index.html para quem já abriu o app.
+      workbox: { navigateFallbackDenylist: [/^\/imprimir\//] },
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png', 'fonts/*.woff2'],
       manifest: {
         name: 'EcoScan',

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoScan: Ponto de Descarte</title>
+    <meta
+      name="description"
+      content="Folha A4 do ponto de descarte do EcoScan, com o QR e o guia das lixeiras."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="ponto-de-descarte.css" />
+    <script src="imprimir.js" defer></script>
+  </head>
+  <body>
+    <!-- Desenho reaproveitado das lixeiras: a cor vem da classe de cada item (currentColor). -->
+    <svg class="symbols" aria-hidden="true">
+      <symbol id="bin" viewBox="0 0 64 72">
+        <rect x="6" y="8" width="52" height="9" rx="3" fill="currentColor" />
+        <rect x="24" y="2" width="16" height="8" rx="3" fill="currentColor" />
+        <path d="M10 20h44l-4 46a6 6 0 0 1-6 6H20a6 6 0 0 1-6-6z" fill="currentColor" />
+        <path
+          d="M24 30v32M32 30v32M40 30v32"
+          stroke="#fff"
+          stroke-opacity="0.55"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="warning" viewBox="0 0 64 64">
+        <path d="M32 4 62 58H2z" fill="currentColor" stroke-linejoin="round" />
+        <path d="M32 24v16" stroke="#1a1a1a" stroke-width="6" stroke-linecap="round" />
+        <circle cx="32" cy="49" r="3.5" fill="#1a1a1a" />
+      </symbol>
+    </svg>
+
+    <div class="toolbar">
+      <p>
+        Folha A4 para colar no ponto de descarte. Na janela de impressão, deixe
+        <b>gráficos de fundo</b> ligado, para sair com as cores.
+      </p>
+      <button type="button" id="print">Imprimir</button>
+    </div>
+
+    <main class="sheet">
+      <header class="hero">
+        <div class="hero__brand">
+          <img src="/favicon.svg" alt="" width="40" height="40" />
+          <span>EcoScan</span>
+        </div>
+        <h1>Ponto de Descarte</h1>
+        <p class="hero__lead">Descarte certo, leia o QR e ganhe XP e moedas!</p>
+      </header>
+
+      <section class="middle">
+        <figure class="qr">
+          <img src="qr-escola-demo.svg" alt="QR do ponto de descarte do EcoScan" />
+          <figcaption>
+            Aponte a câmera do celular<br />
+            ou use o leitor do app
+          </figcaption>
+        </figure>
+
+        <div class="how">
+          <h2>Como funciona</h2>
+          <ol class="steps">
+            <li>
+              <span
+                ><b>Escaneie</b> o objeto no app EcoScan. Ele diz o que é e onde descartar.</span
+              >
+            </li>
+            <li>
+              <span><b>Descarte</b> na lixeira da cor certa.</span>
+            </li>
+            <li>
+              <span><b>Leia este QR</b> e ganhe XP e moedas!</span>
+            </li>
+          </ol>
+
+          <h2>Quanto vale cada descarte</h2>
+          <table class="rewards">
+            <tbody>
+              <tr>
+                <th scope="row">Perigosos</th>
+                <td>+20 XP</td>
+                <td>+10 moedas</td>
+              </tr>
+              <tr>
+                <th scope="row">Recicláveis</th>
+                <td>+10 XP</td>
+                <td>+5 moedas</td>
+              </tr>
+              <tr>
+                <th scope="row">Orgânico e não reciclável</th>
+                <td>+5 XP</td>
+                <td>+2 moedas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide">
+        <h2>Qual lixeira?</h2>
+        <ul class="bins">
+          <li class="bin bin--papel">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Papel</strong>
+            <span class="bin__color">azul</span>
+            <span class="bin__examples">Caderno, jornal, papelão e caixa de leite</span>
+          </li>
+          <li class="bin bin--plastico">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Plástico</strong>
+            <span class="bin__color">vermelho</span>
+            <span class="bin__examples">Garrafa PET, sacola e potes</span>
+          </li>
+          <li class="bin bin--metal">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Metal</strong>
+            <span class="bin__color">amarelo</span>
+            <span class="bin__examples">Latinha, lata de conserva e tampinha</span>
+          </li>
+          <li class="bin bin--vidro">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Vidro</strong>
+            <span class="bin__color">verde</span>
+            <span class="bin__examples">Garrafa, pote e frasco</span>
+          </li>
+          <li class="bin bin--organico">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Orgânico</strong>
+            <span class="bin__color">marrom</span>
+            <span class="bin__examples">Casca de fruta e resto de comida</span>
+          </li>
+          <li class="bin bin--rejeito">
+            <svg aria-hidden="true"><use href="#bin" /></svg>
+            <strong>Não reciclável</strong>
+            <span class="bin__color">cinza</span>
+            <span class="bin__examples">Guardanapo usado, fralda e pacote de salgadinho</span>
+          </li>
+          <li class="bin bin--perigoso">
+            <svg aria-hidden="true"><use href="#warning" /></svg>
+            <div>
+              <strong>Perigosos: nunca no lixo comum!</strong>
+              <span class="bin__examples">
+                Pilhas, baterias, celulares, lâmpadas, remédios e óleo de cozinha vão para um
+                <b>ponto de coleta especial</b>. O app mostra onde levar em Duque de Caxias.
+              </span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        <p class="footer__tips">
+          <b>Dica:</b> embalagens vazias e limpas reciclam melhor. <b>Na dúvida, escaneie!</b>
+        </p>
+        <p class="footer__site">ecoscan-v1.vercel.app</p>
+        <p class="footer__privacy">O EcoScan não guarda fotos nem pede dados pessoais.</p>
+      </footer>
+    </main>
+  </body>
+</html>

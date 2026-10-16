@@ -14,7 +14,7 @@ Guia para apresentar o EcoScan no hackathon. Tempo: **cerca de 5 minutos**, mais
 
 ### Na véspera
 
-- [ ] Imprimir a folha do QR: abra [`print/qr-escola-demo.html`](../print/qr-escola-demo.html) no navegador e imprima em A4. Se possível, plastifique ou cole num papelão.
+- [ ] Imprimir a folha do ponto de descarte: abra **[ecoscan-v1.vercel.app/imprimir/ponto-de-descarte.html](https://ecoscan-v1.vercel.app/imprimir/ponto-de-descarte.html)** e toque em **Imprimir** (A4, com "gráficos de fundo" ligado para sair colorida). Ela tem o QR, o passo a passo, quanto vale cada descarte e o guia das lixeiras por cor. Se possível, plastifique ou cole num papelão.
 - [ ] Separar **3 objetos** para escanear (sugestão abaixo).
 - [ ] Carregar o celular da apresentação (o iPhone já foi testado; se usar um Android, faça o roteiro completo nele antes, porque ele ainda não foi testado).
 - [ ] Ensaiar o roteiro inteiro pelo menos uma vez, **cronometrando**.
